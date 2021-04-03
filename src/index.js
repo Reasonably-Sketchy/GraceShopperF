@@ -9,15 +9,13 @@ import {
 } from 'react-router-dom';
 
 // Page components
-// import { } from './index';
+import { Products } from './components'
 
-import '../styles.css';
+import './styles.css';
 
 const App = () => {
-
     const [token, setToken] = useState("");
     const [userData, setUserData] = useState({});
-
     const [allProducts, setAllProducts] = useState([]);
 
     // Retrieve token from local storage
@@ -45,15 +43,24 @@ const App = () => {
     return (
         <div id="app">
             <h1>Grace Shopper</h1>
+
+            <Switch>
+
+                <Route exact path = "/products">
+                    <Products />
+                </Route>
+
+            </Switch>
+
         </div>
     );
 };
 
 export default App;
 
+
 ReactDOM.render(
-  <Router>
-    <App />
-  </Router>,
-  document.getElementById("root")
-);
+    <Router>
+        <App />
+    </Router>, 
+    document.getElementById('root'));
