@@ -1,0 +1,48 @@
+#login-register {
+    /* display: grid;
+    grid-template-columns: 1fr 80vw 1fr; */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
+}
+
+#login-register h1 {
+    /* color: #b5a264; */
+    color: rgb(200, 200, 200);
+    font-size: 2.6rem;
+    margin-bottom: 12px;
+}
+
+.login-logo {
+    width: 500px;
+}
+
+.user-action-container {
+    grid-column: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 200px;
+    width: 400px;
+}
+
+#login-register .cta-large {
+    height: 60px;
+    margin-bottom: 20px;
+}
+
+@media screen and (max-width: 768px) {
+    #login-register h1 {
+        font-size: 2.2rem;
+    }
+
+    .login-logo {
+        width: 90vw;
+    }
+
+    .user-action-container {
+        width: 80vw;
+    }
+}

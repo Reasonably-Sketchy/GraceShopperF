@@ -12,6 +12,7 @@ import { fetchAllProducts } from './api/utils';
 // Page components
 import { 
     Header,
+    LoginRegister,
     Products,
     SingleProduct } from './components'
 
@@ -71,6 +72,10 @@ const App = () => {
 
                 <Switch>
 
+                    <Route path = "/login">
+                        <LoginRegister />
+                    </Route>
+
                     <Route exact path = "/products">
                         <Products allProducts = {allProducts}/>
                     </Route>
@@ -78,6 +83,7 @@ const App = () => {
                     <Route exact path = "/products/:productId">
                         <SingleProduct allProducts = {allProducts}/>
                     </Route>
+
 
                 </Switch>
 
