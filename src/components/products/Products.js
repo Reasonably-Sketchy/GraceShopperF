@@ -2,12 +2,23 @@ import React, {useEffect, useState} from 'react';
 
 import ProductCard from './ProductCard';
 
-const Products = () => {
+import './Products.css';
+
+const Products = ({ allProducts }) => {
+
     return (
         <main id="products">
             <h1>Products Page</h1>
 
-            <ProductCard />
+            <section className="products-container">
+
+                {allProducts.map((product) => {
+                    return (
+                        <ProductCard key={product.id} product = {product}/>
+                    );
+                })};
+
+            </section>
         </main>
     );
 };

@@ -7,9 +7,11 @@ import {
     useHistory,
     Link
 } from 'react-router-dom';
+import { fetchAllProducts } from './api/utils';
 
 // Page components
 import { Products } from './components'
+import SingleProduct from './components/products/SingleProduct';
 
 import './styles.css';
 
@@ -33,12 +35,18 @@ const App = () => {
 
 
     // Retrieve all products
-    // useEffect(async () => {
-    //     try {
-    //     } catch(error) {
-    //         console.error(error);
-    //     };
-    // }, [])
+    useEffect(async () => {
+        try {
+            const products = await fetchAllProducts();
+            console.log('Products: ', products);
+            if (products) {
+                setAllProducts(products);
+            };
+
+        } catch(error) {
+            console.error(error);
+        };
+    }, [])
 
     return (
         <div id="app">
@@ -47,7 +55,11 @@ const App = () => {
             <Switch>
 
                 <Route exact path = "/products">
-                    <Products />
+                    <Products allProducts = {allProducts}/>
+                </Route>
+
+                <Route exact path = "/products/:productId">
+                    <SingleProduct allProducts = {allProducts}/>
                 </Route>
 
             </Switch>
