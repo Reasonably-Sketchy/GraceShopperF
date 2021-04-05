@@ -10,10 +10,25 @@ import {
 import { fetchAllProducts } from './api/utils';
 
 // Page components
-import { Products } from './components'
-import SingleProduct from './components/products/SingleProduct';
+import { 
+    Products,
+    SingleProduct } from './components'
 
+import {makeStyles, ThemeProvider, createMuiTheme} from '@material-ui/core/styles';
 import './styles.css';
+
+const theme = createMuiTheme({
+    palette: {
+        primary: {
+            // main: '#d4af37',
+            main: '#b5a264',
+        },
+        secondary: {
+            main: '#ffffff',
+        },
+    }
+});
+
 
 const App = () => {
     const [token, setToken] = useState("");
@@ -33,7 +48,6 @@ const App = () => {
     //     };
     // }, [token])
 
-
     // Retrieve all products
     useEffect(async () => {
         try {
@@ -50,20 +64,23 @@ const App = () => {
 
     return (
         <div id="app">
-            <h1>Grace Shopper</h1>
+            <ThemeProvider theme={theme}>
+                <h1>Grace Shopper</h1>
 
-            <Switch>
+                <Switch>
 
-                <Route exact path = "/products">
-                    <Products allProducts = {allProducts}/>
-                </Route>
+                    <Route exact path = "/products">
+                        <Products allProducts = {allProducts}/>
+                    </Route>
 
-                <Route exact path = "/products/:productId">
-                    <SingleProduct allProducts = {allProducts}/>
-                </Route>
+                    <Route exact path = "/products/:productId">
+                        <SingleProduct allProducts = {allProducts}/>
+                    </Route>
 
-            </Switch>
+                </Switch>
 
+                
+            </ThemeProvider>
         </div>
     );
 };

@@ -26,7 +26,7 @@ const SingleProduct = ({ allProducts }) => {
             <h2>{thisProduct.price} USD</h2>
             <p>{thisProduct.description}</p>
             <Button
-                variant="contained"
+                variant="outlined"
                 color="primary">Add to Cart</Button>
         </main>
     );
