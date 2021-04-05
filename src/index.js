@@ -11,6 +11,7 @@ import { fetchAllProducts } from './api/utils';
 
 // Page components
 import { 
+    Header,
     Products,
     SingleProduct } from './components'
 
@@ -65,7 +66,8 @@ const App = () => {
     return (
         <div id="app">
             <ThemeProvider theme={theme}>
-                <h1>Grace Shopper</h1>
+                <Header />
+                {/* <h1>Grace Shopper</h1> */}
 
                 <Switch>
 

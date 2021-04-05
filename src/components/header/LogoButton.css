@@ -1,0 +1,15 @@
+.logo-button img {
+    width: 250px;
+}
+
+@media screen and (max-width: 768px) {
+
+    .logo-button {
+        align-self: flex-start;
+        justify-self: flex-start;
+    }
+
+    .logo-button img {
+        width: 200px;
+    }
+}
