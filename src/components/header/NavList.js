@@ -61,9 +61,9 @@ const NavList = ({
 
                 <li>
                     <Link 
-                        to="/login" 
+                        to="/welcome" 
                         className="nav-link"
-                        id={activeLinkIs === "Login" ? 'active-nav-link' : ''}
+                        id={activeLinkIs === "Welcome" ? 'active-nav-link' : ''}
                         onClick={() => {
                                 toggleMenu();
                             }}>Login/Register</Link>

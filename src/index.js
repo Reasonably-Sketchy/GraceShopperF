@@ -12,11 +12,13 @@ import { fetchAllProducts } from './api/utils';
 // Page components
 import { 
     Header,
-    LoginRegister,
+    Welcome,
+    Login,
+    Register,
     Products,
     SingleProduct } from './components'
 
-import {makeStyles, ThemeProvider, createMuiTheme} from '@material-ui/core/styles';
+import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import './styles.css';
 
 const theme = createMuiTheme({
@@ -30,7 +32,6 @@ const theme = createMuiTheme({
         },
     }
 });
-
 
 const App = () => {
     const [token, setToken] = useState("");
@@ -72,8 +73,16 @@ const App = () => {
 
                 <Switch>
 
+                    <Route path = "/welcome">
+                        <Welcome />
+                    </Route>
+
                     <Route path = "/login">
-                        <LoginRegister />
+                        <Login />
+                    </Route>
+
+                    <Route path ='/register'>
+                        <Register />
                     </Route>
 
                     <Route exact path = "/products">

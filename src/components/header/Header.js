@@ -33,8 +33,8 @@ const Header = ({ setToken, setUserData, userData }) => {
             setActiveLinkIs("Admin")
         };
 
-        if (url.includes('/login')) {
-            setActiveLinkIs("Login")
+        if (url.includes('/welcome') || url.includes('/login') || url.includes('/register')) {
+            setActiveLinkIs("Welcome")
         };
     };
 

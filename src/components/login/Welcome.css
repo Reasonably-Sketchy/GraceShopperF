@@ -1,0 +1,100 @@
+#login-register {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
+}
+
+#login-register h1 {
+    color: rgb(200, 200, 200);
+    font-size: 2.6rem;
+    margin-bottom: 12px;
+}
+
+.login-logo {
+    width: 500px;
+}
+
+.user-action-container {
+    grid-column: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 200px;
+    width: 400px;
+}
+
+.user-action-container button {
+    width: 100%;
+}
+
+#login-register .cta-large {
+    height: 60px;
+    margin-bottom: 20px;
+}
+
+.login-form {
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr;
+    grid-gap: 12px;
+    width: 500px;
+}
+
+.register-form {
+    display: grid;
+    grid-template-rows: repeat(6, 1fr);
+    grid-gap: 12px;
+    max-width: 500px;
+
+}
+
+.double-input {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 12px;
+}
+
+.responsive-button {
+    min-height: 50px;
+}
+
+#login-register .MuiInputBase-root {
+    color: white;
+    font-size: 2rem;
+    font-weight: 300;
+    margin-bottom: 8px;
+}
+
+#login-register .MuiInput-underline:before {
+    border-bottom: 1px solid white;
+}
+
+#login-register .MuiInput-underline:hover:not(.Mui-disabled):before {
+    border-bottom: 2px solid white;
+}
+
+@media screen and (max-width: 768px) {
+    #login-register h1 {
+        font-size: 2.2rem;
+    }
+
+    .login-logo {
+        width: 90vw;
+    }
+
+    .user-action-container {
+        width: 80vw;
+    }
+
+    .register-form, .double-input {
+        display: flex;
+        flex-direction: column;    
+    }
+
+    .login-form {
+        display: flex;
+        flex-direction: column;    
+        width: auto;
+    }
+}
