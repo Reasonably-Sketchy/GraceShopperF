@@ -42,13 +42,15 @@ const Login = () => {
         } catch(error) {
             console.error(error);
         };
-    }
+    };
 
     return (
         <main id="login-register">
             <div className="header-container">
                 <h1>Login</h1>
             </div>
+
+            {respMessage ? <div id="error-message">{ respMessage }</div> : ''}
 
             <form className="login-form" onSubmit={handleSubmit}>
 

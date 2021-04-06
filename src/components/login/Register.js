@@ -15,6 +15,40 @@ const Register = () => {
     const [email, setEmail] = useState('');
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [respMessage, setRespMessage] = useState('');
+
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        try {
+            const data = await callApi({
+                url: '/users/register',
+                method: 'POST',
+                body: {
+                    first: firstName,
+                    last: lastName,
+                    email: email,
+                    username: username,
+                    password: password,
+                },
+            });
+        
+            const token = data.token;
+        
+            if (token) {
+                localStorage.setItem('token', token);
+                setUsername('');
+                setPassword('');
+                setToken(token);
+                // history.push something
+            } else {
+                setRespMessage(data.message);
+            };
+
+        } catch(error) {
+            console.error(error);
+        };
+    };
+
 
     return (
         <main id="login-register">
@@ -22,7 +56,10 @@ const Register = () => {
                 <h1>Register</h1>
             </div>
 
-            <form className="register-form">
+            {respMessage ? <div id="error-message">{ respMessage }</div> : ''}
+
+
+            <form className="register-form" onSubmit={handleSubmit}>
 
                 <div className="double-input">
                     <TextField 
