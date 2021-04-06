@@ -8,8 +8,6 @@ import './Welcome.css'
 
 const Welcome = () => {
 
-    const [userAction, setUserAction] = useState('');
-
     return (
         <main id="login-register">
             <div className="header-container">

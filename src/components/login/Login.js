@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import { callApi } from '../../api/index';
 
 import { 
     Button,
@@ -12,6 +13,36 @@ const Login = () => {
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [respMessage, setRespMessage] = useState('');
+
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        try {
+            const data = await callApi({
+                url: '/users/login',
+                method: 'POST',
+                body: {
+                    username: username,
+                    password: password,
+                },
+            });
+        
+            const token = data.token;
+        
+            if (token) {
+                localStorage.setItem('token', token);
+                setUsername('');
+                setPassword('');
+                setToken(token);
+                // history.push something
+            } else {
+                setRespMessage(data.message);
+            };
+
+        } catch(error) {
+            console.error(error);
+        };
+    }
 
     return (
         <main id="login-register">
@@ -19,7 +50,7 @@ const Login = () => {
                 <h1>Login</h1>
             </div>
 
-            <form className="login-form">
+            <form className="login-form" onSubmit={handleSubmit}>
 
                 <TextField 
                     className="login-input"
