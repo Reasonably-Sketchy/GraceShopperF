@@ -1,0 +1,152 @@
+.burger {
+    display: none;
+    z-index: 101;
+
+    position: absolute;
+    right: 5vw;
+    top: 25px;
+    height: 61px;
+    width: 61px;
+    outline: none;
+    border: none;
+
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+
+    background-color: rgba(0, 0, 0, 0);
+    padding: 5px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+/* ~~~~~~~~~~
+
+MEDIA QUERIES
+
+~~~~~~~~~~ */
+
+@media screen and (max-width: 768px) {
+
+    .burger {
+        display: flex;
+        z-index: 101;
+    }
+
+    #burger-top-active {
+        -webkit-animation: transformTopBar 0.3s;
+        -moz-animation: transformTopBar 0.3s;
+        -o-animation: transformTopBar 0.3s;
+        animation: transformTopBar 0.3s;
+
+        -webkit-transform: rotate(-45deg);
+        -moz-transform: rotate(-45deg);
+        -ms-transform: rotate(-45deg);
+        -o-transform: rotate(-45deg);
+        transform: rotate(-45deg);
+        position: relative;
+        top: 17px;
+    }
+
+    #burger-mid-active {
+        -webkit-animation: transformMiddleBar 0.3s;
+        -moz-animation: transformMiddleBar 0.3s;
+        -o-animation: transformMiddleBar 0.3s;
+        animation: transformMiddleBar 0.3s;
+
+        -webkit-opacity: 0;
+        -moz-opacity: 0;
+        filter: alpha(opacity=0);
+        opacity: 0%;
+    }
+
+    #burger-bottom-active {
+        -webkit-animation: transformBottomBar 0.3s;
+        -moz-animation: transformBottomBar 0.3s;
+        -o-animation: transformBottomBar 0.3s;
+        animation: transformBottomBar 0.3s;
+
+        -webkit-transform: rotate(45deg);
+        -moz-transform: rotate(45deg);
+        -ms-transform: rotate(45deg);
+        -o-transform: rotate(45deg);
+        transform: rotate(45deg);
+        position: relative;
+        bottom: 17px;
+    }
+
+    .burger-top {
+        -webkit-animation: revertTopBar 0.3s;
+        -moz-animation: revertTopBar 0.3s;
+        -o-animation: revertTopBar 0.3s;
+        animation: revertTopBar 0.3s;
+        position: relative;
+        height: 4px;
+        width: 40px;
+        border-radius: 10px;
+        background-color: white;
+    }
+
+    .burger-bottom {
+        -webkit-animation: revertBottomBar 0.3s;
+        -moz-animation: revertBottomBar 0.3s;
+        -o-animation: revertBottomBar 0.3s;
+        animation: revertBottomBar 0.3s;
+        position: relative;
+        height: 4px;
+        width: 40px;
+        border-radius: 10px;
+        background-color: white;
+    }
+
+    .burger-mid {
+        -webkit-animation: revertMiddleBar 0.3s;
+        -moz-animation: revertMiddleBar 0.3s;
+        -o-animation: revertMiddleBar 0.3s;
+        animation: revertMiddleBar 0.3s;
+        height: 4px;
+        width: 40px;
+        border-radius: 10px;
+        background-color: white;
+
+    }
+
+    /* ANIMATIONS */
+
+        /* Transform */
+        @keyframes transformTopBar {
+            0% { top: 0px; transform: none; }
+            50% { top: 17px; transform: none; }
+            100% { top: 17px; transform: rotate(-45deg) }
+        }
+
+        @keyframes transformBottomBar {
+            0% { bottom: 0px; transform: none; }
+            50% { bottom: 17px; transform: none; }
+            100% { bottom: 17px; transform: rotate(45deg) }
+        }
+
+        @keyframes transformMiddleBar {
+            0% { opacity: 100%; }
+            50% { opacity: 0%; }
+        }
+
+        /* Revert */
+        @keyframes revertTopBar {
+            0% { top: 17px; transform: rotate(-45deg); }
+            50% { top: 17px; transform: none; }
+            100% { top: 0px; transform: none; }
+        }
+
+        @keyframes revertBottomBar {
+            0% { bottom: 17px; transform: rotate(45deg); }
+            50% { bottom: 17px; transform: none; }
+            100% { bottom: 0px; transform: none; }
+        }
+
+        @keyframes revertMiddleBar {
+            0% { opacity: 0%; }
+            50% { opacity: 0%; }
+            100% { opacity: 100%; }
+        } 
+}

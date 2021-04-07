@@ -7,11 +7,29 @@ import {
     useHistory,
     Link
 } from 'react-router-dom';
+import { fetchAllProducts } from './api/utils';
 
 // Page components
-import { Products } from './components'
+import { 
+    Header,
+    Products,
+    SingleProduct } from './components'
 
+import {makeStyles, ThemeProvider, createMuiTheme} from '@material-ui/core/styles';
 import './styles.css';
+
+const theme = createMuiTheme({
+    palette: {
+        primary: {
+            // main: '#d4af37',
+            main: '#b5a264',
+        },
+        secondary: {
+            main: '#ffffff',
+        },
+    }
+});
+
 
 const App = () => {
     const [token, setToken] = useState("");
@@ -31,27 +49,40 @@ const App = () => {
     //     };
     // }, [token])
 
-
     // Retrieve all products
-    // useEffect(async () => {
-    //     try {
-    //     } catch(error) {
-    //         console.error(error);
-    //     };
-    // }, [])
+    useEffect(async () => {
+        try {
+            const products = await fetchAllProducts();
+            console.log('Products: ', products);
+            if (products) {
+                setAllProducts(products);
+            };
+
+        } catch(error) {
+            console.error(error);
+        };
+    }, [])
 
     return (
         <div id="app">
-            <h1>Grace Shopper</h1>
+            <ThemeProvider theme={theme}>
+                <Header />
+                {/* <h1>Grace Shopper</h1> */}
 
-            <Switch>
+                <Switch>
 
-                <Route exact path = "/products">
-                    <Products />
-                </Route>
+                    <Route exact path = "/products">
+                        <Products allProducts = {allProducts}/>
+                    </Route>
 
-            </Switch>
+                    <Route exact path = "/products/:productId">
+                        <SingleProduct allProducts = {allProducts}/>
+                    </Route>
 
+                </Switch>
+
+                
+            </ThemeProvider>
         </div>
     );
 };
