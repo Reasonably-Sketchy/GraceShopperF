@@ -32,6 +32,10 @@ const Header = ({ setToken, setUserData, userData }) => {
         if (url.includes('/admin')) {
             setActiveLinkIs("Admin")
         };
+
+        if (url.includes('/welcome') || url.includes('/login') || url.includes('/register')) {
+            setActiveLinkIs("Welcome")
+        };
     };
 
     useEffect(() => {

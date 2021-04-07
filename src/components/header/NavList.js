@@ -37,6 +37,8 @@ const NavList = ({
                             }}>Products</Link>
                 </li>
 
+                
+
                 <li>
                     <Link 
                         to="/account" 
@@ -55,6 +57,16 @@ const NavList = ({
                         onClick={() => {
                                 toggleMenu();
                             }}>Admin</Link>
+                </li>
+
+                <li>
+                    <Link 
+                        to="/welcome" 
+                        className="nav-link"
+                        id={activeLinkIs === "Welcome" ? 'active-nav-link' : ''}
+                        onClick={() => {
+                                toggleMenu();
+                            }}>Login/Register</Link>
                 </li>
                 
             </ul>
