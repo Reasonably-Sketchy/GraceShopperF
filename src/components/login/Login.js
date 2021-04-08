@@ -8,7 +8,7 @@ import {
 
 import './Welcome.css'
 
-const Login = () => {
+const Login = ({ setToken }) => {
     const history = useHistory();
 
     const [username, setUsername] = useState('');
@@ -26,9 +26,11 @@ const Login = () => {
                     password: password,
                 },
             });
+
+            console.log(data);
         
             const token = data.token;
-        
+            
             if (token) {
                 localStorage.setItem('token', token);
                 setUsername('');

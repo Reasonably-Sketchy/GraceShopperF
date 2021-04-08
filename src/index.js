@@ -7,7 +7,7 @@ import {
     useHistory,
     Link
 } from 'react-router-dom';
-import { fetchAllProducts } from './api/utils';
+import { fetchUserData, fetchAllProducts } from './api/utils';
 
 // Page components
 import { 
@@ -16,7 +16,8 @@ import {
     Login,
     Register,
     Products,
-    SingleProduct } from './components'
+    SingleProduct,
+    Account } from './components'
 
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import './styles.css';
@@ -39,17 +40,17 @@ const App = () => {
     const [allProducts, setAllProducts] = useState([]);
 
     // Retrieve token from local storage
-    // useEffect(async () => {
-    //     if (!token) {
-    //         setToken(localStorage.getItem('token'));
-    //         return;
-    //     };
-    //     const data = await fetchUserData(token);
-    //     if (data && data.username) {
-    //         setUserData(data);
-    //         console.log('USER DATA', data);
-    //     };
-    // }, [token])
+    useEffect(async () => {
+        if (!token) {
+            setToken(localStorage.getItem('token'));
+            return;
+        };
+
+        const data = await fetchUserData(token);
+        if (data && data.username) {
+            setUserData(data);
+        };
+    }, [token])
 
     // Retrieve all products
     useEffect(async () => {
@@ -78,11 +79,13 @@ const App = () => {
                     </Route>
 
                     <Route path = "/login">
-                        <Login />
+                        <Login 
+                            setToken = {setToken} />
                     </Route>
 
-                    <Route path ='/register'>
-                        <Register />
+                    <Route path ="/register">
+                        <Register
+                            setToken = {setToken} />
                     </Route>
 
                     <Route exact path = "/products">
@@ -91,6 +94,11 @@ const App = () => {
 
                     <Route exact path = "/products/:productId">
                         <SingleProduct allProducts = {allProducts}/>
+                    </Route>
+
+                    <Route path = "/account">
+                        <Account 
+                            userData = {userData} />
                     </Route>
 
 

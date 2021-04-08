@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import { callApi } from '../../api';
 
 import { 
     Button,
@@ -7,7 +8,7 @@ import {
 
 import './Welcome.css'
 
-const Register = () => {
+const Register = ({ setToken }) => {
     const history = useHistory();
 
     const [firstName, setFirstName] = useState('');
@@ -33,7 +34,7 @@ const Register = () => {
             });
         
             const token = data.token;
-        
+
             if (token) {
                 localStorage.setItem('token', token);
                 setUsername('');

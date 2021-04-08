@@ -7,3 +7,5 @@ export {default as Register} from './login/Register';
 
 export {default as Products} from './products/Products';
 export {default as SingleProduct} from './products/SingleProduct';
+
+export {default as Account} from './account/Account';

@@ -1,0 +1,28 @@
+.page-header {
+    padding: 50px;
+}
+
+.page-body {
+    padding: 50px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.user-info {
+    display: flex;
+    flex-direction: column;
+    padding: 12px;
+}
+
+.user-cart {
+    display: flex;
+    flex-direction: column;
+    padding: 12px;
+}
+
+.no-orders-message {
+    display: flex;
+    justify-content: center;
+    padding: 24px 0 24px 0;
+    background-color: rgba(255, 255, 255, 0.1);
+}
