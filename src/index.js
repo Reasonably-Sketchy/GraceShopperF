@@ -17,7 +17,8 @@ import {
     Register,
     Products,
     SingleProduct,
-    Account } from './components'
+    Account,
+    SingleOrder } from './components'
 
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import './styles.css';
@@ -29,7 +30,7 @@ const theme = createMuiTheme({
             main: '#b5a264',
         },
         secondary: {
-            main: '#ffffff',
+            main: '#222',
         },
     }
 });
@@ -100,6 +101,12 @@ const App = () => {
                         <Account 
                             userData = {userData} />
                     </Route>
+
+                    {userData.isAdmin
+                    ? <Route path = "/orders/:orderId">
+                        <SingleOrder />
+                    </Route>
+                    : ''}
 
 
                 </Switch>
