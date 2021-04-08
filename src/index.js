@@ -7,7 +7,7 @@ import {
     useHistory,
     Link
 } from 'react-router-dom';
-import { fetchAllProducts } from './api/utils';
+import { fetchUserData, fetchAllProducts } from './api/utils';
 
 // Page components
 import { 
@@ -39,17 +39,19 @@ const App = () => {
     const [allProducts, setAllProducts] = useState([]);
 
     // Retrieve token from local storage
-    // useEffect(async () => {
-    //     if (!token) {
-    //         setToken(localStorage.getItem('token'));
-    //         return;
-    //     };
-    //     const data = await fetchUserData(token);
-    //     if (data && data.username) {
-    //         setUserData(data);
-    //         console.log('USER DATA', data);
-    //     };
-    // }, [token])
+    useEffect(async () => {
+        if (!token) {
+            setToken(localStorage.getItem('token'));
+            return;
+        };
+
+        const data = await fetchUserData(token);
+        console.log('USER DATA', data);
+
+        if (data && data.username) {
+            setUserData(data);
+        };
+    }, [token])
 
     // Retrieve all products
     useEffect(async () => {
@@ -78,11 +80,13 @@ const App = () => {
                     </Route>
 
                     <Route path = "/login">
-                        <Login />
+                        <Login 
+                            setToken = {setToken} />
                     </Route>
 
                     <Route path ='/register'>
-                        <Register />
+                        <Register
+                            setToken = {setToken} />
                     </Route>
 
                     <Route exact path = "/products">
