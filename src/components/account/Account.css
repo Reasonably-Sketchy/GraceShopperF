@@ -3,15 +3,19 @@
 }
 
 .page-body {
-    padding: 50px;
+    padding: 0 50px 50px 50px;
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    /* grid-template-columns: 2fr 1fr; */
 }
 
 .user-info {
     display: flex;
     flex-direction: column;
     padding: 12px;
+}
+
+.accordian-button {
+    height: 60px;
 }
 
 .user-cart {
