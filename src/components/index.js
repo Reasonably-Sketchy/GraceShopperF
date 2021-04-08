@@ -9,3 +9,4 @@ export {default as Products} from './products/Products';
 export {default as SingleProduct} from './products/SingleProduct';
 
 export {default as Account} from './account/Account';
+export {default as SingleOrder} from './orders/SingleOrder';

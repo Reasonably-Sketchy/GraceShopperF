@@ -3,15 +3,43 @@
 }
 
 .page-body {
-    padding: 50px;
+    padding: 0 50px 50px 50px;
     display: grid;
-    grid-template-columns: 1fr 1fr;
 }
 
 .user-info {
     display: flex;
     flex-direction: column;
     padding: 12px;
+}
+
+.user-card {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin: 12px 0 10px 0;
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.user-details {
+    display: grid;
+    padding: 12px;
+    grid-template-rows: repeat(4, 1fr);
+    grid-gap: 12px;
+}
+
+.user-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.user-image img {
+    max-height: 300px;
+}
+
+.accordian-button {
+    height: 60px;
+    margin-top: 2px !important;
 }
 
 .user-cart {

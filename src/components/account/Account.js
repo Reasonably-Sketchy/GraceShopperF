@@ -3,6 +3,9 @@ import React, {useEffect, useState} from 'react';
 import { Button } from '@material-ui/core';
 import { KeyboardArrowDown, KeyboardArrowRight } from '@material-ui/icons';
 
+import OrderCard from '../orders/OrderCard';
+import UserCard from './UserCard';
+
 import './Account.css';
 
 const Account = ({ userData }) => {
@@ -10,7 +13,9 @@ const Account = ({ userData }) => {
         return <h1>Loading...</h1>
     };
 
+    const [ detailsOpen, setDetailsOpen ] = useState(false);
     const [ ordersOpen, setOrdersOpen ] = useState(false);
+
     return (
         <main id="account">
 
@@ -21,31 +26,46 @@ const Account = ({ userData }) => {
 
 
             <section className="page-body">
+                <div className="user-cart">
+                    <h2>Your Cart:</h2>
+                    {/* Map the products in the cart here, or if empty, say no items currently in cart */}
+                </div> 
 
                 <div className="user-info">
                     <Button
+                        className="accordian-button"
                         variant="contained"
-                        color="primary"
+                        color="secondary"
+                        onClick={() => {
+                            setDetailsOpen(!detailsOpen);
+                        }}>User Info {detailsOpen ? <KeyboardArrowDown /> : <KeyboardArrowRight />}</Button>
+
+                    {detailsOpen
+                    ? <UserCard userData = {userData} />
+
+                    : ''}
+
+                    <Button
+                        className="accordian-button"
+                        variant="contained"
+                        color="secondary"
                         onClick={() => {
                             setOrdersOpen(!ordersOpen);
-                        }}>Previous Orders {ordersOpen ? <KeyboardArrowDown /> : <KeyboardArrowRight />}</Button>
+                        }}>Order History {ordersOpen ? <KeyboardArrowDown /> : <KeyboardArrowRight />}</Button>
 
                     {ordersOpen
                     ? userData.orders.length > 0
-                        ? <div className="no-orders-message">No orders to display.</div>
-                        // userData.orders.map((order) => {
-                        //     return <div key={order.id}>Order Component for {order.id}</div>
-                        // })
+                        ? userData.orders.map((order) => {
+                            return <OrderCard key={order.id} order={order} />
+                        })
                         : <div className="no-orders-message">No orders to display.</div>
 
                     : ''}
+
                 </div>
 
 
 
-                <div className="user-cart">
-                    <h2>My Cart:</h2>
-                </div>
 
             </section>
 
