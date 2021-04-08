@@ -16,7 +16,8 @@ import {
     Login,
     Register,
     Products,
-    SingleProduct } from './components'
+    SingleProduct,
+    Account } from './components'
 
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import './styles.css';
@@ -46,8 +47,6 @@ const App = () => {
         };
 
         const data = await fetchUserData(token);
-        console.log('USER DATA', data);
-
         if (data && data.username) {
             setUserData(data);
         };
@@ -84,7 +83,7 @@ const App = () => {
                             setToken = {setToken} />
                     </Route>
 
-                    <Route path ='/register'>
+                    <Route path ="/register">
                         <Register
                             setToken = {setToken} />
                     </Route>
@@ -95,6 +94,11 @@ const App = () => {
 
                     <Route exact path = "/products/:productId">
                         <SingleProduct allProducts = {allProducts}/>
+                    </Route>
+
+                    <Route path = "/account">
+                        <Account 
+                            userData = {userData} />
                     </Route>
 
 
