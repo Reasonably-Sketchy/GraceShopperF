@@ -10,21 +10,21 @@ const Welcome = () => {
 
     return (
         <main id="login-register">
-            <div className="header-container">
+            {/* <div className="header-container">
                 <h1>Welcome to</h1>
                 <img className="login-logo" src={logo} />
-            </div>
+            </div> */}
             <div className="user-action-container">
                 <Link to='/login'>
                     <Button
-                        className="cta-large"
+                        className="cta-large welcome"
                         variant="outlined"
                         color="primary">Login</Button>
                 </Link>
 
                 <Link to='register'>
                     <Button
-                        className="cta-large"
+                        className="cta-large welcome"
                         variant="outlined"
                         color="primary">Register</Button>
                 </Link>
