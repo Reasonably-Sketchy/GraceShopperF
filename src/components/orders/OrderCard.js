@@ -9,7 +9,22 @@ const OrderCard = ({ order }) => {
 
     const [productListOpen, setProductListOpen] = useState(false);
 
-    console.log('ORDER PRODUCTS: ', order.products)
+    // Generates total price for product based on quantity
+    if (order && order.products) {
+        const productTotals = order.products.map((product) => {
+            const quantity = product.quantity;
+            const price = product.price;
+            const total = (Number(quantity) * Number(price));
+            product.total = total;
+            return total;
+        });
+        console.log(productTotals)
+
+        order.total = productTotals.reduce((total, num) => {return total + num});
+        console.log(order.total);
+    };
+
+
 
     return (
         <div className="order-card">
@@ -39,7 +54,7 @@ const OrderCard = ({ order }) => {
 
                 <div className="data-pair">
                     <h4>Total: </h4>
-                    <h3>$100.00</h3>
+                    <h3>${order.total}</h3>
                 </div>
 
 
