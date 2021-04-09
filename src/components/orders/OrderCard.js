@@ -9,6 +9,8 @@ const OrderCard = ({ order }) => {
 
     const [productListOpen, setProductListOpen] = useState(false);
 
+    console.log('ORDER PRODUCTS: ', order.products)
+
     return (
         <div className="order-card">
 
@@ -32,8 +34,7 @@ const OrderCard = ({ order }) => {
 
                 <div className="data-pair">
                     <h4>Products: </h4>
-                    {/* <h3>{order.products.length}</h3> */}
-                    <h3>4</h3>
+                    <h3>{order.products.length}</h3>
                 </div>
 
                 <div className="data-pair">

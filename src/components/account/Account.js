@@ -7,6 +7,7 @@ import OrderCard from '../orders/OrderCard';
 import UserCard from './UserCard';
 
 import './Account.css';
+import ProductCard from '../products/ProductCard';
 
 const Account = ({ userData }) => {
     if (!userData) {
@@ -15,6 +16,16 @@ const Account = ({ userData }) => {
 
     const [ detailsOpen, setDetailsOpen ] = useState(false);
     const [ ordersOpen, setOrdersOpen ] = useState(false);
+    
+    let cartProducts = [];
+    if (userData.cart) {
+        cartProducts = userData.cart.products;
+    };
+
+    let completedOrders = [];
+    if (userData.orders) {
+        completedOrders = userData.orders.filter((order) => {return order.status !== 'created'});
+    };
 
     return (
         <main id="account">
@@ -27,8 +38,14 @@ const Account = ({ userData }) => {
 
             <section className="page-body">
                 <div className="user-cart">
-                    <h2>Your Cart:</h2>
-                    {/* Map the products in the cart here, or if empty, say no items currently in cart */}
+                    <h2>Items in Your Cart:</h2>
+                    <div className="cart-display">
+                        {cartProducts.map((product) => {
+                            return (
+                                <ProductCard key = {product.id} product = {product} />
+                            );
+                        })}
+                    </div>
                 </div> 
 
                 <div className="user-info">
@@ -55,7 +72,7 @@ const Account = ({ userData }) => {
 
                     {ordersOpen
                     ? userData.orders.length > 0
-                        ? userData.orders.map((order) => {
+                        ? completedOrders.map((order) => {
                             return <OrderCard key={order.id} order={order} />
                         })
                         : <div className="no-orders-message">No orders to display.</div>

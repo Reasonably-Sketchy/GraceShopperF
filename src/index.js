@@ -66,7 +66,7 @@ const App = () => {
             console.error(error);
         };
     }, [])
-
+    console.log('USER DATA', userData )
     return (
         <div id="app">
             <ThemeProvider theme={theme}>
