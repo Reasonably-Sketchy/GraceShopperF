@@ -7,7 +7,7 @@ import logo from '../../assets/flim-flam-logo.png';
 import './Home.css';
 import { KeyboardArrowRight } from '@material-ui/icons';
 
-const Home = ({ setActiveLinkIs }) => {
+const Home = ({ setActiveLinkIs, userData }) => {
 
     return (
         <main id="home">
@@ -17,6 +17,18 @@ const Home = ({ setActiveLinkIs }) => {
                     <h1>Welcome to</h1>
                     <img className="home-logo" src={logo} />
                 </div>
+
+                {userData && userData.username
+                ? ''
+                : <Link to="/welcome">
+                    <Button
+                        className="home-cta login"
+                        color="primary"
+                        onClick={() => {
+                            setActiveLinkIs("Welcome")
+                        }}>Login/Register<KeyboardArrowRight /></Button>
+                </Link>    
+                }
             </section>
 
             <section className="shop-banner">
@@ -28,18 +40,11 @@ const Home = ({ setActiveLinkIs }) => {
                         onClick={() => {
                             setActiveLinkIs("Products")
                         }}>Browse the Shoppe <KeyboardArrowRight /></Button>
-                </Link>     
+                </Link> 
+                
+
+                
             </section>
-
-
-
-            {/* <section className="home-banner about">
-                <Button
-                    className="home-cta"
-                    variant="outlined"
-                    color="primary">Shoppe</Button>
-            </section> */}
-
         </main> 
     );
 };

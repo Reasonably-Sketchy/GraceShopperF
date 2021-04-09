@@ -27,6 +27,34 @@
 .home-cta {
     height: 60px;
     width: 30vw;
-    /* margin-top: 50vh !important; */
     box-shadow: 0 0 10px black !important;
+}
+
+.home-cta.login {
+    box-shadow: none !important;
+    /* color: white !important; */
+    text-shadow: 1px 1px 1px black;
+    width: fit-content;
+}
+
+@media screen and (max-width: 768px) {
+    #home {
+        display: grid;
+        grid-template-rows: 1fr 1fr;
+        grid-template-columns: 1fr;
+    }
+
+    .home-banner {
+        background: linear-gradient(180deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0.9) 50%, rgba(255,255,255,0) 100%);
+    }
+
+    .home-logo {
+        width: 80vw;
+    }
+
+    .home-cta {
+        height: 80px;
+        width: 80vw;
+    }
+    
 }

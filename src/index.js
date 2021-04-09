@@ -85,7 +85,8 @@ const App = () => {
 
                 <Switch>
                     <Route exact path = "/">
-                        <Home 
+                        <Home
+                            userData = {userData} 
                             setActiveLinkIs = {setActiveLinkIs}/>
                     </Route>
 
