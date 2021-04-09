@@ -1,5 +1,6 @@
 // For exporting page components
 export {default as Header} from './header/Header';
+export {default as Home} from './home/Home';
 
 export {default as Welcome} from './login/Welcome';
 export {default as Login} from './login/Login';

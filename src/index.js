@@ -12,6 +12,7 @@ import { fetchUserData, fetchAllProducts } from './api/utils';
 // Page components
 import { 
     Header,
+    Home,
     Welcome,
     Login,
     Register,
@@ -30,6 +31,8 @@ const theme = createMuiTheme({
         primary: {
             // main: '#d4af37',
             main: '#b5a264',
+            contrastText: 'white',
+
         },
         secondary: {
             main: '#222',
@@ -41,6 +44,7 @@ const App = () => {
     const [token, setToken] = useState("");
     const [userData, setUserData] = useState({});
     const [allProducts, setAllProducts] = useState([]);
+    const [activeLinkIs, setActiveLinkIs] = useState('Home');
 
     // Retrieve token from local storage
     useEffect(async () => {
@@ -73,11 +77,17 @@ const App = () => {
         <div id="app">
             <ThemeProvider theme={theme}>
                 <Header 
+                    activeLinkIs = {activeLinkIs}
+                    setActiveLinkIs = {setActiveLinkIs}
                     setToken = {setToken}
                     setUserData = {setUserData}
                     userData = {userData} />
 
                 <Switch>
+                    <Route exact path = "/">
+                        <Home 
+                            setActiveLinkIs = {setActiveLinkIs}/>
+                    </Route>
 
                     <Route path = "/welcome">
                         <Welcome />

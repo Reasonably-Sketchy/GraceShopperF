@@ -1,0 +1,32 @@
+#home {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    height: 90vh;
+    background: url(/src/assets/shoppe-interior.jpg);
+    background-size: cover;
+    background-position: center;
+
+}
+
+.home-logo {
+    width: 30vw;
+}
+
+.home-banner, .shop-banner {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.home-banner {
+    background: linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0.9) 50%, rgba(255,255,255,0) 100%);
+}
+
+
+.home-cta {
+    height: 60px;
+    width: 30vw;
+    /* margin-top: 50vh !important; */
+    box-shadow: 0 0 10px black !important;
+}

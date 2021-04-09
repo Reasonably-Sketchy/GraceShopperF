@@ -43,7 +43,8 @@ const NavList = ({
                             }}>Products</Link>
                 </li>
 
-                <li>
+                {userData && userData.username
+                ? <li>
                     <Link 
                         to="/account" 
                         className="nav-link"
@@ -52,8 +53,10 @@ const NavList = ({
                                 toggleMenu();
                             }}>Account</Link>
                 </li>
+                : ''}
 
-                <li>
+                {userData && userData.isAdmin
+                ? <li>
                     <Link 
                         to="/admin" 
                         className="nav-link"
@@ -62,6 +65,7 @@ const NavList = ({
                                 toggleMenu();
                             }}>Admin</Link>
                 </li>
+                : '' }
 
 
                 {userData && userData.username

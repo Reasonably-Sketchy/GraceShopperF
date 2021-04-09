@@ -5,14 +5,19 @@ import NavList from './NavList';
 import Burger from './Burger';
 import './Header.css';
 
-const Header = ({ setToken, setUserData, userData }) => {
+const Header = ({ 
+    activeLinkIs, 
+    setActiveLinkIs, 
+    setToken, 
+    setUserData, 
+    userData }) => {
+
     const [isMenuOpen, setIsMenuOpen] = useState(false);
    
     const toggleMenu = () => {
         setIsMenuOpen(!isMenuOpen);
     };
 
-    const [activeLinkIs, setActiveLinkIs] = useState('Home');
     const [clientWidth, setClientWidth] = useState(0);
 
     const changeActiveLink = (url, setActiveLinkIs) => {
