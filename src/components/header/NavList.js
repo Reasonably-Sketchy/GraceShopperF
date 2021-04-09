@@ -67,7 +67,7 @@ const NavList = ({
                 {userData && userData.username
                 ? <li>
                     <Link 
-                        to="/welcome" 
+                        to="/logout" 
                         className="nav-link"
                         onClick={() => {
                                 logOut();

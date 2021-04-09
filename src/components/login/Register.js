@@ -40,7 +40,7 @@ const Register = ({ setToken }) => {
                 setUsername('');
                 setPassword('');
                 setToken(token);
-                // history.push something
+                history.push('/register/success');
             } else {
                 setRespMessage(data.message);
             };

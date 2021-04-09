@@ -36,7 +36,7 @@ const Login = ({ setToken }) => {
                 setUsername('');
                 setPassword('');
                 setToken(token);
-                // history.push something
+                history.push('/login/success');
             } else {
                 setRespMessage(data.message);
             };

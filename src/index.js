@@ -15,6 +15,8 @@ import {
     Welcome,
     Login,
     Register,
+    LoginLanding,
+    LogoutLanding,
     Products,
     SingleProduct,
     Account,
@@ -81,14 +83,30 @@ const App = () => {
                         <Welcome />
                     </Route>
 
-                    <Route path = "/login">
+                    <Route exact path = "/login">
                         <Login 
                             setToken = {setToken} />
+                    </Route>
+
+                    <Route exact path="/login/success">
+                        <LoginLanding
+                            userData = {userData}
+                            action = {'logged in'} />
                     </Route>
 
                     <Route path ="/register">
                         <Register
                             setToken = {setToken} />
+                    </Route>
+
+                    <Route exact path="/register/success">
+                        <LoginLanding
+                            userData = {userData}
+                            action = {'registered'} />
+                    </Route>
+
+                    <Route path="/logout">
+                        <LogoutLanding />
                     </Route>
 
                     <Route exact path = "/products">
