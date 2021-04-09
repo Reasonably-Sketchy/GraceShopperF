@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import { Button } from '@material-ui/core';
-import logo from '../../assets/grace-shopper-logo.png'
+import logo from '../../assets/flim-flam-logo.png';
 
 import './Welcome.css'
 
