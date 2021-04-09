@@ -7,7 +7,8 @@ import OrderCard from '../orders/OrderCard';
 import UserCard from './UserCard';
 
 import './Account.css';
-import ProductCard from '../products/ProductCard';
+// import ProductCard from '../products/ProductCard';
+import OrderProduct from './OrderProduct';
 
 const Account = ({ userData }) => {
     if (!userData) {
@@ -42,7 +43,7 @@ const Account = ({ userData }) => {
                     <div className="cart-display">
                         {cartProducts.map((product) => {
                             return (
-                                <ProductCard key = {product.id} product = {product} />
+                                <OrderProduct key = {product.id} product = {product} />
                             );
                         })}
                     </div>

@@ -7,10 +7,16 @@ const NavList = ({
     isMenuOpen, 
     toggleMenu, 
     activeLinkIs,
-    // setToken, 
-    // setUserData, 
-    // userData 
+    setToken, 
+    setUserData, 
+    userData, 
 }) => {
+
+    const logOut = () => {
+        localStorage.clear();
+        setUserData({});
+        setToken("");
+    };
     
     return (
         <nav className="nav" id={isMenuOpen ? 'nav-active' : ''}>
@@ -37,8 +43,6 @@ const NavList = ({
                             }}>Products</Link>
                 </li>
 
-                
-
                 <li>
                     <Link 
                         to="/account" 
@@ -59,7 +63,19 @@ const NavList = ({
                             }}>Admin</Link>
                 </li>
 
-                <li>
+
+                {userData && userData.username
+                ? <li>
+                    <Link 
+                        to="/welcome" 
+                        className="nav-link"
+                        onClick={() => {
+                                logOut();
+                                toggleMenu();
+                            }}>Log Out</Link>
+                </li>
+            
+                : <li>
                     <Link 
                         to="/welcome" 
                         className="nav-link"
@@ -68,6 +84,11 @@ const NavList = ({
                                 toggleMenu();
                             }}>Login/Register</Link>
                 </li>
+                }
+                
+
+
+
                 
             </ul>
         </nav>
