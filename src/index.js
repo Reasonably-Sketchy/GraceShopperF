@@ -12,9 +12,12 @@ import { fetchUserData, fetchAllProducts } from './api/utils';
 // Page components
 import { 
     Header,
+    Home,
     Welcome,
     Login,
     Register,
+    LoginLanding,
+    LogoutLanding,
     Products,
     SingleProduct,
     Account,
@@ -28,6 +31,8 @@ const theme = createMuiTheme({
         primary: {
             // main: '#d4af37',
             main: '#b5a264',
+            contrastText: 'white',
+
         },
         secondary: {
             main: '#222',
@@ -39,6 +44,7 @@ const App = () => {
     const [token, setToken] = useState("");
     const [userData, setUserData] = useState({});
     const [allProducts, setAllProducts] = useState([]);
+    const [activeLinkIs, setActiveLinkIs] = useState('Home');
 
     // Retrieve token from local storage
     useEffect(async () => {
@@ -70,23 +76,48 @@ const App = () => {
     return (
         <div id="app">
             <ThemeProvider theme={theme}>
-                <Header />
-                {/* <h1>Grace Shopper</h1> */}
+                <Header 
+                    activeLinkIs = {activeLinkIs}
+                    setActiveLinkIs = {setActiveLinkIs}
+                    setToken = {setToken}
+                    setUserData = {setUserData}
+                    userData = {userData} />
 
                 <Switch>
+                    <Route exact path = "/">
+                        <Home
+                            userData = {userData} 
+                            setActiveLinkIs = {setActiveLinkIs}/>
+                    </Route>
 
                     <Route path = "/welcome">
                         <Welcome />
                     </Route>
 
-                    <Route path = "/login">
+                    <Route exact path = "/login">
                         <Login 
                             setToken = {setToken} />
+                    </Route>
+
+                    <Route exact path="/login/success">
+                        <LoginLanding
+                            userData = {userData}
+                            action = {'logged in'} />
                     </Route>
 
                     <Route path ="/register">
                         <Register
                             setToken = {setToken} />
+                    </Route>
+
+                    <Route exact path="/register/success">
+                        <LoginLanding
+                            userData = {userData}
+                            action = {'registered'} />
+                    </Route>
+
+                    <Route path="/logout">
+                        <LogoutLanding />
                     </Route>
 
                     <Route exact path = "/products">

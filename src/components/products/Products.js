@@ -16,7 +16,7 @@ const Products = ({ allProducts }) => {
                     return (
                         <ProductCard key={product.id} product = {product}/>
                     );
-                })};
+                })}
 
             </section>
         </main>

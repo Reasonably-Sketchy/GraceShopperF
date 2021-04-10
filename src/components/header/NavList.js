@@ -7,10 +7,16 @@ const NavList = ({
     isMenuOpen, 
     toggleMenu, 
     activeLinkIs,
-    // setToken, 
-    // setUserData, 
-    // userData 
+    setToken, 
+    setUserData, 
+    userData, 
 }) => {
+
+    const logOut = () => {
+        localStorage.clear();
+        setUserData({});
+        setToken("");
+    };
     
     return (
         <nav className="nav" id={isMenuOpen ? 'nav-active' : ''}>
@@ -37,9 +43,8 @@ const NavList = ({
                             }}>Products</Link>
                 </li>
 
-                
-
-                <li>
+                {userData && userData.username
+                ? <li>
                     <Link 
                         to="/account" 
                         className="nav-link"
@@ -48,8 +53,10 @@ const NavList = ({
                                 toggleMenu();
                             }}>Account</Link>
                 </li>
+                : ''}
 
-                <li>
+                {userData && userData.isAdmin
+                ? <li>
                     <Link 
                         to="/admin" 
                         className="nav-link"
@@ -58,8 +65,21 @@ const NavList = ({
                                 toggleMenu();
                             }}>Admin</Link>
                 </li>
+                : '' }
 
-                <li>
+
+                {userData && userData.username
+                ? <li>
+                    <Link 
+                        to="/logout" 
+                        className="nav-link"
+                        onClick={() => {
+                                logOut();
+                                toggleMenu();
+                            }}>Log Out</Link>
+                </li>
+            
+                : <li>
                     <Link 
                         to="/welcome" 
                         className="nav-link"
@@ -68,6 +88,11 @@ const NavList = ({
                                 toggleMenu();
                             }}>Login/Register</Link>
                 </li>
+                }
+                
+
+
+
                 
             </ul>
         </nav>

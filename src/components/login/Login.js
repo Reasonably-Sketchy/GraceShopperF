@@ -36,7 +36,7 @@ const Login = ({ setToken }) => {
                 setUsername('');
                 setPassword('');
                 setToken(token);
-                // history.push something
+                history.push('/login/success');
             } else {
                 setRespMessage(data.message);
             };
@@ -48,6 +48,7 @@ const Login = ({ setToken }) => {
 
     return (
         <main id="login-register">
+            <div className="user-action-container">
             <div className="header-container">
                 <h1>Login</h1>
             </div>
@@ -88,7 +89,7 @@ const Login = ({ setToken }) => {
                     }}>Back</Button>
 
             </form>
-
+            </div>
         </main>
     );
     
