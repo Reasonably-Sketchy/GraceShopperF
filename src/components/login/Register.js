@@ -40,7 +40,7 @@ const Register = ({ setToken }) => {
                 setUsername('');
                 setPassword('');
                 setToken(token);
-                // history.push something
+                history.push('/register/success');
             } else {
                 setRespMessage(data.message);
             };
@@ -53,6 +53,8 @@ const Register = ({ setToken }) => {
 
     return (
         <main id="login-register">
+            <div className="user-action-container">
+
             <div className="header-container">
                 <h1>Register</h1>
             </div>
@@ -117,7 +119,7 @@ const Register = ({ setToken }) => {
                     }}>Back</Button>
 
             </form>
-
+            </div>
         </main>
     );
     

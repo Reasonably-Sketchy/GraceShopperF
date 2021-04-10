@@ -48,6 +48,33 @@
     padding: 12px;
 }
 
+.cart-display {
+    padding: 12px;
+    display: flex;
+    overflow-x: scroll;
+}
+
+.cart-display .product-card {
+    height: 300px;
+    width: 200px;
+    grid-template-rows: 195px 105px;
+    margin: 0px 8px 0px 8px;
+}
+
+.cart-display .product-picture {
+    height: 180px;
+    width: 180px;
+}
+
+.cart-display .product-card h1 {
+    font-size: 1.5rem;
+}
+
+.product-card h2 {
+    font-size: 1.2rem;
+    border-top: 2px solid white;
+}
+
 .no-orders-message {
     display: flex;
     justify-content: center;
