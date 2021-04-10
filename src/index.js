@@ -18,7 +18,10 @@ import {
     Products,
     SingleProduct,
     Account,
-    SingleOrder } from './components'
+    SingleOrder, 
+} from './components'
+
+import Cart from './components/cart/Cart.js'
 
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import './styles.css';
@@ -39,6 +42,7 @@ const App = () => {
     const [token, setToken] = useState("");
     const [userData, setUserData] = useState({});
     const [allProducts, setAllProducts] = useState([]);
+    const [cart, setCart] = useState([]);
 
     // Retrieve token from local storage
     useEffect(async () => {
@@ -56,7 +60,7 @@ const App = () => {
     // Retrieve all products
     useEffect(async () => {
         try {
-            const products = await fetchAllProducts();
+            const products = await fetchAllProducts(token);
             console.log('Products: ', products);
             if (products) {
                 setAllProducts(products);
@@ -107,6 +111,10 @@ const App = () => {
                         <SingleOrder />
                     </Route>
                     : ''}
+
+                    <Route path = "/cart">
+                        <Cart cart={cart} setCart={setCart}/>
+                    </Route>
 
 
                 </Switch>

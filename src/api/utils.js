@@ -23,10 +23,11 @@ export const fetchUserData = async (token) => {
 
 
 // Products
-export const fetchAllProducts = async () => {
+export const fetchAllProducts = async (token) => {
     try {
       const data = await callApi({
         url: "/products",
+        token
       });
   
       return data;

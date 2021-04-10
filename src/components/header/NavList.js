@@ -68,6 +68,16 @@ const NavList = ({
                                 toggleMenu();
                             }}>Login/Register</Link>
                 </li>
+
+                <li>
+                    <Link 
+                        to="/cart" 
+                        className="nav-link"
+                        id={activeLinkIs === "Cart" ? 'active-nav-link' : ''}
+                        onClick={() => {
+                            toggleMenu();
+                        }}>Cart</Link>
+                </li>
                 
             </ul>
         </nav>
