@@ -105,7 +105,7 @@ const App = () => {
                             action = {'logged in'} />
                     </Route>
 
-                    <Route path ="/register">
+                    <Route exact path ="/register">
                         <Register
                             setToken = {setToken} />
                     </Route>

@@ -108,7 +108,11 @@ const Register = ({ setToken }) => {
                     className="responsive-button"
                     variant="contained"
                     color="primary"
-                    type="submit">Register</Button>
+                    type="submit"
+                    // onClick={() => {
+                    //     history.push
+                    // }}
+                    >Register</Button>
 
                 <Button
                     className="responsive-button"
