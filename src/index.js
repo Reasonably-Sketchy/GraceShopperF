@@ -64,9 +64,9 @@ const App = () => {
   // Retrieve all products
   useEffect(async () => {
     try {
-      const products = await fetchAllProducts();
+      const products = await fetchAllProducts(token);
       console.log("Products: ", products);
-      if (products) {
+      if (Array.isArray(products)) {
         setAllProducts(products);
       }
     } catch (error) {
@@ -115,11 +115,16 @@ const App = () => {
           </Route>
 
           <Route exact path="/products">
-            <Products allProducts={allProducts} />
+            <Products allProducts={allProducts}/>
           </Route>
 
           <Route exact path="/products/:productId">
-            <SingleProduct allProducts={allProducts} />
+            <SingleProduct 
+                allProducts={allProducts}
+                setCart={setCart} 
+                cart={cart} 
+                token={token}
+            />
           </Route>
 
           <Route path="/account">
