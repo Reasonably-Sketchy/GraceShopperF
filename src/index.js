@@ -7,7 +7,7 @@ import {
     useHistory,
     Link
 } from 'react-router-dom';
-import { fetchUserData, fetchAllProducts } from './api/utils';
+import { fetchUserData, fetchAllProducts, fetchUserCart } from './api/utils';
 
 // Page components
 import { 
@@ -20,6 +20,7 @@ import {
     LogoutLanding,
     Products,
     SingleProduct,
+    Cart,
     Account,
     SingleOrder } from './components'
 
@@ -45,6 +46,7 @@ const App = () => {
     const [userData, setUserData] = useState({});
     const [allProducts, setAllProducts] = useState([]);
     const [activeLinkIs, setActiveLinkIs] = useState('Home');
+    const [cart, setCart] = useState([]);
 
     // Retrieve token from local storage
     useEffect(async () => {
@@ -57,13 +59,20 @@ const App = () => {
         if (data && data.username) {
             setUserData(data);
         };
-    }, [token])
+
+        const databaseCart = await fetchUserCart(token);
+        if (databaseCart && databaseCart.products && databaseCart.products.length > 0) {
+          const cartCopy = [...cart];
+          const dbCartOrderProducts = [databaseCart.products];
+          dbCartOrderProducts[0].forEach((orderProduct) => {cartCopy.push(orderProduct)});
+          setCart(cartCopy);
+        };
+    }, [token]);
 
     // Retrieve all products
     useEffect(async () => {
         try {
             const products = await fetchAllProducts();
-            console.log('Products: ', products);
             if (products) {
                 setAllProducts(products);
             };
@@ -139,6 +148,11 @@ const App = () => {
                     </Route>
                     : ''}
 
+                    <Route path = "/cart">
+                        <Cart 
+                            cart = {cart} 
+                            setCart = {setCart} />
+                    </Route>
 
                 </Switch>
 

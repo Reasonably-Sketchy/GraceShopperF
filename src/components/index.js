@@ -10,6 +10,7 @@ export {default as LogoutLanding} from './login/LogoutLanding';
 
 export {default as Products} from './products/Products';
 export {default as SingleProduct} from './products/SingleProduct';
+export {default as Cart} from './cart/Cart';
 
 export {default as Account} from './account/Account';
 export {default as SingleOrder} from './orders/SingleOrder';

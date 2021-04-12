@@ -14,13 +14,18 @@ export const fetchUserData = async (token) => {
     };
 };
 
-// export const logOut = () => {
-//   localStorage.clear();
-//   setUserData({});
-//   setToken("");
-//   history.push("/");
-// };
-
+// Fetch userCart
+export const fetchUserCart = async (token) => {
+  try {
+    const userCart = await callApi({
+      url: '/orders/cart',
+      token: token
+    });
+    return userCart;
+  } catch(error) {
+    console.error(error);
+  };
+};
 
 // Products
 export const fetchAllProducts = async () => {
