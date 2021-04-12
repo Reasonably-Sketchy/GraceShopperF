@@ -24,6 +24,15 @@ const OrderProductCard = ({ orderProduct, cart, setCart, token }) => {
         setCart(newCart);
     };
 
+    const handleRemoveFromCart = async () => {
+        // if no token
+        const newCart = [...cart];
+        const cartProductIndexToRemove = newCart.findIndex((product) => {return product.name === orderProduct.name});
+        newCart.splice(cartProductIndexToRemove, 1);
+        console.log('NEW CART: ', newCart);
+        setCart(newCart);
+    }
+
     return (
         <div className="order-product-card">
             <div className="order-product-image-container">
@@ -45,7 +54,8 @@ const OrderProductCard = ({ orderProduct, cart, setCart, token }) => {
             <div className="order-product-summary">
                 <Button
                     color="primary"
-                    variant="contained">Remove From Cart</Button>
+                    variant="contained"
+                    onClick={handleRemoveFromCart}>Remove From Cart</Button>
             </div>
         </div>
     );

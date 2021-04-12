@@ -4,9 +4,11 @@ import OrderProductCard from "../orders/OrderProductCard";
 import "./Cart.css";
 
 const Cart = ({ cart, setCart, token }) => {
-    if (!cart) {
-        return <h1>Loading...</h1>
-    };
+    // if (!cart) {
+    //     return <h1>Loading...</h1>
+    // };
+
+    console.log('MY CART: ', cart)
 
     return (
         <main id="cart">

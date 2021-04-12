@@ -31,6 +31,8 @@ const SingleProduct = ({ allProducts, cart, setCart, token }) => {
          
         // when creating an order, i need a userId and a status
         // when adding a product to an order, i need productId, price, quantity in the body and the orderId
+
+        // IF I'M NOT LOGGED IN
         if (!token) {
             const toBeOrderProduct = {
                 productId: thisProduct.id,
@@ -40,14 +42,27 @@ const SingleProduct = ({ allProducts, cart, setCart, token }) => {
                 price: thisProduct.price,
                 quantity: quantity,
             };
+
             let cartCopy = [];
             if (cart && cart.length > 0) {
                 cartCopy = [...cart];
+                for (let i = 0; i < cartCopy.length; i ++) {
+                    const checkedProduct = cartCopy[i];
+                    if (checkedProduct.name === thisProduct.name) {
+                        console.log('This item is already in your cart.');
+                        return;
+                    };
+                };
             };
+
             cartCopy.push(toBeOrderProduct);
             setCart(cartCopy);
             localStorage.setItem('cart', JSON.stringify(cartCopy));
         };
+
+        // if (token && cart.length === 0) {
+
+        // }
 
     };
 
