@@ -50,3 +50,15 @@
 .order-product-summary button {
     width: 120px;
 }
+
+@media screen and (max-width: 768px) {
+    .order-product-card {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .order-product-summary {
+        align-items: flex-start;
+        padding: 30px;
+    }
+}

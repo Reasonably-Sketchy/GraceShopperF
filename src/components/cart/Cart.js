@@ -4,6 +4,9 @@ import OrderProductCard from "../orders/OrderProductCard";
 import "./Cart.css";
 
 const Cart = ({ cart, setCart, token }) => {
+    if (!cart) {
+        return <h1>Loading...</h1>
+    };
 
     return (
         <main id="cart">
@@ -13,11 +16,11 @@ const Cart = ({ cart, setCart, token }) => {
             
             <section className="cart-page-display">
 
-                {cart.length > 0
+                {cart && cart.length > 0
                 ? cart.map((orderProduct) => {
                     return (
                         <OrderProductCard
-                            key = {orderProduct.id}
+                            key = {orderProduct.name}
                             orderProduct = {orderProduct}
                             cart = {cart}
                             setCart = {setCart}

@@ -41,12 +41,34 @@ const theme = createMuiTheme({
     }
 });
 
+// Persistent cart
+const getCartFromLocal = () => {
+    let cart = localStorage.getItem('cart');
+    if (cart) {
+        return JSON.parse(cart);
+    };
+};
+
+const setCartOnLocal = (cart) => {
+    localStorage.setItem('cart', JSON.stringify(cart));
+};
+
 const App = () => {
+
+    const setCart = (currentCart) => {
+        setCartOnLocal(currentCart);
+        _setCart(currentCart);
+    }
+
+    useEffect(() => {
+        _setCart(getCartFromLocal());
+    }, []);
+
     const [token, setToken] = useState("");
     const [userData, setUserData] = useState({});
     const [allProducts, setAllProducts] = useState([]);
     const [activeLinkIs, setActiveLinkIs] = useState('Home');
-    const [cart, setCart] = useState([]);
+    const [cart, _setCart] = useState([]);
 
     // Retrieve token from local storage
     useEffect(async () => {
@@ -77,6 +99,7 @@ const App = () => {
                 setAllProducts(products);
             };
 
+            // setCart(localStorage.getItem('cart'))
         } catch(error) {
             console.error(error);
         };
@@ -137,7 +160,11 @@ const App = () => {
                     </Route>
 
                     <Route exact path = "/products/:productId">
-                        <SingleProduct allProducts = {allProducts}/>
+                        <SingleProduct 
+                            allProducts = {allProducts}
+                            cart = {cart}
+                            setCart = {setCart}
+                            token = {token}/>
                     </Route>
 
                     <Route path = "/account">

@@ -9,6 +9,10 @@
     padding: 20px;
 }
 
+.single-product-image-container img {
+    width: 380px;
+}
+
 #single-product .description {
     font-style: italic;
 }
@@ -35,4 +39,16 @@
     font-size: 1.6rem;
     padding: 0 5px 0 10px;
     border-radius: 8px;
+}
+
+@media screen and (max-width: 768px) {
+    #single-product {
+        display: flex;
+        flex-direction: column;
+        padding: 20px;
+    }
+
+    .single-product-image-container img {
+        width: 80vw;
+    }
 }

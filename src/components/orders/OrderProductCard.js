@@ -19,7 +19,7 @@ const OrderProductCard = ({ orderProduct, cart, setCart, token }) => {
         };
 
         const newCart = [...cart];
-        const cartProductToUpdate = newCart.find((product) => {return product.id === orderProduct.id});
+        const cartProductToUpdate = newCart.find((product) => {return product.name === orderProduct.name});
         cartProductToUpdate.quantity = Number(event.target.value);
         setCart(newCart);
     };

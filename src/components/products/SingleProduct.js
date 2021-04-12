@@ -7,7 +7,7 @@ import ProductCard from './ProductCard';
 // import './Products.css';
 import './SingleProduct.css';
 
-const SingleProduct = ({ allProducts }) => {
+const SingleProduct = ({ allProducts, cart, setCart, token }) => {
     const { productId } = useParams();
     const [quantity, setQuantity] = useState(1);
 
@@ -25,10 +25,36 @@ const SingleProduct = ({ allProducts }) => {
         setQuantity(Number(event.target.value))
     };
 
+    const handleAddToCart = async () => {
+        // If no token, create an "order-product" object: {(id), name, description, imageURL, price, quantity}
+        // If token && cart.length === 0, need to create a new order
+         
+        // when creating an order, i need a userId and a status
+        // when adding a product to an order, i need productId, price, quantity in the body and the orderId
+        if (!token) {
+            const toBeOrderProduct = {
+                productId: thisProduct.id,
+                name: thisProduct.name,
+                description: thisProduct.description,
+                imageURL: thisProduct.imageURL,
+                price: thisProduct.price,
+                quantity: quantity,
+            };
+            let cartCopy = [];
+            if (cart && cart.length > 0) {
+                cartCopy = [...cart];
+            };
+            cartCopy.push(toBeOrderProduct);
+            setCart(cartCopy);
+            localStorage.setItem('cart', JSON.stringify(cartCopy));
+        };
+
+    };
+
     return (
         <main id="single-product">
             <section className="single-product-image-container">
-                <img className="product-picture" src={thisProduct.imageURL} />
+                <img src={thisProduct.imageURL} />
             </section>
 
             <section className="single-product-description">
@@ -49,7 +75,8 @@ const SingleProduct = ({ allProducts }) => {
 
                     <Button
                         variant="outlined"
-                        color="primary">Add to Cart</Button>
+                        color="primary"
+                        onClick={handleAddToCart}>Add to Cart</Button>
                 </div>
 
             </section>
