@@ -45,7 +45,7 @@ const SingleProduct = ({ allProducts, cart, setCart, token }) => {
                 for (let i = 0; i < cartCopy.length; i ++) {
                     const checkedProduct = cartCopy[i];
                     if (checkedProduct.name === thisProduct.name) {
-                        console.log('This item is already in your cart.');
+                        setRespMessage('This item is already in your cart.');
                         return;
                     };
                 };
@@ -54,6 +54,7 @@ const SingleProduct = ({ allProducts, cart, setCart, token }) => {
             cartCopy.push(toBeOrderProduct);
             setCart(cartCopy);
             localStorage.setItem('cart', JSON.stringify(cartCopy));
+            setRespMessage('Added to cart!')
         };
 
         // IF I AM LOGGED IN
@@ -80,24 +81,22 @@ const SingleProduct = ({ allProducts, cart, setCart, token }) => {
             };
 
             const newOrderProduct = await addProductToOrder(databaseCart.id, body, token);
-            // window.location.reload();
-            // setRespMessage(`x${quantity} ${thisProduct.name} Added to cart`);
 
-        //     let cartCopy = [];
-        //     if (cart && cart.length > 0) {
-        //         cartCopy = [...cart];
-        //         for (let i = 0; i < cartCopy.length; i ++) {
-        //             const checkedProduct = cartCopy[i];
-        //             if (checkedProduct.name === thisProduct.name) {
-        //                 console.log('This item is already in your cart.');
-        //                 return;
-        //             };
-        //         };
-        //     };
-
-        //     cartCopy.push(newOrderProduct);
-        //     setCart(cartCopy);
-        //     localStorage.setItem('cart', JSON.stringify(cartCopy));
+            // Need to update the cart
+            let cartCopy = [];
+            if (cart && cart.length > 0) {
+                cartCopy = [...cart];
+                for (let i = 0; i < cartCopy.length; i ++) {
+                    const checkedProduct = cartCopy[i];
+                    if (checkedProduct.name === thisProduct.name) {
+                        setRespMessage('This item is already in your cart.');
+                        return;
+                    };
+                };
+            };
+            cartCopy.push(newOrderProduct);
+            setCart(cartCopy);
+            setRespMessage('Added to cart!')
         };
 
     };
@@ -129,7 +128,7 @@ const SingleProduct = ({ allProducts, cart, setCart, token }) => {
                         color="primary"
                         onClick={handleAddToCart}>Add to Cart</Button>
                 </div>
-                {respMessage ? <div>{respMessage}</div> : ''}
+                {respMessage ? <div className="respMessage">{respMessage}</div> : ''}
             </section>
 
         </main>
