@@ -36,6 +36,10 @@
     border-radius: 8px;
 }
 
+.quantity-container {
+    display: flex;
+}
+
 .order-product-summary {
     padding: 10px;
     display: flex;

@@ -41,6 +41,10 @@ const Header = ({
         if (url.includes('/welcome') || url.includes('/login') || url.includes('/register')) {
             setActiveLinkIs("Welcome")
         };
+
+        if (url.includes('/cart')) {
+            setActiveLinkIs("Cart")
+        };
     };
 
     useEffect(() => {

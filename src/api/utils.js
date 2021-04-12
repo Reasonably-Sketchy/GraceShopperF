@@ -40,5 +40,18 @@ export const fetchAllProducts = async () => {
     };
 };
 
-
+// Update order product
+export const updateOrderProduct = async (orderProductId, body, token) => {
+  try {
+    const data = await callApi({
+      url: `/order_products/${orderProductId}`,
+      method: 'PATCH',
+      body: body,
+      token: token,
+    });
+    return data;
+  } catch(error) {
+    console.error(error);
+  };
+};
 

@@ -3,10 +3,11 @@ import OrderProductCard from "../orders/OrderProductCard";
 
 import "./Cart.css";
 
-const Cart = ({ cart, setCart }) => {
+const Cart = ({ cart, setCart, token }) => {
     console.log('CART', cart)
     const [updatedCart, setUpdatedCart] = useState(cart);
     console.log('UPDATED CART: ', updatedCart)
+    // setCart(updatedCart) 
 
     return (
         <main id="cart">
@@ -22,8 +23,10 @@ const Cart = ({ cart, setCart }) => {
                         <OrderProductCard
                             key = {orderProduct.id}
                             orderProduct = {orderProduct}
+                            // setCart = {setCart} ?
                             updatedCart = {updatedCart}
-                            setUpdatedCart = {setUpdatedCart} />
+                            setUpdatedCart = {setUpdatedCart}
+                            token = {token} />
                     );
                 })
                 : <div className="cart-empy">

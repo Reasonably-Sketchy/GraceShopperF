@@ -7,12 +7,20 @@ const OrderProductCard = ({ orderProduct, updatedCart, setUpdatedCart }) => {
 
     console.log('Card product', orderProduct)
     const [quantity, setQuantity] = useState(orderProduct.quantity);
+    const [product, setProduct] = useState(orderProduct)
 
     const handleQuantityChange = (event) => {
         setQuantity(event.target.value);
         const newCart = [...updatedCart];
         // console.log(newCart);
     }
+
+    // setQuantity(change)
+        //if logged in, update orderProduct:
+            //updateOrderProduct(orderProduct.id, body: {price: orderProduct.price, quantity:quantity}, token: token)
+        // const productCopy = {...orderProduct}
+    // setProduct(productCopy)
+
 
     useEffect(()=> {
         console.log('QUANTITY UPDATED');
@@ -32,7 +40,7 @@ const OrderProductCard = ({ orderProduct, updatedCart, setUpdatedCart }) => {
                 <h3>{orderProduct.name}</h3>
                 <p>{orderProduct.description}</p>
                 <fieldset className="quantity-container">
-                    <label for="quantity">Quantity:</label>
+                    <label htmlFor="quantity">Quantity:</label>
                     <input 
                         name="quantity"
                         type="number"
