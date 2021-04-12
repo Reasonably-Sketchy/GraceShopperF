@@ -1,35 +1,28 @@
 import { Button } from '@material-ui/core';
 import React, {useEffect, useState} from 'react';
+import { updateOrderProduct } from '../../api/utils';
 
 import './OrderProductCard.css'
 
-const OrderProductCard = ({ orderProduct, updatedCart, setUpdatedCart }) => {
+const OrderProductCard = ({ orderProduct, cart, setCart, token }) => {
 
-    console.log('Card product', orderProduct)
     const [quantity, setQuantity] = useState(orderProduct.quantity);
-    const [product, setProduct] = useState(orderProduct)
 
-    const handleQuantityChange = (event) => {
-        setQuantity(event.target.value);
-        const newCart = [...updatedCart];
-        // console.log(newCart);
-    }
+    const handleQuantityChange = async (event) => {
+        setQuantity(Number(event.target.value))
+        if (token) {
+            const body = {
+                price: orderProduct.price,
+                quantity: Number(event.target.value)
+            };
+            const updatedOrderProduct = await updateOrderProduct(orderProduct.id, body, token);
+        };
 
-    // setQuantity(change)
-        //if logged in, update orderProduct:
-            //updateOrderProduct(orderProduct.id, body: {price: orderProduct.price, quantity:quantity}, token: token)
-        // const productCopy = {...orderProduct}
-    // setProduct(productCopy)
-
-
-    useEffect(()=> {
-        console.log('QUANTITY UPDATED');
-        const newCart = [...updatedCart];
-        const productToUpdate = {...orderProduct};
-        productToUpdate.quantity = Number(quantity);
-        console.log('Updated product: ', productToUpdate)
-
-    }, [quantity]);
+        const newCart = [...cart];
+        const cartProductToUpdate = newCart.find((product) => {return product.id === orderProduct.id});
+        cartProductToUpdate.quantity = Number(event.target.value);
+        setCart(newCart);
+    };
 
     return (
         <div className="order-product-card">

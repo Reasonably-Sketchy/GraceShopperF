@@ -4,10 +4,6 @@ import OrderProductCard from "../orders/OrderProductCard";
 import "./Cart.css";
 
 const Cart = ({ cart, setCart, token }) => {
-    console.log('CART', cart)
-    const [updatedCart, setUpdatedCart] = useState(cart);
-    console.log('UPDATED CART: ', updatedCart)
-    // setCart(updatedCart) 
 
     return (
         <main id="cart">
@@ -23,9 +19,8 @@ const Cart = ({ cart, setCart, token }) => {
                         <OrderProductCard
                             key = {orderProduct.id}
                             orderProduct = {orderProduct}
-                            // setCart = {setCart} ?
-                            updatedCart = {updatedCart}
-                            setUpdatedCart = {setUpdatedCart}
+                            cart = {cart}
+                            setCart = {setCart}
                             token = {token} />
                     );
                 })

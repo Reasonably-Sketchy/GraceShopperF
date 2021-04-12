@@ -151,7 +151,8 @@ const App = () => {
                     <Route path = "/cart">
                         <Cart 
                             cart = {cart} 
-                            setCart = {setCart} />
+                            setCart = {setCart}
+                            token = {token} />
                     </Route>
 
                 </Switch>
