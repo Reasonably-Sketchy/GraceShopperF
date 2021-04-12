@@ -1,6 +1,7 @@
 import { Button } from '@material-ui/core';
 import React, {useEffect, useState} from 'react';
 import { useParams } from 'react-router';
+import { addProductToOrder, createOrder, fetchUserCart } from '../../api/utils';
 
 import ProductCard from './ProductCard';
 
@@ -10,6 +11,7 @@ import './SingleProduct.css';
 const SingleProduct = ({ allProducts, cart, setCart, token }) => {
     const { productId } = useParams();
     const [quantity, setQuantity] = useState(1);
+    const [respMessage, setRespMessage] = useState('');
 
     if (!allProducts) {
         return <h1>Loading...</h1>
@@ -26,12 +28,6 @@ const SingleProduct = ({ allProducts, cart, setCart, token }) => {
     };
 
     const handleAddToCart = async () => {
-        // If no token, create an "order-product" object: {(id), name, description, imageURL, price, quantity}
-        // If token && cart.length === 0, need to create a new order
-         
-        // when creating an order, i need a userId and a status
-        // when adding a product to an order, i need productId, price, quantity in the body and the orderId
-
         // IF I'M NOT LOGGED IN
         if (!token) {
             const toBeOrderProduct = {
@@ -60,9 +56,49 @@ const SingleProduct = ({ allProducts, cart, setCart, token }) => {
             localStorage.setItem('cart', JSON.stringify(cartCopy));
         };
 
-        // if (token && cart.length === 0) {
+        // IF I AM LOGGED IN
+        if (token) {
+            // try to get my cart
+            let databaseCart = await fetchUserCart(token);
 
-        // }
+            // If there's nothing in the cart state, either find my empty cart or create a new order
+            if (cart.length === 0) {
+                // Locate the user's cart (or create one if there is none)
+                if (databaseCart && databaseCart.length > 0) {
+                    console.log("Existing User Cart: ", databaseCart);
+                } else if (!databaseCart) {
+                    databaseCart = await createOrder(token);
+                    console.log("New User Cart:", databaseCart);
+                };
+            };
+
+            // Add the product to the order
+            const body = {
+                productId: productId,
+                price: thisProduct.price,
+                quantity: quantity,
+            };
+
+            const newOrderProduct = await addProductToOrder(databaseCart.id, body, token);
+            // window.location.reload();
+            // setRespMessage(`x${quantity} ${thisProduct.name} Added to cart`);
+
+        //     let cartCopy = [];
+        //     if (cart && cart.length > 0) {
+        //         cartCopy = [...cart];
+        //         for (let i = 0; i < cartCopy.length; i ++) {
+        //             const checkedProduct = cartCopy[i];
+        //             if (checkedProduct.name === thisProduct.name) {
+        //                 console.log('This item is already in your cart.');
+        //                 return;
+        //             };
+        //         };
+        //     };
+
+        //     cartCopy.push(newOrderProduct);
+        //     setCart(cartCopy);
+        //     localStorage.setItem('cart', JSON.stringify(cartCopy));
+        };
 
     };
 
@@ -93,7 +129,7 @@ const SingleProduct = ({ allProducts, cart, setCart, token }) => {
                         color="primary"
                         onClick={handleAddToCart}>Add to Cart</Button>
                 </div>
-
+                {respMessage ? <div>{respMessage}</div> : ''}
             </section>
 
         </main>

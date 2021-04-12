@@ -7,7 +7,7 @@ import {
     useHistory,
     Link
 } from 'react-router-dom';
-import { fetchUserData, fetchAllProducts, fetchUserCart } from './api/utils';
+import { fetchUserData, fetchAllProducts, fetchUserCart, addProductToOrder } from './api/utils';
 
 // Page components
 import { 
@@ -83,11 +83,47 @@ const App = () => {
         };
 
         const databaseCart = await fetchUserCart(token);
+        console.log('MY OLD CART PRODUCTS: ', cart);
         if (databaseCart && databaseCart.products && databaseCart.products.length > 0) {
-          const cartCopy = [...cart];
-          const dbCartOrderProducts = [databaseCart.products];
-          dbCartOrderProducts[0].forEach((orderProduct) => {cartCopy.push(orderProduct)});
-          setCart(cartCopy);
+
+            let cartCopy = [];
+            const dbCartOrderProducts = [databaseCart.products];
+            console.log('MY DB CART PRODUCTS: ', dbCartOrderProducts[0]);
+
+            // Nothing in cart pre-login
+            if (cart.length === 0) {
+                console.log('Cart Length 0')
+                dbCartOrderProducts[0].forEach((orderProduct) => {cartCopy.push(orderProduct)});
+                setCart(cartCopy);
+                return;
+            }
+            
+            // Items in cart pre-login:
+            if (cart.length > 0) {
+                cartCopy = [...cart];
+                const newCart = [];
+
+                for (let i = 0; i < dbCartOrderProducts[0].length; i++) {
+                    const dbProduct = dbCartOrderProducts[0][i];
+                    const indexToRemove = cartCopy.findIndex((product) => {return product.productId === dbProduct.productId});
+                    if (indexToRemove >= 0) {
+                        cartCopy.splice(indexToRemove, 1);
+                    };
+                };
+                const newOrderProducts = await Promise.all(cartCopy.map(async (product) => {
+                    const body = {
+                        productId: product.productId,
+                        price: product.price,
+                        quantity: product.quantity,
+                    };
+                    const newOrderProduct = await addProductToOrder(databaseCart.id, body, token);
+                    return newOrderProduct;
+                }));
+                dbCartOrderProducts[0].forEach(product => newCart.push(product));
+                newOrderProducts.forEach(product => newCart.push(product));
+                setCart(newCart);
+            };
+
         };
     }, [token]);
 

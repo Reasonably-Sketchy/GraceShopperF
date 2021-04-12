@@ -1,6 +1,6 @@
 import { Button } from '@material-ui/core';
 import React, {useEffect, useState} from 'react';
-import { updateOrderProduct } from '../../api/utils';
+import { deleteOrderProduct, updateOrderProduct } from '../../api/utils';
 
 import './OrderProductCard.css'
 
@@ -10,14 +10,16 @@ const OrderProductCard = ({ orderProduct, cart, setCart, token }) => {
 
     const handleQuantityChange = async (event) => {
         setQuantity(Number(event.target.value))
+        // TOKEN
         if (token) {
             const body = {
                 price: orderProduct.price,
                 quantity: Number(event.target.value)
             };
-            const updatedOrderProduct = await updateOrderProduct(orderProduct.id, body, token);
+            const updatedOrderProduct = await updateOrderProduct(orderProduct.orderProductId, body, token);
         };
 
+        // NO TOKEN
         const newCart = [...cart];
         const cartProductToUpdate = newCart.find((product) => {return product.name === orderProduct.name});
         cartProductToUpdate.quantity = Number(event.target.value);
@@ -25,7 +27,13 @@ const OrderProductCard = ({ orderProduct, cart, setCart, token }) => {
     };
 
     const handleRemoveFromCart = async () => {
-        // if no token
+        // TOKEN
+        if (token) {
+            const deletedOrderProduct = await deleteOrderProduct(orderProduct.orderProductId, token);
+            console.log('DELETED: ', deletedOrderProduct);
+        };
+
+        // NO TOKEN
         const newCart = [...cart];
         const cartProductIndexToRemove = newCart.findIndex((product) => {return product.name === orderProduct.name});
         newCart.splice(cartProductIndexToRemove, 1);
