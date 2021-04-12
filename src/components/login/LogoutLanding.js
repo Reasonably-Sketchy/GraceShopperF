@@ -10,7 +10,7 @@ import {Button} from '@material-ui/core';
 import './Landings.css';
 
 // DEFAULT COMPONENT
-const LogoutLanding = () => {
+const LogoutLanding = ({ setActiveLinkIs }) => {
     return(
         <main id="landing">
             <div className="landing-container">
@@ -21,7 +21,10 @@ const LogoutLanding = () => {
                         <Button 
                             className="landing-button"
                             variant="outlined" 
-                            color="primary">
+                            color="primary"
+                            onClick={() => {
+                                setActiveLinkIs('Home')
+                            }}>
                             Return Home</Button></Link>
             </div>
         </main>

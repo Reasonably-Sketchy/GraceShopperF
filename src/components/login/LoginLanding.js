@@ -11,7 +11,7 @@ import './Landings.css';
 import { KeyboardArrowRight } from '@material-ui/icons';
 
 // DEFAULT COMPONENT
-const LoginLanding = ({ userData, action }) => {
+const LoginLanding = ({ userData, action, setActiveLinkIs }) => {
     return(
         <main id="landing">
             <div className="landing-container">
@@ -23,18 +23,27 @@ const LoginLanding = ({ userData, action }) => {
                         <Button 
                             className="landing-button"
                             variant="contained" 
-                            color="primary">
+                            color="primary"
+                            onClick={() => {
+                                setActiveLinkIs('Products')
+                            }}>
                             To the Shoppe <KeyboardArrowRight /></Button></Link>
 
                     {/* TO CART */}
-                    <Link to="/">
+                    <Link to="/cart">
                         <Button 
-                            color="primary">
+                            color="primary"
+                            onClick={() => {
+                                setActiveLinkIs('Cart')
+                            }}>
                             View Your Cart <KeyboardArrowRight /></Button></Link>
 
                     <Link to="/account">
                         <Button 
-                            color="primary">
+                            color="primary"
+                            onClick={() => {
+                                setActiveLinkIs('Account')
+                            }}>
                             Visit Your Dashboard <KeyboardArrowRight /></Button></Link>
             </div>
         </main>

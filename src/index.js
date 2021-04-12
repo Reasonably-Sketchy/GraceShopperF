@@ -90,7 +90,8 @@ const App = () => {
                     setActiveLinkIs = {setActiveLinkIs}
                     setToken = {setToken}
                     setUserData = {setUserData}
-                    userData = {userData} />
+                    userData = {userData}
+                    setCart = {setCart} />
 
                 <Switch>
                     <Route exact path = "/">
@@ -111,7 +112,8 @@ const App = () => {
                     <Route exact path="/login/success">
                         <LoginLanding
                             userData = {userData}
-                            action = {'logged in'} />
+                            action = {'logged in'}
+                            setActiveLinkIs = {setActiveLinkIs} />
                     </Route>
 
                     <Route exact path ="/register">
@@ -122,11 +124,12 @@ const App = () => {
                     <Route exact path="/register/success">
                         <LoginLanding
                             userData = {userData}
-                            action = {'registered'} />
+                            action = {'registered'}
+                            setActiveLinkIs = {setActiveLinkIs} />
                     </Route>
 
                     <Route path="/logout">
-                        <LogoutLanding />
+                        <LogoutLanding setActiveLinkIs = {setActiveLinkIs} />
                     </Route>
 
                     <Route exact path = "/products">

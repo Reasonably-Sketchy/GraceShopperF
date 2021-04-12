@@ -9,12 +9,14 @@ const NavList = ({
     activeLinkIs,
     setToken, 
     setUserData, 
-    userData, 
+    userData,
+    setCart, 
 }) => {
 
     const logOut = () => {
         localStorage.clear();
         setUserData({});
+        setCart([]);
         setToken("");
     };
     

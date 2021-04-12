@@ -10,7 +10,8 @@ const Header = ({
     setActiveLinkIs, 
     setToken, 
     setUserData, 
-    userData }) => {
+    userData,
+    setCart }) => {
 
     const [isMenuOpen, setIsMenuOpen] = useState(false);
    
@@ -61,7 +62,8 @@ const Header = ({
                 isMenuOpen = {isMenuOpen} 
                 toggleMenu = {toggleMenu}
                 activeLinkIs = {activeLinkIs}
-                userData = {userData} 
+                userData = {userData}
+                setCart = {setCart} 
                 />
             
             <Burger 
