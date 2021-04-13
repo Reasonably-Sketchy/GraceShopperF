@@ -4,6 +4,7 @@ import OrderProductCard from "../orders/OrderProductCard";
 import axios from 'axios';
 
 import "./Cart.css";
+import { Button } from "@material-ui/core";
 
 const STRIPE_KEY = 'pk_test_51IemByGFMkmVlUo2ZadMmHIIQKtbGWn2OdYjCM2aOLy0JVMa5WajgLBi5qAeg2dj90cmmfpb9Rcp8Ycb2FxXmVGp00le6ddDto';
 const CURRENCY = 'USD';
@@ -69,14 +70,19 @@ const Cart = ({ cart, setCart, token }) => {
             <section className="checkout">
                 <h1>Total:</h1>
 
-                <StripeCheckout 
+                <StripeCheckout
                     token={onToken(orderTotal * 100)}
                     stripeKey={STRIPE_KEY}
                     name="Grace Shopper"
                     amount={orderTotal * 100}
                     currency={CURRENCY}
                     shippingAddress
-                />
+                    billingAddress
+                >
+                    <Button
+                        variant="contained"
+                        color="primary">Checkout</Button>
+                </StripeCheckout>
 
             </section>
 
