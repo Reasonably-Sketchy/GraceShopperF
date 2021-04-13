@@ -70,11 +70,12 @@ const OrderProductCard = ({ orderProduct, cart, setCart, token }) => {
                 <div className="price">
                     <h3>Price:</h3>
                     <h4 className="calculation"><span className="gold-text">${orderProduct.price}</span> x {orderProduct.quantity}</h4>
-                    <h2><span className="gold-text">{generateProductTotal(orderProduct)}</span> USD</h2>
+                    {/* <h2><span className="gold-text">{generateProductTotal(orderProduct)}</span> USD</h2> */}
+                    <h2 className="price-line"><span className="usd">USD</span><span className="gold-text">${generateProductTotal(orderProduct)}</span> </h2>
                 </div>
                 <Button
                     color="primary"
-                    variant="contained"
+                    variant="outlined"
                     onClick={handleRemoveFromCart}>Remove From Cart</Button>
             </div>
         </div>

@@ -10,6 +10,28 @@ const STRIPE_KEY = 'pk_test_51IemByGFMkmVlUo2ZadMmHIIQKtbGWn2OdYjCM2aOLy0JVMa5Wa
 const CURRENCY = 'USD';
 const PAYMENT_URL = 'http://localhost:3000/api/pay';
 
+const generateItemsTotal = (cart) => {
+    if (cart && cart.length > 0) {
+        const productTotals = cart.map((product) => {
+            const quantity = product.quantity;
+            return quantity;
+        });
+        return productTotals.reduce((total, num) => {return total + num});
+    };
+};
+
+const generateOrderTotal = (cart) => {
+    if (cart && cart.length > 0) {
+        const productTotals = cart.map((product) => {
+            const quantity = product.quantity;
+            const price = product.price;
+            const total = (Number(quantity) * Number(price));
+            return total;
+        });
+        return productTotals.reduce((total, num) => {return total + num});
+    };
+};
+
 const onToken = (amount) => async (token) => {
     console.log("Token is: ", token);
     try {
@@ -27,19 +49,8 @@ const onToken = (amount) => async (token) => {
 const Cart = ({ cart, setCart, token }) => {
     console.log('MY CART: ', cart)
 
-    const generateOrderTotal = () => {
-        if (cart && cart.length > 0) {
-            const productTotals = cart.map((product) => {
-                const quantity = product.quantity;
-                const price = product.price;
-                const total = (Number(quantity) * Number(price));
-                return total;
-            });
-            return productTotals.reduce((total, num) => {return total + num});
-        };
-    };
-
-    const orderTotal = generateOrderTotal();
+    const items = generateItemsTotal(cart);
+    const orderTotal = generateOrderTotal(cart);
 
     return (
         <main id="cart">
@@ -67,8 +78,17 @@ const Cart = ({ cart, setCart, token }) => {
 
             </section>
 
-            <section className="checkout">
-                <h1>Total:</h1>
+            {cart.length > 0
+            ? <section className="checkout">
+                <div className="summary">
+                    <h3>Items: {items}</h3>
+                    {/* <h3 className="gold-text">{items}</h3> */}
+                </div>
+
+                <div className="total">
+                    <h3>Total:</h3>
+                    <h2 className="price-line"><span className="usd">USD</span><span className="gold-text">${orderTotal}</span> </h2>
+                </div>
 
                 <StripeCheckout
                     token={onToken(orderTotal * 100)}
@@ -77,15 +97,17 @@ const Cart = ({ cart, setCart, token }) => {
                     amount={orderTotal * 100}
                     currency={CURRENCY}
                     shippingAddress
-                    billingAddress
-                >
+                    billingAddress>
                     <Button
+                        className="checkout-button"
                         variant="contained"
                         color="primary">Checkout</Button>
                 </StripeCheckout>
 
             </section>
-
+            : ''
+            }
+            
         </main>
     )
 //   return <div>Cart Page Sucess!</div>;
