@@ -41,11 +41,16 @@ const Account = ({ userData }) => {
                 <div className="user-cart">
                     <h2>Items in Your Cart:</h2>
                     <div className="cart-display">
-                        {cartProducts.map((product) => {
+
+                        {cartProducts && cartProducts.length > 0
+                        ? cartProducts.map((product) => {
                             return (
                                 <OrderProduct key = {product.id} product = {product} />
                             );
-                        })}
+                        })
+                        : <div>You have no products in your cart.</div>
+                        }
+
                     </div>
                 </div> 
 

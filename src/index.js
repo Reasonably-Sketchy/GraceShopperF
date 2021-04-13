@@ -1,158 +1,239 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from 'react';
 import ReactDOM from "react-dom";
 import {
-  BrowserRouter as Router,
-  Route,
-  Switch,
-  useHistory,
-  Link,
-} from "react-router-dom";
-import { fetchUserData, fetchAllProducts } from "./api/utils";
+    BrowserRouter as Router,
+    Route,
+    Switch,
+    useHistory,
+    Link
+} from 'react-router-dom';
+import { fetchUserData, fetchAllProducts, fetchUserCart, addProductToOrder } from './api/utils';
 
-import {
-  Header,
-  Home,
-  Welcome,
-  Login,
-  Register,
-  LoginLanding,
-  LogoutLanding,
-  Products,
-  SingleProduct,
-  Account,
-  SingleOrder,
-  Cart,
-} from "./components";
+// Page components
+import { 
+    Header,
+    Home,
+    Welcome,
+    Login,
+    Register,
+    LoginLanding,
+    LogoutLanding,
+    Products,
+    SingleProduct,
+    Cart,
+    Account,
+    SingleOrder } from './components'
 
-import { ThemeProvider, createMuiTheme } from "@material-ui/core/styles";
-import "./styles.css";
+import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import './styles.css';
 
 const theme = createMuiTheme({
-  palette: {
-    primary: {
-      // main: '#d4af37',
-      main: "#b5a264",
-      contrastText: "white",
-    },
-    secondary: {
-      main: "#222",
-    },
-  },
+    palette: {
+        primary: {
+            // main: '#d4af37',
+            main: '#b5a264',
+            contrastText: 'white',
+
+        },
+        secondary: {
+            main: '#222',
+        },
+    }
 });
 
+// Persistent cart
+const getCartFromLocal = () => {
+    let cart = localStorage.getItem('cart');
+    if (cart) {
+        return JSON.parse(cart);
+    };
+};
+
+const setCartOnLocal = (cart) => {
+    localStorage.setItem('cart', JSON.stringify(cart));
+};
+
 const App = () => {
-  const [token, setToken] = useState("");
-  const [userData, setUserData] = useState({});
-  const [allProducts, setAllProducts] = useState([]);
-  const [activeLinkIs, setActiveLinkIs] = useState("Home");
-  const [cart, setCart] = useState([]);
 
-  // Retrieve token from local storage
-  useEffect(async () => {
-    if (!token) {
-      setToken(localStorage.getItem("token"));
-      return;
+    const setCart = (currentCart) => {
+        setCartOnLocal(currentCart);
+        _setCart(currentCart);
     }
 
-    const data = await fetchUserData(token);
-    if (data && data.username) {
-      setUserData(data);
-    }
-    console.log("userData", data);
-  }, [token]);
+    useEffect(() => {
+        _setCart(getCartFromLocal());
+    }, []);
 
-  // Retrieve all products
-  useEffect(async () => {
-    try {
-      const products = await fetchAllProducts(token);
-      console.log("Products: ", products);
-      if (Array.isArray(products)) {
-        setAllProducts(products);
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  }, []);
+    const [token, setToken] = useState("");
+    const [userData, setUserData] = useState({});
+    const [allProducts, setAllProducts] = useState([]);
+    const [activeLinkIs, setActiveLinkIs] = useState('Home');
+    const [cart, _setCart] = useState([]);
 
-  return (
-    <div id="app">
-      <ThemeProvider theme={theme}>
-        <Header
-          activeLinkIs={activeLinkIs}
-          setActiveLinkIs={setActiveLinkIs}
-          setToken={setToken}
-          setUserData={setUserData}
-          userData={userData}
-        />
+    // Retrieve token from local storage
+    useEffect(async () => {
+        if (!token) {
+            setToken(localStorage.getItem('token'));
+            return;
+        };
 
-        <Switch>
-          <Route exact path="/">
-            <Home userData={userData} setActiveLinkIs={setActiveLinkIs} />
-          </Route>
+        const data = await fetchUserData(token);
+        if (data && data.username) {
+            setUserData(data);
+        };
 
-          <Route path="/welcome">
-            <Welcome />
-          </Route>
+        const databaseCart = await fetchUserCart(token);
+        console.log('MY OLD CART PRODUCTS: ', cart);
+        if (databaseCart && databaseCart.products && databaseCart.products.length > 0) {
 
-          <Route exact path="/login">
-            <Login setToken={setToken} />
-          </Route>
+            let cartCopy = [];
+            const dbCartOrderProducts = [databaseCart.products];
+            console.log('MY DB CART PRODUCTS: ', dbCartOrderProducts[0]);
 
-          <Route exact path="/login/success">
-            <LoginLanding userData={userData} action={"logged in"} />
-          </Route>
+            // Nothing in cart pre-login
+            if (cart.length === 0) {
+                console.log('Cart Length 0')
+                dbCartOrderProducts[0].forEach((orderProduct) => {cartCopy.push(orderProduct)});
+                setCart(cartCopy);
+                return;
+            }
+            
+            // Items in cart pre-login:
+            if (cart.length > 0) {
+                cartCopy = [...cart];
+                const newCart = [];
 
-          <Route path="/register">
-            <Register setToken={setToken} />
-          </Route>
+                for (let i = 0; i < dbCartOrderProducts[0].length; i++) {
+                    const dbProduct = dbCartOrderProducts[0][i];
+                    const indexToRemove = cartCopy.findIndex((product) => {return product.productId === dbProduct.productId});
+                    if (indexToRemove >= 0) {
+                        cartCopy.splice(indexToRemove, 1);
+                    };
+                };
+                const newOrderProducts = await Promise.all(cartCopy.map(async (product) => {
+                    const body = {
+                        productId: product.productId,
+                        price: product.price,
+                        quantity: product.quantity,
+                    };
+                    const newOrderProduct = await addProductToOrder(databaseCart.id, body, token);
+                    return newOrderProduct;
+                }));
+                dbCartOrderProducts[0].forEach(product => newCart.push(product));
+                newOrderProducts.forEach(product => newCart.push(product));
+                setCart(newCart);
+            };
 
-          <Route exact path="/register/success">
-            <LoginLanding userData={userData} action={"registered"} />
-          </Route>
+        };
+    }, [token]);
 
-          <Route path="/logout">
-            <LogoutLanding />
-          </Route>
+    // Retrieve all products
+    useEffect(async () => {
+        try {
+            const products = await fetchAllProducts();
+            if (products) {
+                setAllProducts(products);
+            };
 
-          <Route exact path="/products">
-            <Products allProducts={allProducts}/>
-          </Route>
+            // setCart(localStorage.getItem('cart'))
+        } catch(error) {
+            console.error(error);
+        };
+    }, [])
 
-          <Route exact path="/products/:productId">
-            <SingleProduct 
-                allProducts={allProducts}
-                setCart={setCart} 
-                cart={cart} 
-                token={token}
-            />
-          </Route>
+    return (
+        <div id="app">
+            <ThemeProvider theme={theme}>
+                <Header 
+                    activeLinkIs = {activeLinkIs}
+                    setActiveLinkIs = {setActiveLinkIs}
+                    setToken = {setToken}
+                    setUserData = {setUserData}
+                    userData = {userData}
+                    setCart = {setCart} />
 
-          <Route path="/account">
-            <Account userData={userData} />
-          </Route>
+                <Switch>
+                    <Route exact path = "/">
+                        <Home
+                            userData = {userData} 
+                            setActiveLinkIs = {setActiveLinkIs}/>
+                    </Route>
 
-          {userData.isAdmin ? (
-            <Route path="/orders/:orderId">
-              <SingleOrder />
-            </Route>
-          ) : (
-            ""
-          )}
+                    <Route path = "/welcome">
+                        <Welcome />
+                    </Route>
 
-          <Route path="/cart">
-            <Cart cart={cart} setCart={setCart} />
-          </Route>
-        </Switch>
-      </ThemeProvider>
-    </div>
-  );
+                    <Route exact path = "/login">
+                        <Login 
+                            setToken = {setToken} />
+                    </Route>
+
+                    <Route exact path="/login/success">
+                        <LoginLanding
+                            userData = {userData}
+                            action = {'logged in'}
+                            setActiveLinkIs = {setActiveLinkIs} />
+                    </Route>
+
+                    <Route exact path ="/register">
+                        <Register
+                            setToken = {setToken} />
+                    </Route>
+
+                    <Route exact path="/register/success">
+                        <LoginLanding
+                            userData = {userData}
+                            action = {'registered'}
+                            setActiveLinkIs = {setActiveLinkIs} />
+                    </Route>
+
+                    <Route path="/logout">
+                        <LogoutLanding setActiveLinkIs = {setActiveLinkIs} />
+                    </Route>
+
+                    <Route exact path = "/products">
+                        <Products allProducts = {allProducts}/>
+                    </Route>
+
+                    <Route exact path = "/products/:productId">
+                        <SingleProduct 
+                            allProducts = {allProducts}
+                            cart = {cart}
+                            setCart = {setCart}
+                            token = {token}/>
+                    </Route>
+
+                    <Route path = "/account">
+                        <Account 
+                            userData = {userData} />
+                    </Route>
+
+                    {userData.isAdmin
+                    ? <Route path = "/orders/:orderId">
+                        <SingleOrder />
+                    </Route>
+                    : ''}
+
+                    <Route path = "/cart">
+                        <Cart 
+                            cart = {cart} 
+                            setCart = {setCart}
+                            token = {token} />
+                    </Route>
+
+                </Switch>
+
+                
+            </ThemeProvider>
+        </div>
+    );
 };
 
 export default App;
 
+
 ReactDOM.render(
-  <Router>
-    <App />
-  </Router>,
-  document.getElementById("root")
-);
+    <Router>
+        <App />
+    </Router>, 
+    document.getElementById('root'));
