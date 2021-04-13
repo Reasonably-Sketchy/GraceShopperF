@@ -15,6 +15,7 @@ export {default as Cart} from './cart/Cart';
 export {default as Account} from './account/Account';
 export {default as SingleOrder} from './orders/SingleOrder';
 
+export {default as Admin} from './admin/Admin';
 export {default as AdminUsers} from './admin/AdminUsers'
 export {default as SingleUser} from './admin/AdminSingleUser'
 export {default as AddUser} from './admin/AddUser'

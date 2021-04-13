@@ -56,4 +56,5 @@ const SingleUser = ({thisUser, userData}) => {
     )
 }
 
-export default SingleUser;
+export default SingleUser; 
+

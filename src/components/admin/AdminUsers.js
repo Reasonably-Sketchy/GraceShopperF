@@ -32,4 +32,5 @@ const AdminUsers = ({allUsers}) => {
     )
 }
 
-export default AdminUsers;
+export default AdminUsers; 
+
