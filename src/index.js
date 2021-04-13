@@ -223,6 +223,7 @@ const App = () => {
 
                     <Route path = "/cart">
                         <Cart 
+                            userData = {userData}
                             cart = {cart} 
                             setCart = {setCart}
                             token = {token} />

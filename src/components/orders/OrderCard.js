@@ -10,7 +10,7 @@ const OrderCard = ({ order }) => {
     const [productListOpen, setProductListOpen] = useState(false);
 
     // Generates total price for product based on quantity
-    if (order && order.products) {
+    if (order && order.products && order.products.length > 0) {
         const productTotals = order.products.map((product) => {
             const quantity = product.quantity;
             const price = product.price;
@@ -54,7 +54,7 @@ const OrderCard = ({ order }) => {
                     <h3>${order.total}</h3>
                 </div>
 
-
+{/* 
                 <div className="view-button">
                     <Button
                         variant="contained"
@@ -62,7 +62,7 @@ const OrderCard = ({ order }) => {
                         onClick={() => {
                             setProductListOpen(!productListOpen)
                         }}>Order Products {productListOpen ? <KeyboardArrowDown/> : <KeyboardArrowRight />}</Button>
-                </div>
+                </div> */}
                 
             </div>
             
