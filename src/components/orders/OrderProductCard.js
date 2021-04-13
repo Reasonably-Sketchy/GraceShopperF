@@ -39,9 +39,7 @@ const OrderProductCard = ({ orderProduct, cart, setCart, token }) => {
         newCart.splice(cartProductIndexToRemove, 1);
         console.log('NEW CART: ', newCart);
         setCart(newCart);
-    }
-
-    console.log('orderProduct: ', orderProduct)
+    };
 
     const generateProductTotal = (orderProduct) => {
         const price = orderProduct.price;
