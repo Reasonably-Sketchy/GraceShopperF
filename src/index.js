@@ -22,7 +22,8 @@ import {
     SingleProduct,
     Cart,
     Account,
-    SingleOrder } from './components'
+    SingleOrder,
+    Admin, } from './components'
 
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import './styles.css';
@@ -213,6 +214,12 @@ const App = () => {
                         <SingleOrder />
                     </Route>
                     : ''}
+
+                    {userData.isAdmin
+                    ? <Route path = "/admin">
+                        <Admin />
+                    </Route>
+                    : '' }
 
                     <Route path = "/cart">
                         <Cart 
