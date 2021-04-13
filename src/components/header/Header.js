@@ -10,7 +10,8 @@ const Header = ({
     setActiveLinkIs, 
     setToken, 
     setUserData, 
-    userData }) => {
+    userData,
+    setCart }) => {
 
     const [isMenuOpen, setIsMenuOpen] = useState(false);
    
@@ -41,6 +42,10 @@ const Header = ({
         if (url.includes('/welcome') || url.includes('/login') || url.includes('/register')) {
             setActiveLinkIs("Welcome")
         };
+
+        if (url.includes('/cart')) {
+            setActiveLinkIs("Cart")
+        };
     };
 
     useEffect(() => {
@@ -57,7 +62,8 @@ const Header = ({
                 isMenuOpen = {isMenuOpen} 
                 toggleMenu = {toggleMenu}
                 activeLinkIs = {activeLinkIs}
-                userData = {userData} 
+                userData = {userData}
+                setCart = {setCart} 
                 />
             
             <Burger 

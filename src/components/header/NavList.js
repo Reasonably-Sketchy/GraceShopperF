@@ -9,12 +9,14 @@ const NavList = ({
     activeLinkIs,
     setToken, 
     setUserData, 
-    userData, 
+    userData,
+    setCart, 
 }) => {
 
     const logOut = () => {
         localStorage.clear();
         setUserData({});
+        setCart([]);
         setToken("");
     };
     
@@ -67,6 +69,15 @@ const NavList = ({
                 </li>
                 : '' }
 
+                <li>
+                    <Link
+                        to="/cart"
+                        className="nav-link"
+                        id={activeLinkIs === "Cart" ? 'active-nav-link' : ''}
+                        onClick={() => {
+                            toggleMenu();
+                        }}>Cart</Link>
+                </li>
 
                 {userData && userData.username
                 ? <li>
