@@ -71,6 +71,9 @@ const App = () => {
     const [activeLinkIs, setActiveLinkIs] = useState('Home');
     const [cart, _setCart] = useState([]);
 
+    //  ! need api route for GET /users
+    const [allUsers, setAllUsers] = useState([]);
+
     // Retrieve token from local storage
     useEffect(async () => {
         if (!token) {
@@ -140,6 +143,19 @@ const App = () => {
         } catch(error) {
             console.error(error);
         };
+    }, [])
+
+    // Retrieve all users
+    // ! route needs to be made
+    useEffect(async ()=>{
+        try {
+            const users = await fetchAllUsers();
+            if (users) {
+                setAllUsers(users);
+            };
+        } catch (error) {
+            console.error(error)
+        }
     }, [])
 
     return (
