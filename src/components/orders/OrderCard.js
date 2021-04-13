@@ -18,10 +18,7 @@ const OrderCard = ({ order }) => {
             product.total = total;
             return total;
         });
-        console.log(productTotals)
-
         order.total = productTotals.reduce((total, num) => {return total + num});
-        console.log(order.total);
     };
 
 

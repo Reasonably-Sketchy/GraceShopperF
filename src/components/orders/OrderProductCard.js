@@ -41,6 +41,15 @@ const OrderProductCard = ({ orderProduct, cart, setCart, token }) => {
         setCart(newCart);
     }
 
+    console.log('orderProduct: ', orderProduct)
+
+    const generateProductTotal = (orderProduct) => {
+        const price = orderProduct.price;
+        const quantity = orderProduct.quantity;
+        return Number(price) * Number(quantity);
+    };
+    
+
     return (
         <div className="order-product-card">
             <div className="order-product-image-container">
@@ -60,6 +69,11 @@ const OrderProductCard = ({ orderProduct, cart, setCart, token }) => {
 
             </div>
             <div className="order-product-summary">
+                <div className="price">
+                    <h3>Price:</h3>
+                    <h4 className="calculation"><span className="gold-text">${orderProduct.price}</span> x {orderProduct.quantity}</h4>
+                    <h2><span className="gold-text">{generateProductTotal(orderProduct)}</span> USD</h2>
+                </div>
                 <Button
                     color="primary"
                     variant="contained"

@@ -32,6 +32,10 @@ const Cart = ({ cart, setCart, token }) => {
 
             </section>
 
+            <section className="checkout">
+                
+            </section>
+
         </main>
     )
 //   return <div>Cart Page Sucess!</div>;

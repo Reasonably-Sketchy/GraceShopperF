@@ -45,7 +45,7 @@ const Account = ({ userData }) => {
                         {cartProducts && cartProducts.length > 0
                         ? cartProducts.map((product) => {
                             return (
-                                <OrderProduct key = {product.id} product = {product} />
+                                <OrderProduct key = {product.name} product = {product} />
                             );
                         })
                         : <div>You have no products in your cart.</div>
