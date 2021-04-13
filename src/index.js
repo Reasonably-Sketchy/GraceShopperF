@@ -22,7 +22,13 @@ import {
     SingleProduct,
     Cart,
     Account,
-    SingleOrder } from './components'
+    SingleOrder,
+
+    // ! pass in properly with routes/comps/props/etc
+    AdminUsers,
+    SingleUser,
+    AddUser
+} from './components'
 
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import './styles.css';
@@ -69,6 +75,9 @@ const App = () => {
     const [allProducts, setAllProducts] = useState([]);
     const [activeLinkIs, setActiveLinkIs] = useState('Home');
     const [cart, _setCart] = useState([]);
+
+    //  ! need api route for GET /users
+    const [allUsers, setAllUsers] = useState([]);
 
     // Retrieve token from local storage
     useEffect(async () => {
@@ -139,6 +148,19 @@ const App = () => {
         } catch(error) {
             console.error(error);
         };
+    }, [])
+
+    // Retrieve all users
+    // ! route needs to be made
+    useEffect(async ()=>{
+        try {
+            const users = await fetchAllUsers();
+            if (users) {
+                setAllUsers(users);
+            };
+        } catch (error) {
+            console.error(error)
+        }
     }, [])
 
     return (
