@@ -225,7 +225,8 @@ const App = () => {
 
                     <Route path = "/account">
                         <Account 
-                            userData = {userData} />
+                            userData = {userData}
+                            setActiveLinkIs = {setActiveLinkIs} />
                     </Route>
 
                     {userData.isAdmin

@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import { Link } from 'react-router-dom';
 
 import { Button } from '@material-ui/core';
 import { KeyboardArrowDown, KeyboardArrowRight } from '@material-ui/icons';
@@ -10,7 +11,7 @@ import './Account.css';
 // import ProductCard from '../products/ProductCard';
 import OrderProduct from './OrderProduct';
 
-const Account = ({ userData }) => {
+const Account = ({ userData, setActiveLinkIs }) => {
     if (!userData) {
         return <h1>Loading...</h1>
     };
@@ -50,6 +51,18 @@ const Account = ({ userData }) => {
                         })
                         : <div>You have no products in your cart.</div>
                         }
+
+                        {cartProducts && cartProducts.length > 0
+                        ? <Link to='/cart'>
+                            <Button
+                                variant="outlined"
+                                color="primary"
+                                onClick={() => {
+                                    setActiveLinkIs('Cart');
+                                }}
+                                >Go to Cart<KeyboardArrowRight /></Button>
+                        </Link>
+                        : ''}
 
                     </div>
                 </div> 
