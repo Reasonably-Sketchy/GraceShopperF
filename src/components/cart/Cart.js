@@ -43,7 +43,7 @@ const handleCompleteOrder = async (userId, orderId, cart, setCart, token) => {
 
         try {
             const updatedOrder = await updateOrder(orderId, body, token);
-            console.log(updatedOrder);
+            console.log('USER COMPLETED ORDER: ', updatedOrder);
             setCart([]);
         } catch (error) {
             console.error(error);
@@ -52,12 +52,11 @@ const handleCompleteOrder = async (userId, orderId, cart, setCart, token) => {
 
     // IF NO TOKEN
     if (!token) {
-        console.log('Guest cart: ', cart);
-
         // create an order
         const guestOrder = await createOrder();
-        console.log('NEW GUEST ORDER: ', guestOrder);
+        console.log('GUEST COMPLETED ORDER: ', guestOrder);
         setCart([]);
+        
         // add products to order
         // const guestOrderProducts = await Promise.all(cart.map(async (product) => {
         //     const body = {
@@ -77,6 +76,7 @@ const Cart = ({ userData, cart, setCart, token }) => {
 
     const items = generateItemsTotal(cart);
     const orderTotal = generateOrderTotal(cart);
+    const userToken = token;
 
     let orderId;
     let userId;
@@ -94,8 +94,7 @@ const Cart = ({ userData, cart, setCart, token }) => {
                 amount,
             });
             console.log('Payment Success!', response);
-            const completedOrder = await handleCompleteOrder(userId, orderId, cart, setCart, token);
-            console.log('COMPLETED ORDER: ', completedOrder);
+            const completedOrder = await handleCompleteOrder(userId, orderId, cart, setCart, userToken);
 
         } catch (error) {
             console.error(error);
