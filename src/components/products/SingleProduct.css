@@ -41,6 +41,13 @@
     border-radius: 8px;
 }
 
+.resp-message {
+    padding: 24px 0 24px 0;
+    font-size: 1.5rem;
+    font-style: italic;
+    color: rgb(200, 200, 200);
+}
+
 @media screen and (max-width: 768px) {
     #single-product {
         display: flex;

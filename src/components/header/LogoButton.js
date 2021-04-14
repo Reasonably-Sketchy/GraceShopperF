@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import headerLogo from '../../assets/flim-flam-logo.png';
+import headerLogo from '../../assets/sketch-shop-logo.png';
 import './LogoButton.css';
 
 const LogoButton = () => {
