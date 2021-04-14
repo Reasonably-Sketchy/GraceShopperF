@@ -9,7 +9,7 @@
 }
 
 .home-logo {
-    width: 30vw;
+    width: 50vw;
 }
 
 .home-banner, .shop-banner {
@@ -17,6 +17,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    padding-left: 24px;
 }
 
 .home-banner {
@@ -42,6 +43,10 @@
         display: grid;
         grid-template-rows: 1fr 1fr;
         grid-template-columns: 1fr;
+    }
+
+    .home-banner, .shop-banner {
+        padding-left: 0px;
     }
 
     .home-banner {
