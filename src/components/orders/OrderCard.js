@@ -7,6 +7,8 @@ import './OrderCard.css';
 
 const OrderCard = ({ order }) => {
 
+    console.log('ORDER', order);
+
     const [productListOpen, setProductListOpen] = useState(false);
 
     // Generates total price for product based on quantity

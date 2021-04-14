@@ -1,12 +1,11 @@
 import { callApi } from "./index";
 
 // Users
-export const fetchUserData = async (token) => {
+export const fetchUserData = async () => {
 
     try {
         const data = await callApi({
             url: '/users/me',
-            token: token
         });
         return data;
     } catch(error) {
@@ -34,10 +33,11 @@ export const fetchUserCart = async (token) => {
 };
 
 // Products
-export const fetchAllProducts = async () => {
+export const fetchAllProducts = async (token) => {
     try {
       const data = await callApi({
         url: "/products",
+        token
       });
   
       return data;

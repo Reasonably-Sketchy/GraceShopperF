@@ -5,8 +5,9 @@ import ProductCard from './ProductCard';
 import './Products.css';
 
 const Products = ({ allProducts }) => {
-
+    console.log(allProducts);
     return (
+        
         <main id="products">
             <h1>Products</h1>
 
@@ -14,7 +15,10 @@ const Products = ({ allProducts }) => {
 
                 {allProducts.map((product) => {
                     return (
-                        <ProductCard key={product.id} product = {product}/>
+                        <ProductCard 
+                            key={product.id}
+                            product = {product} 
+                        />
                     );
                 })}
 
