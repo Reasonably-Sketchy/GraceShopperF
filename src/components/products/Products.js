@@ -9,7 +9,7 @@ const Products = ({ allProducts }) => {
     return (
         
         <main id="products">
-            <h1>Products Page</h1>
+            <h1>Products</h1>
 
             <section className="products-container">
 

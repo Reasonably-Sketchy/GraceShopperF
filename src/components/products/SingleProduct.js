@@ -96,6 +96,7 @@ const SingleProduct = ({ allProducts, cart, setCart, token }) => {
             };
             cartCopy.push(newOrderProduct);
             setCart(cartCopy);
+            window.location.reload();
             setRespMessage('Added to cart!')
         };
 
