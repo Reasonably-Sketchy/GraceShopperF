@@ -1,11 +1,12 @@
 import { callApi } from "./index";
 
 // Users
-export const fetchUserData = async () => {
+export const fetchUserData = async (token) => {
 
     try {
         const data = await callApi({
             url: '/users/me',
+            token: token,
         });
         return data;
     } catch(error) {

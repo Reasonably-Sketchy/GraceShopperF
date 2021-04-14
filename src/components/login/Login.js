@@ -27,7 +27,7 @@ const Login = ({ setToken }) => {
                 },
             });
 
-            console.log(data);
+            console.log('LOGIN: ', data);
         
             const token = data.token;
             
