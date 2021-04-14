@@ -16,10 +16,29 @@ const Register = ({ setToken }) => {
     const [email, setEmail] = useState('');
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [confirmPass, setConfirmPass] = useState('');
+    const [imageURL, setImageURL] = useState('');
     const [respMessage, setRespMessage] = useState('');
+
+    // const resetFields = () => {
+    //     setFirstName('');
+    //     setLastName('');
+    //     setEmail('');
+    //     setUsername('');
+    //     setPassword('');
+    //     setConfirmPass('');
+    //     setImageURL('');
+    //     setRespMessage('');
+    // }
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+
+        if (password !== confirmPass) {
+            setRespMessage('Your passwords do not match!');
+            return;
+        };
+
         try {
             const data = await callApi({
                 url: '/users/register',
@@ -28,6 +47,7 @@ const Register = ({ setToken }) => {
                     first: firstName,
                     last: lastName,
                     email: email,
+                    imageURL: imageURL,
                     username: username,
                     password: password,
                 },
@@ -97,11 +117,26 @@ const Register = ({ setToken }) => {
                     required={true} />
 
                 <TextField 
+                    id="imageURL"
+                    placeholder="Profile Image URL (optional)"
+                    value={imageURL}
+                    onChange={(event) => setImageURL(event.target.value)}
+                    required={false} />
+
+                <TextField 
                     id="password"
                     type="password"
                     placeholder="Password"
                     value={password}
                     onChange={(event) => setPassword(event.target.value)}
+                    required={true} />
+                
+                <TextField 
+                    id="confirm-password"
+                    type="password"
+                    placeholder="Confirm Password"
+                    value={confirmPass}
+                    onChange={(event) => setConfirmPass(event.target.value)}
                     required={true} />
 
                 <Button
@@ -109,9 +144,6 @@ const Register = ({ setToken }) => {
                     variant="contained"
                     color="primary"
                     type="submit"
-                    // onClick={() => {
-                    //     history.push
-                    // }}
                     >Register</Button>
 
                 <Button
