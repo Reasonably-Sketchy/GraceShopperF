@@ -219,7 +219,8 @@ const App = () => {
                             allProducts = {allProducts}
                             cart = {cart}
                             setCart = {setCart}
-                            token = {token}/>
+                            token = {token}
+                            setUserData = {setUserData}/>
                     </Route>
 
                     <Route path = "/account">

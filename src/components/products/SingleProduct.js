@@ -1,14 +1,14 @@
 import { Button } from '@material-ui/core';
 import React, {useEffect, useState} from 'react';
 import { useParams } from 'react-router';
-import { addProductToOrder, createOrder, fetchUserCart } from '../../api/utils';
+import { addProductToOrder, createOrder, fetchUserCart, updateUserData } from '../../api/utils';
 
 import ProductCard from './ProductCard';
 
 // import './Products.css';
 import './SingleProduct.css';
 
-const SingleProduct = ({ allProducts, cart, setCart, token }) => {
+const SingleProduct = ({ allProducts, cart, setCart, token, setUserData }) => {
     const { productId } = useParams();
     const [quantity, setQuantity] = useState(1);
     const [respMessage, setRespMessage] = useState('');
@@ -96,8 +96,9 @@ const SingleProduct = ({ allProducts, cart, setCart, token }) => {
             };
             cartCopy.push(newOrderProduct);
             setCart(cartCopy);
-            window.location.reload();
+            // window.location.reload();
             setRespMessage('Added to cart!')
+            await updateUserData(token, setUserData);
         };
 
     };
