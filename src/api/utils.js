@@ -109,3 +109,18 @@ export const deleteOrderProduct = async (orderProductId, token) => {
     console.error(error);
   };
 };
+
+// Update an order (change to "complete")
+export const updateOrder = async (orderId, body, token) => {
+  try {
+    const data = await callApi({
+      url: `/orders/${orderId}`,
+      method: 'PATCH',
+      body: body,
+      token: token,
+    });
+    return data;
+  } catch (error) {
+    console.error(error);
+  };
+};

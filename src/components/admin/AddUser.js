@@ -6,7 +6,7 @@ const AddUser = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [admin, setAdmin] = useState(false)
-    
+
     // ! need api routes and adapters
     const handleSubmit = async (event) =>{
         event.preventDefault();
@@ -62,7 +62,8 @@ const AddUser = () => {
                 </form>
             </div>
         </>
-    )
-}
+    );
+};
 
-export default AddUser;
+export default AddUser; 
+
