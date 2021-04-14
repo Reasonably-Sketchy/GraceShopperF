@@ -244,6 +244,7 @@ const App = () => {
                     <Route path = "/cart">
                         <Cart 
                             userData = {userData}
+                            setUserData = {setUserData}
                             cart = {cart} 
                             setCart = {setCart}
                             token = {token} />

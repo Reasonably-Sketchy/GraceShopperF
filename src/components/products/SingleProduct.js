@@ -130,7 +130,9 @@ const SingleProduct = ({ allProducts, cart, setCart, token, setUserData }) => {
                         color="primary"
                         onClick={handleAddToCart}>Add to Cart</Button>
                 </div>
-                {respMessage ? <div className="respMessage">{respMessage}</div> : ''}
+                <div className="resp-message">
+                    {respMessage ? <div className="respMessage">{respMessage}</div> : ''}
+                </div>
             </section>
 
         </main>
