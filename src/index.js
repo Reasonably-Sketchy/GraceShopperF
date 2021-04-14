@@ -219,12 +219,14 @@ const App = () => {
                             allProducts = {allProducts}
                             cart = {cart}
                             setCart = {setCart}
-                            token = {token}/>
+                            token = {token}
+                            setUserData = {setUserData}/>
                     </Route>
 
                     <Route path = "/account">
                         <Account 
-                            userData = {userData} />
+                            userData = {userData}
+                            setActiveLinkIs = {setActiveLinkIs} />
                     </Route>
 
                     {userData.isAdmin
@@ -242,6 +244,7 @@ const App = () => {
                     <Route path = "/cart">
                         <Cart 
                             userData = {userData}
+                            setUserData = {setUserData}
                             cart = {cart} 
                             setCart = {setCart}
                             token = {token} />

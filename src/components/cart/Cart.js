@@ -5,7 +5,7 @@ import axios from 'axios';
 
 import "./Cart.css";
 import { Button } from "@material-ui/core";
-import { addProductToOrder, createOrder, updateOrder } from "../../api/utils";
+import { addProductToOrder, createOrder, updateOrder, updateUserData } from "../../api/utils";
 
 const STRIPE_KEY = 'pk_test_51IemByGFMkmVlUo2ZadMmHIIQKtbGWn2OdYjCM2aOLy0JVMa5WajgLBi5qAeg2dj90cmmfpb9Rcp8Ycb2FxXmVGp00le6ddDto';
 const CURRENCY = 'USD';
@@ -33,7 +33,7 @@ const generateOrderTotal = (cart) => {
     };
 };
 
-const handleCompleteOrder = async (userId, orderId, cart, setCart, token) => {
+const handleCompleteOrder = async (userId, orderId, cart, setCart, token, setUserData) => {
     // IF TOKEN
     if (token) {
         const body = {
@@ -45,6 +45,7 @@ const handleCompleteOrder = async (userId, orderId, cart, setCart, token) => {
             const updatedOrder = await updateOrder(orderId, body, token);
             console.log('USER COMPLETED ORDER: ', updatedOrder);
             setCart([]);
+            await updateUserData(token, setUserData);
         } catch (error) {
             console.error(error);
         };
@@ -55,8 +56,7 @@ const handleCompleteOrder = async (userId, orderId, cart, setCart, token) => {
         // create an order
         const guestOrder = await createOrder();
         console.log('GUEST COMPLETED ORDER: ', guestOrder);
-        setCart([]);
-        
+        setCart([]);        
         // add products to order
         // const guestOrderProducts = await Promise.all(cart.map(async (product) => {
         //     const body = {
@@ -71,7 +71,7 @@ const handleCompleteOrder = async (userId, orderId, cart, setCart, token) => {
     };
 };
 
-const Cart = ({ userData, cart, setCart, token }) => {
+const Cart = ({ userData, setUserData, cart, setCart, token }) => {
     console.log('MY USER DATA: ', userData)
 
     const items = generateItemsTotal(cart);
@@ -94,7 +94,7 @@ const Cart = ({ userData, cart, setCart, token }) => {
                 amount,
             });
             console.log('Payment Success!', response);
-            const completedOrder = await handleCompleteOrder(userId, orderId, cart, setCart, userToken);
+            const completedOrder = await handleCompleteOrder(userId, orderId, cart, setCart, userToken, setUserData);
 
         } catch (error) {
             console.error(error);

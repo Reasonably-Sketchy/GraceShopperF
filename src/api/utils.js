@@ -14,6 +14,14 @@ export const fetchUserData = async (token) => {
     };
 };
 
+// Update userData
+export const updateUserData = async (token, setUserData) => {
+  const data = await fetchUserData(token);
+    if (data && data.username) {
+        setUserData(data);
+    };
+};
+
 // Fetch userCart
 export const fetchUserCart = async (token) => {
   try {
