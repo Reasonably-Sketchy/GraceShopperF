@@ -62,7 +62,9 @@ const App = () => {
     }
 
     useEffect(() => {
-        _setCart(getCartFromLocal());
+        if (getCartFromLocal()) {
+            _setCart(getCartFromLocal());
+        };
     }, []);
 
     const [token, setToken] = useState("");
@@ -72,7 +74,7 @@ const App = () => {
     const [cart, _setCart] = useState([]);
 
     //  ! need api route for GET /users
-    const [allUsers, setAllUsers] = useState([]);
+    // const [allUsers, setAllUsers] = useState([]);
 
     // Retrieve token from local storage
     useEffect(async () => {
@@ -80,7 +82,7 @@ const App = () => {
             setToken(localStorage.getItem('token'));
             return;
         };
-
+        
         const data = await fetchUserData(token);
         if (data && data.username) {
             setUserData(data);
@@ -95,7 +97,7 @@ const App = () => {
             console.log('MY DB CART PRODUCTS: ', dbCartOrderProducts[0]);
 
             // Nothing in cart pre-login
-            if (cart.length === 0) {
+            if (cart && cart.length === 0) {
                 console.log('Cart Length 0')
                 dbCartOrderProducts[0].forEach((orderProduct) => {cartCopy.push(orderProduct)});
                 setCart(cartCopy);
@@ -103,7 +105,7 @@ const App = () => {
             }
             
             // Items in cart pre-login:
-            if (cart.length > 0) {
+            if (cart && cart.length > 0) {
                 cartCopy = [...cart];
                 const newCart = [];
 
@@ -147,16 +149,16 @@ const App = () => {
 
     // Retrieve all users
     // ! route needs to be made
-    useEffect(async ()=>{
-        try {
-            const users = await fetchAllUsers();
-            if (users) {
-                setAllUsers(users);
-            };
-        } catch (error) {
-            console.error(error)
-        }
-    }, [])
+    // useEffect(async ()=>{
+    //     try {
+    //         const users = await fetchAllUsers();
+    //         if (users) {
+    //             setAllUsers(users);
+    //         };
+    //     } catch (error) {
+    //         console.error(error)
+    //     }
+    // }, [])
 
     return (
         <div id="app">
