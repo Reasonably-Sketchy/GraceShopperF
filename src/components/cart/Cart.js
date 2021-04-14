@@ -140,7 +140,7 @@ const Cart = ({ userData, cart, setCart, token }) => {
                     <h2 className="price-line"><span className="usd">USD</span><span className="gold-text">${orderTotal}</span> </h2>
                 </div>
 
-                {/* <StripeCheckout
+                <StripeCheckout
                     token={onToken(orderTotal * 100)}
                     stripeKey={STRIPE_KEY}
                     name="Grace Shopper"
@@ -152,13 +152,13 @@ const Cart = ({ userData, cart, setCart, token }) => {
                         className="checkout-button"
                         variant="contained"
                         color="primary">Checkout</Button>
-                </StripeCheckout> */}
+                </StripeCheckout>
 
-                    <Button
+                    {/* <Button
                         className="checkout-button"
                         variant="contained"
                         color="primary"
-                        onClick={() => {handleCompleteOrder(userId, orderId, cart, setCart, token)}}>Checkout</Button>
+                        onClick={() => {handleCompleteOrder(userId, orderId, cart, setCart, token)}}>Checkout</Button> */}
 
             </section>
             : ''
