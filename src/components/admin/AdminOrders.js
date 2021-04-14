@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 
-const AdminOrders = () =>{
-    return 'this is admin orders'
+const AdminOrders = ({orders}) =>{
+    
 }
 
 export default AdminOrders;

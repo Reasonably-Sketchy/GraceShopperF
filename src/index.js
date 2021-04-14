@@ -23,7 +23,8 @@ import {
     Cart,
     Account,
     SingleOrder,
-    Admin, } from './components'
+    Admin,
+    AdminOrders } from './components'
 
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import './styles.css';
