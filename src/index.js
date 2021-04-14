@@ -147,16 +147,16 @@ const App = () => {
 
     // Retrieve all users
     // ! route needs to be made
-    useEffect(async ()=>{
-        try {
-            const users = await fetchAllUsers();
-            if (users) {
-                setAllUsers(users);
-            };
-        } catch (error) {
-            console.error(error)
-        }
-    }, [])
+    // useEffect(async ()=>{
+    //     try {
+    //         const users = await fetchAllUsers();
+    //         if (users) {
+    //             setAllUsers(users);
+    //         };
+    //     } catch (error) {
+    //         console.error(error)
+    //     }
+    // }, [])
 
     return (
         <div id="app">
