@@ -183,6 +183,21 @@ export const editReview = async (reviewId, body, token) => {
   };
 };
 
+// Delete a review
+export const deleteReview = async (reviewId, token) => {
+  try {
+    const data = await callApi({
+      url: `/reviews/${reviewId}`,
+      method: 'DELETE',
+      token: token,
+    });
+
+    return data;
+  } catch (error) {
+    console.error(error);
+  };
+};
+
 // MISC
 // Render Stars
 export const renderStars = (starsNum, setStars) => {

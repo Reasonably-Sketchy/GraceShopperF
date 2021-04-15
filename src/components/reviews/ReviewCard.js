@@ -5,13 +5,12 @@ import { renderStars } from '../../api/utils';
 
 import './ReviewCard.css';
 import ReviewEditor from './ReviewEditor';
+import DeleteModal from './DeleteModal';
 
 const ReviewCard = ({ review, userData, token, setReviews }) => {
-
-    // const [stars, setStars] = useState([false, false, false, false, false]);
     const [cardStars, setCardStars] = useState([false, false, false, false, false]);
-
     const [editorOpen, setEditorOpen] = useState(false);
+    const [deleteModalOpen, setDeleteModalOpen] = useState(false);
 
     useEffect(() => {
         renderStars(review.stars, setCardStars);
@@ -40,11 +39,14 @@ const ReviewCard = ({ review, userData, token, setReviews }) => {
                         variant="contained"
                         color="primary"
                         onClick={() => {
-                            setEditorOpen(review.id);
+                            setEditorOpen(true);
                         }}>Edit</Button>
                     <Button
                         variant="outlined"
-                        color="primary">Delete</Button>
+                        color="primary"
+                        onClick={() => {
+                            setDeleteModalOpen(true)
+                        }}>Delete</Button>
                 </>
                 : ''}
             </div>
@@ -57,6 +59,16 @@ const ReviewCard = ({ review, userData, token, setReviews }) => {
                 setReviews = {setReviews}
                 setCardStars = {setCardStars}/>
             : ''} 
+
+            {deleteModalOpen
+            ? <DeleteModal 
+                review = {review}
+                token = {token}
+                setDeleteModalOpen = {setDeleteModalOpen}
+                setReviews = {setReviews}
+                cardStars = {cardStars}
+            />
+            : ''}
 
         </div>
     );
