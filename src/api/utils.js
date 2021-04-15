@@ -198,6 +198,21 @@ export const deleteReview = async (reviewId, token) => {
   };
 };
 
+// Get user reviews
+export const getUserReviews = async (userId, token) => {
+  console.log('UserId', userId)
+  try {
+    const data = await callApi({
+      url: `/users/${userId}/reviews`,
+      token: token,
+    });
+
+    return data;
+  } catch (error) {
+    console.error(error);
+  };
+};
+
 // MISC
 // Render Stars
 export const renderStars = (starsNum, setStars) => {

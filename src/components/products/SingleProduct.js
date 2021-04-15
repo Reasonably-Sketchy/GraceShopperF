@@ -17,14 +17,13 @@ const SingleProduct = ({ allProducts, cart, setCart, token, setUserData, userDat
     const [respMessage, setRespMessage] = useState('');
     const [reviews, setReviews] = useState([]);
     const [creatorOpen, setCreatorOpen] = useState(false);
-    const [editorOpen, setEditorOpen] = useState('');
 
     useEffect(async () => {
         const productReviews = await fetchReviews(productId);
         if (productReviews) {
             setReviews(productReviews);
         };
-    }, [])
+    }, []);
 
     if (!allProducts) {
         return <h1>Loading...</h1>

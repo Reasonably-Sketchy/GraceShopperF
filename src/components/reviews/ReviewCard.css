@@ -5,6 +5,10 @@
     padding: 12px;
 }
 
+.account-review-card {
+    grid-template-columns: 1fr 200px;
+}
+
 .review-content {
     display: flex;
     flex-direction: column;
@@ -21,6 +25,7 @@
 .actions {
     display: flex;
     flex-direction: column;
+    justify-content: center;
 }
 
 .actions button {

@@ -6,19 +6,30 @@ import { KeyboardArrowDown, KeyboardArrowRight } from '@material-ui/icons';
 
 import OrderCard from '../orders/OrderCard';
 import UserCard from './UserCard';
+import OrderProduct from './OrderProduct';
+import { getUserReviews } from '../../api/utils';
+import UserReview from '../reviews/UserReview';
 
 import './Account.css';
-// import ProductCard from '../products/ProductCard';
-import OrderProduct from './OrderProduct';
 
-const Account = ({ userData, setActiveLinkIs }) => {
-    if (!userData) {
+const Account = ({ userData, setActiveLinkIs, token }) => {
+    if (!userData || !userData.id) {
         return <h1>Loading...</h1>
     };
-
     const [ detailsOpen, setDetailsOpen ] = useState(false);
     const [ ordersOpen, setOrdersOpen ] = useState(false);
-    
+    const [ reviewsOpen, setReviewsOpen ] = useState(false);
+    const [ userReviews, setUserReviews ] = useState([]);
+
+    useEffect(async () => {
+        const myReviews = await getUserReviews(userData.id, token);
+        if (myReviews) {
+            setUserReviews(myReviews);
+            console.log('MY REVIEWS: ', myReviews)
+        };
+    }, []);
+
+
     let cartProducts = [];
     if (userData.cart) {
         cartProducts = userData.cart.products;
@@ -95,6 +106,30 @@ const Account = ({ userData, setActiveLinkIs }) => {
                             return <OrderCard key={order.id} order={order} />
                         })
                         : <div className="no-orders-message">No orders to display.</div>
+
+                    : ''}
+
+                    <Button
+                        className="accordian-button"
+                        variant="contained"
+                        color="secondary"
+                        onClick={() => {
+                            setReviewsOpen(!reviewsOpen);
+                        }}>User Reviews {reviewsOpen ? <KeyboardArrowDown /> : <KeyboardArrowRight />}</Button>
+
+                    {reviewsOpen
+                    ? userReviews && userReviews.length > 0
+                        ? userReviews.map((review) => {
+                            return (
+                                <UserReview
+                                    key = {review.id} 
+                                    review = {review}
+                                    userData = {userData}
+                                    setActiveLinkIs = {setActiveLinkIs}
+                                 />
+                            );
+                        })
+                        : <div className="no-orders-message">No reviews to display.</div>
 
                     : ''}
 

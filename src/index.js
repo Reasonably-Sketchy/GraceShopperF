@@ -213,6 +213,7 @@ const App = () => {
                     <Route path = "/account">
                         <Account 
                             userData = {userData}
+                            token = {token}
                             setActiveLinkIs = {setActiveLinkIs} />
                     </Route>
 
