@@ -167,6 +167,21 @@ export const addReview = async (productId, body, token) => {
   };
 };
 
+// Update a review
+export const editReview = async (reviewId, body, token) => {
+  try {
+    const data = await callApi({
+      url: `/reviews/${reviewId}`,
+      method: 'PATCH',
+      body: body,
+      token: token,
+    });
+
+    return data;
+  } catch (error) {
+    console.error(error);
+  };
+};
 
 // MISC
 // Render Stars

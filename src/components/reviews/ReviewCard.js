@@ -4,13 +4,17 @@ import { Star, StarBorder } from '@material-ui/icons';
 import { renderStars } from '../../api/utils';
 
 import './ReviewCard.css';
+import ReviewEditor from './ReviewEditor';
 
-const ReviewCard = ({review, userData}) => {
+const ReviewCard = ({ review, userData, token, setReviews }) => {
 
-    const [stars, setStars] = useState([false, false, false, false, false]);
+    // const [stars, setStars] = useState([false, false, false, false, false]);
+    const [cardStars, setCardStars] = useState([false, false, false, false, false]);
+
+    const [editorOpen, setEditorOpen] = useState(false);
 
     useEffect(() => {
-        renderStars(review.stars, setStars);
+        renderStars(review.stars, setCardStars);
     }, []);
 
     return (
@@ -18,7 +22,7 @@ const ReviewCard = ({review, userData}) => {
             <div className="review-content">
                 <h2>"{review.title}"</h2>
                 <div className="stars-container">
-                    {stars.map((value) => {
+                    {cardStars.map((value) => {
                         if (value) {
                             return <Star />
                         } else {
@@ -34,14 +38,26 @@ const ReviewCard = ({review, userData}) => {
                 ? <>
                     <Button
                         variant="contained"
-                        color="primary">Edit</Button>
+                        color="primary"
+                        onClick={() => {
+                            setEditorOpen(review.id);
+                        }}>Edit</Button>
                     <Button
                         variant="outlined"
                         color="primary">Delete</Button>
                 </>
                 : ''}
             </div>
- 
+
+            {editorOpen
+            ? <ReviewEditor
+                review = {review}
+                token = {token}
+                setEditorOpen = {setEditorOpen}
+                setReviews = {setReviews}
+                setCardStars = {setCardStars}/>
+            : ''} 
+
         </div>
     );
 };

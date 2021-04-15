@@ -4,6 +4,7 @@ import { useParams } from 'react-router';
 import { addProductToOrder, createOrder, fetchReviews, fetchUserCart, updateUserData } from '../../api/utils';
 import ReviewCard from '../reviews/ReviewCard';
 import ReviewCreator from '../reviews/ReviewCreator';
+import ReviewEditor from '../reviews/ReviewEditor';
 
 import ProductCard from './ProductCard';
 
@@ -16,6 +17,7 @@ const SingleProduct = ({ allProducts, cart, setCart, token, setUserData, userDat
     const [respMessage, setRespMessage] = useState('');
     const [reviews, setReviews] = useState([]);
     const [creatorOpen, setCreatorOpen] = useState(false);
+    const [editorOpen, setEditorOpen] = useState('');
 
     useEffect(async () => {
         const productReviews = await fetchReviews(productId);
@@ -164,7 +166,9 @@ const SingleProduct = ({ allProducts, cart, setCart, token, setUserData, userDat
                             <ReviewCard
                                 key = {review.id} 
                                 review = {review}
-                                userData = {userData} />
+                                userData = {userData}
+                                token = {token}
+                                setReviews = {setReviews} />
                         );
                     })
                     : <div>No reviews to display.</div>
@@ -179,6 +183,7 @@ const SingleProduct = ({ allProducts, cart, setCart, token, setUserData, userDat
                 setCreatorOpen = {setCreatorOpen}
                 setReviews = {setReviews}/>
             : ''}
+
         </main>
     );
 };
