@@ -41,6 +41,21 @@ export const fetchUserCart = async (token) => {
   };
 };
 
+// Users
+export const fetchAllUsers = async (token) => {
+  try {
+    const data = await callApi({
+      url: "/users",
+      token
+    });
+    console.log('data fetch users line 51 utils', data)
+
+    return data;
+  } catch (error) {
+    console.error(error)
+  };
+};
+
 // Products
 export const fetchAllProducts = async (token) => {
     try {

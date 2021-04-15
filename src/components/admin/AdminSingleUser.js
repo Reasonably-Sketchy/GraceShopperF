@@ -1,32 +1,39 @@
 import React, {useState, useEffect} from 'react';
 import { callApi } from '../../api';
 
-const SingleUser = ({thisUser, userData}) => {
+const SingleUser = ({thisUser, userData, token}) => {
     const [email, editEmail] = useState()
-    const [admin, setAdmin] = useState(false)
+    const [isAdmin, setAdmin] = useState(false)
 
-    // ! need api routes and adapters
+    const user = thisUser;
+
     const handleSubmit = async (event) =>{
         event.preventDefault();
 
-        const response = callApi()
-        // TODO build out when routes and adapters exist
+        const response = callApi({
+            url: `/users/${user.id}`,
+            method: 'PATCH',
+            body: {
+                email,
+                isAdmin
+            }, 
+            token: token
+        });
+
     }
 
-    // or check admin in index.js might be better most probably
-    if (userData.isAdmin) {
         return (
             <>
                 <div className="singleUser-container">
-                    <h2>{thisUser.username}</h2>
-                    <h4>{thisUser.email}</h4>
+                    <h2>{user.username}</h2>
+                    <h4>{user.email}</h4>
                     <img 
                         className="user-pfp"
-                        src={thisUser.imageURL}
+                        src={user.imageURL}
                     ></img>
-                    {thisUser.isAdmin
-                        ? <h4>{thisUser.username} is an Admin</h4>
-                        : <h4>{thisUser.username} is not an Admin</h4>
+                    {user.isAdmin
+                        ? <h4>{user.username} is an Admin</h4>
+                        : <h4>{user.username} is not an Admin</h4>
                     }
                 </div>
 
@@ -39,21 +46,18 @@ const SingleUser = ({thisUser, userData}) => {
                         <input
                             type="text"
                             value={email}
-                            placeholder={thisUser.email}
+                            placeholder={user.email}
                             onChange={(event)=>editEmail(event.target.value)}
                         >Edit email?</input>
                         <div id="isAdmin">Grant Admin?<input
                             type="checkbox"
-                            value={admin}
+                            value={isAdmin}
                             onChange={()=>setAdmin(true)}
                         ></input></div>
                     </form>                    
                 </div>
             </>
         )
-    } else return (
-        <h2>Must be Admin to view users</h2>
-    )
 }
 
 export default SingleUser; 

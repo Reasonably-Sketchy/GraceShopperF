@@ -7,7 +7,14 @@ import {
     useHistory,
     Link
 } from 'react-router-dom';
-import { fetchUserData, fetchAllProducts, fetchUserCart, addProductToOrder } from './api/utils';
+
+import { 
+    fetchUserData, 
+    fetchAllProducts, 
+    fetchUserCart, 
+    addProductToOrder,
+    fetchAllUsers 
+} from './api/utils';
 
 // Page components
 import { 
@@ -24,7 +31,11 @@ import {
     Account,
     SingleOrder,
     Admin,
-    AdminOrders } from './components'
+    AdminOrders, 
+    AdminUsers,
+    AddUser,
+    SingleUser
+} from './components'
 
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import './styles.css';
@@ -73,8 +84,6 @@ const App = () => {
     const [allProducts, setAllProducts] = useState([]);
     const [activeLinkIs, setActiveLinkIs] = useState('Home');
     const [cart, _setCart] = useState([]);
-
-    //  ! need api route for GET /users
     // const [allUsers, setAllUsers] = useState([]);
 
     // Retrieve token from local storage
@@ -149,10 +158,10 @@ const App = () => {
     }, [])
 
     // Retrieve all users
-    // ! route needs to be made
     // useEffect(async ()=>{
     //     try {
     //         const users = await fetchAllUsers();
+    //         console.log('users line 161 index.js', users)
     //         if (users) {
     //             setAllUsers(users);
     //         };
@@ -238,7 +247,13 @@ const App = () => {
 
                     {userData.isAdmin
                     ? <Route path = "/admin">
-                        <Admin />
+                        <Admin token={token} />
+                    </Route>
+                    : '' }
+
+                    {userData.isAdmin
+                    ? <Route path = "/users">
+                        <AdminUsers token={token} />
                     </Route>
                     : '' }
 

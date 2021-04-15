@@ -5,12 +5,13 @@ import AdminSingleUser from './AdminSingleUser'
 const AdminUsers = ({allUsers}) => {
     const [thisUser, setThisUser] = useState({})
 
-// ! need api route for GET /users
+    const usersToMap = allUsers;
+
     return (
         <main id="users">
             <h1>All Users</h1>
             <section className="users-container">
-                {allUsers.map((user)=>{
+                {usersToMap.map((user)=>{
                     setThisUser(user);
                     return (
                         <React.Fragment key={user.id}>
