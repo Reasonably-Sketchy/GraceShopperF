@@ -103,9 +103,12 @@ const Cart = ({ userData, setUserData, cart, setCart, token }) => {
 
     return (
         <main id="cart">
-            <section className="cart-page-header">
-                <h1>Shopping Cart</h1>
-            </section>
+
+            <div className="page-header-image">
+                <section className="page-header">
+                    <h1 className="header-text">Shopping Cart</h1>
+                </section>
+            </div>
             
             <section className="cart-page-display">
 
