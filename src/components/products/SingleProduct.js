@@ -1,7 +1,7 @@
 import { Button } from '@material-ui/core';
 import React, {useEffect, useState} from 'react';
 import { useParams } from 'react-router';
-import { addProductToOrder, createOrder, fetchUserCart, updateUserData } from '../../api/utils';
+import { addProductToOrder, createOrder, fetchReviews, fetchUserCart, updateUserData } from '../../api/utils';
 
 import ProductCard from './ProductCard';
 
@@ -12,6 +12,7 @@ const SingleProduct = ({ allProducts, cart, setCart, token, setUserData }) => {
     const { productId } = useParams();
     const [quantity, setQuantity] = useState(1);
     const [respMessage, setRespMessage] = useState('');
+    const [reviews, setReviews] = useState([]);
 
     if (!allProducts) {
         return <h1>Loading...</h1>
@@ -23,6 +24,15 @@ const SingleProduct = ({ allProducts, cart, setCart, token, setUserData }) => {
         return <h1>This product does not exist.</h1>
     };
     
+
+    // Fetch the reviews
+    // useEffect(async () => {
+    //     const productReviews = await fetchReviews(productId);
+    //     if (productReviews) {
+    //         setReviews(productReviews);
+    //     };
+    // }, []);
+
     const handleQuantityChange = async (event) => {
         setQuantity(Number(event.target.value))
     };
@@ -135,6 +145,9 @@ const SingleProduct = ({ allProducts, cart, setCart, token, setUserData }) => {
                 </div>
             </section>
 
+            <section className="reviews">
+                <h2>Reviews:</h2>
+            </section>
         </main>
     );
 };

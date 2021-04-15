@@ -133,3 +133,20 @@ export const updateOrder = async (orderId, body, token) => {
     console.error(error);
   };
 };
+
+
+// Fetch product reviews (productId)
+export const fetchReviews = async (productId) => {
+  try {
+    const data = await callApi({
+      url: `/reviews/${productId}`,
+    });
+
+    if (!data) {
+      console.log('No reviews exist yet for this product.');
+    };
+    return data;
+  } catch (error) {
+    console.error(error);
+  };
+};
