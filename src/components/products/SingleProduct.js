@@ -3,17 +3,19 @@ import React, {useEffect, useState} from 'react';
 import { useParams } from 'react-router';
 import { addProductToOrder, createOrder, fetchReviews, fetchUserCart, updateUserData } from '../../api/utils';
 import ReviewCard from '../reviews/ReviewCard';
+import ReviewCreator from '../reviews/ReviewCreator';
 
 import ProductCard from './ProductCard';
 
 // import './Products.css';
 import './SingleProduct.css';
 
-const SingleProduct = ({ allProducts, cart, setCart, token, setUserData }) => {
+const SingleProduct = ({ allProducts, cart, setCart, token, setUserData, userData }) => {
     const { productId } = useParams();
     const [quantity, setQuantity] = useState(1);
     const [respMessage, setRespMessage] = useState('');
     const [reviews, setReviews] = useState([]);
+    const [creatorOpen, setCreatorOpen] = useState(false);
 
     useEffect(async () => {
         const productReviews = await fetchReviews(productId);
@@ -128,6 +130,7 @@ const SingleProduct = ({ allProducts, cart, setCart, token, setUserData }) => {
                     <fieldset className="quantity-container">
                         <label htmlFor="quantity">Quantity:</label>
                         <input 
+                            className="quantity-input"
                             name="quantity"
                             type="number"
                             value={quantity}
@@ -146,19 +149,36 @@ const SingleProduct = ({ allProducts, cart, setCart, token, setUserData }) => {
 
             <section className="reviews">
                 <h2>Reviews:</h2>
+                <Button
+                    className="add-review"
+                    variant="contained"
+                    color="primary"
+                    disabled={userData && userData.username ? false : true}
+                    onClick={() => {
+                        setCreatorOpen(true);
+                    }}>Add a Review</Button>
                 <div className="reviews-container">
                     {reviews && reviews.length > 0
                     ? reviews.map((review) => {
                         return (
                             <ReviewCard
                                 key = {review.id} 
-                                review = {review} />
+                                review = {review}
+                                userData = {userData} />
                         );
                     })
                     : <div>No reviews to display.</div>
                     }
                 </div>
             </section>
+
+            {creatorOpen
+            ? <ReviewCreator 
+                token = {token}
+                productId = {productId}
+                setCreatorOpen = {setCreatorOpen}
+                setReviews = {setReviews}/>
+            : ''}
         </main>
     );
 };

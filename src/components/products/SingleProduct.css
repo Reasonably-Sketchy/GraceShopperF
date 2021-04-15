@@ -32,7 +32,7 @@
     margin-right: 24px;
 }
 
-#single-product input {
+#single-product .quantity-input {
     height: 40px;
     width: 80px;
     outline: none;
@@ -58,6 +58,11 @@
     display: grid;
     grid-template-columns: 1fr;
     grid-gap: 12px;
+    margin-top: 12px;
+}
+
+.add-review {
+    width: 200px;
 }
 
 @media screen and (max-width: 768px) {

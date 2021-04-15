@@ -150,3 +150,40 @@ export const fetchReviews = async (productId) => {
     console.error(error);
   };
 };
+
+// Add a review
+export const addReview = async (productId, body, token) => {
+  try {
+    const data = await callApi({
+      url: `/reviews/${productId}`,
+      method: 'POST',
+      body: body,
+      token: token,
+    });
+
+    return data;
+  } catch (error) {
+    console.error(error);
+  };
+};
+
+
+// MISC
+// Render Stars
+export const renderStars = (starsNum, setStars) => {
+  let newArray = [];
+  if (starsNum === 1) {
+      newArray = [true, false, false, false, false]
+  } else if (starsNum === 2) {
+      newArray = [true, true, false, false, false]
+  } else if (starsNum === 3) {
+      newArray = [true, true, true, false, false]
+  } else if (starsNum === 4) {
+      newArray = [true, true, true, true, false]
+  } else if (starsNum === 5) {
+      newArray = [true, true, true, true, true]
+  } else {
+      newArray = [false, false, false, false, false]
+  };
+  setStars(newArray);
+};

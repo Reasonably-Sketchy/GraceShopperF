@@ -146,19 +146,6 @@ const App = () => {
         };
     }, [])
 
-    // Retrieve all users
-    // ! route needs to be made
-    // useEffect(async ()=>{
-    //     try {
-    //         const users = await fetchAllUsers();
-    //         if (users) {
-    //             setAllUsers(users);
-    //         };
-    //     } catch (error) {
-    //         console.error(error)
-    //     }
-    // }, [])
-
     return (
         <div id="app">
             <ThemeProvider theme={theme}>
@@ -219,7 +206,8 @@ const App = () => {
                             cart = {cart}
                             setCart = {setCart}
                             token = {token}
-                            setUserData = {setUserData}/>
+                            setUserData = {setUserData}
+                            userData = {userData}/>
                     </Route>
 
                     <Route path = "/account">
