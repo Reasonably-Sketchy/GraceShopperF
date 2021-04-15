@@ -2,6 +2,7 @@ import { Button } from '@material-ui/core';
 import React, {useEffect, useState} from 'react';
 import { useParams } from 'react-router';
 import { addProductToOrder, createOrder, fetchReviews, fetchUserCart, updateUserData } from '../../api/utils';
+import ReviewCard from '../reviews/ReviewCard';
 
 import ProductCard from './ProductCard';
 
@@ -14,6 +15,13 @@ const SingleProduct = ({ allProducts, cart, setCart, token, setUserData }) => {
     const [respMessage, setRespMessage] = useState('');
     const [reviews, setReviews] = useState([]);
 
+    useEffect(async () => {
+        const productReviews = await fetchReviews(productId);
+        if (productReviews) {
+            setReviews(productReviews);
+        };
+    }, [])
+
     if (!allProducts) {
         return <h1>Loading...</h1>
     };
@@ -23,15 +31,6 @@ const SingleProduct = ({ allProducts, cart, setCart, token, setUserData }) => {
     if (!thisProduct) {
         return <h1>This product does not exist.</h1>
     };
-    
-
-    // Fetch the reviews
-    // useEffect(async () => {
-    //     const productReviews = await fetchReviews(productId);
-    //     if (productReviews) {
-    //         setReviews(productReviews);
-    //     };
-    // }, []);
 
     const handleQuantityChange = async (event) => {
         setQuantity(Number(event.target.value))
@@ -147,6 +146,18 @@ const SingleProduct = ({ allProducts, cart, setCart, token, setUserData }) => {
 
             <section className="reviews">
                 <h2>Reviews:</h2>
+                <div className="reviews-container">
+                    {reviews && reviews.length > 0
+                    ? reviews.map((review) => {
+                        return (
+                            <ReviewCard
+                                key = {review.id} 
+                                review = {review} />
+                        );
+                    })
+                    : <div>No reviews to display.</div>
+                    }
+                </div>
             </section>
         </main>
     );

@@ -140,7 +140,6 @@ const App = () => {
             if (products) {
                 setAllProducts(products);
             };
-
             // setCart(localStorage.getItem('cart'))
         } catch(error) {
             console.error(error);
