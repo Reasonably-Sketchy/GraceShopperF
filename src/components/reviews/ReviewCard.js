@@ -5,21 +5,20 @@ import { renderStars } from '../../api/utils';
 
 import './ReviewCard.css';
 
-const ReviewCard = (review, userData) => {
-    console.log('REVIEW: ', review.review)
+const ReviewCard = ({review, userData}) => {
+
     const [stars, setStars] = useState([false, false, false, false, false]);
 
     useEffect(() => {
-        renderStars(review.review.stars, setStars);
+        renderStars(review.stars, setStars);
     }, []);
 
     return (
         <div className="review-card">
             <div className="review-content">
-                <h2>"{review.review.title}"</h2>
+                <h2>"{review.title}"</h2>
                 <div className="stars-container">
                     {stars.map((value) => {
-                        console.log(value)
                         if (value) {
                             return <Star />
                         } else {
@@ -27,17 +26,17 @@ const ReviewCard = (review, userData) => {
                         };
                     })}
                 </div>
-                <p>{review.review.content}</p>
+                <p>{review.content}</p>
             </div>
 
             <div className="actions">
-                {review.review.userId === userData.id
+                {review.userId === userData.id
                 ? <>
                     <Button
                         variant="contained"
                         color="primary">Edit</Button>
                     <Button
-                        variant="contained"
+                        variant="outlined"
                         color="primary">Delete</Button>
                 </>
                 : ''}
