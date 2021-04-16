@@ -1,0 +1,109 @@
+.review-editor {
+    position: fixed;
+    top: 10vh;
+    bottom: 10vh;
+    right: 10vw;
+    left: 10vw;
+    background-color: black;
+    box-shadow: 1px 1px 5px gray;
+    z-index: 200;
+    overflow-y: scroll;
+    padding: 24px;
+}
+
+.editor-background {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 200;
+    overflow-y: hidden;
+}
+
+.close-button-container {
+    display: flex;
+    justify-content: flex-end;
+}
+
+form {
+    width: 100%;
+    /* padding: 0px 24px 0px 24px; */
+}
+
+.fieldset {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 12px;
+}
+
+.fieldset label, .fieldset h3 {
+    font-size: 1.6rem;
+}
+
+.review-editor .fieldset h3 {
+    margin-bottom: 6px !important;
+}
+
+.review-editor .MuiSvgIcon-root {
+    width: 2em;
+    height: 2em;
+}
+
+.fieldset input {
+    height: 40px;
+    font-size: 1.4rem;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    padding: 8px;
+    border-radius: 8px;
+    outline: none;
+    border: none;
+    box-shadow: inset 0 0 5px gray;
+    background-color: black;
+    color: white;
+}
+
+.fieldset textarea {
+    font-size: 1.4rem;
+    padding: 8px;
+    font-weight: 400;
+    font-family: 'Montserrat', sans-serif;
+    resize: none;
+    border-radius: 8px;
+    outline: none;
+    border: none;
+    box-shadow: inset 0 0 5px gray;
+    background-color: black;
+    color: white;
+}
+
+.fieldset .stars-container {
+    display: flex;
+}
+
+.star {
+    cursor: pointer;
+}
+
+.submit-container {
+    display: flex;
+    justify-content: flex-end;
+    padding: 24px 0 24px 0;
+}
+
+.submit-container button {
+    height: 60px;
+    width: 200px;
+}
+
+
+@media screen and (max-width: 768px) {
+    .review-editor {
+        top: 5vw;
+        bottom: 5vw;
+        right: 5vw;
+        left: 5vw;
+    }
+}

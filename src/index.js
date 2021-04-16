@@ -140,25 +140,11 @@ const App = () => {
             if (products) {
                 setAllProducts(products);
             };
-
             // setCart(localStorage.getItem('cart'))
         } catch(error) {
             console.error(error);
         };
     }, [])
-
-    // Retrieve all users
-    // ! route needs to be made
-    // useEffect(async ()=>{
-    //     try {
-    //         const users = await fetchAllUsers();
-    //         if (users) {
-    //             setAllUsers(users);
-    //         };
-    //     } catch (error) {
-    //         console.error(error)
-    //     }
-    // }, [])
 
     return (
         <div id="app">
@@ -220,12 +206,14 @@ const App = () => {
                             cart = {cart}
                             setCart = {setCart}
                             token = {token}
-                            setUserData = {setUserData}/>
+                            setUserData = {setUserData}
+                            userData = {userData}/>
                     </Route>
 
                     <Route path = "/account">
                         <Account 
                             userData = {userData}
+                            token = {token}
                             setActiveLinkIs = {setActiveLinkIs} />
                     </Route>
 

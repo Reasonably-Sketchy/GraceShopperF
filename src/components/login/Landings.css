@@ -6,8 +6,16 @@
     text-align: center;
 }
 
+#landing {
+    background: url(/src/assets/shoppe-interior.jpg);
+    background-size: cover;
+    background-position: center;
+}
+
 .landing-container {
     height: 80vh;
+    width: 100%;
+    background: radial-gradient(circle, rgba(0,0,0,0.9) 40%, rgba(0,0,0,0.5) 70%, rgba(0,0,0,0.4) 100%);    box-shadow: inset 0 0 5px black;
 }
 
 .landing-container h1, .landing-container h3 {
