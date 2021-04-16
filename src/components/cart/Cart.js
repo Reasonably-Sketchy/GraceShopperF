@@ -9,7 +9,7 @@ import { addProductToOrder, createOrder, updateOrder, updateUserData } from "../
 
 const STRIPE_KEY = 'pk_test_51IemByGFMkmVlUo2ZadMmHIIQKtbGWn2OdYjCM2aOLy0JVMa5WajgLBi5qAeg2dj90cmmfpb9Rcp8Ycb2FxXmVGp00le6ddDto';
 const CURRENCY = 'USD';
-const PAYMENT_URL = 'http://localhost:3000/api/pay';
+const PAYMENT_URL = 'https://sketch-shoppe-backend.herokuapp.com/api/pay';
 
 const generateItemsTotal = (cart) => {
     if (cart && cart.length > 0) {
