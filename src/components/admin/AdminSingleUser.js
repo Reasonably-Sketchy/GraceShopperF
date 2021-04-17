@@ -1,36 +1,35 @@
 import React, {useState, useEffect} from 'react';
 import { callApi } from '../../api';
-import {Link} from 'react-router-dom';
+import {Link, useParams} from 'react-router-dom';
 import { fetchAllUsers } from '../../api/utils';
 
 const SingleUser = ({allUsers, userData, token}) => {
     const [email, editEmail] = useState()
     const [isAdmin, setAdmin] = useState(false)
-    const [users, setUsers] = useState([])
+    const [user, setUser] = useState([])
+    const {userId} =  useParams()
+
 
     if (!allUsers) {
         return <h1>Loading...</h1>
     }
 
-    const thisUser = localStorage.getItem('thisUser');
-    // console.log('user line 10', user)
-    useEffect(async()=> {
-        try{
-            const data = await fetchAllUsers(token);
-            if (data) {
-                setUsers(data)
-            };
+    const thisUser = allUsers.find((user)=>{
+        return Number(userId) === user.id
+    })
+
+    useEffect(async()=>{
+        try {
+
         } catch (error) {
             console.error(error)
-        }   
-    }, [])
-    console.log('please be all users', users)
-
-    const wantedUser = allUsers.find((user)=>{
-        return user.id == thisUser
+        }
     })
-    // console.log('this is the user we want', wantedUser)
-    
+
+
+    setUser(thisUser);
+    console.log('this User line 21', thisUser)
+
 
 
     const handleSubmit = async (event) =>{
@@ -50,20 +49,20 @@ const SingleUser = ({allUsers, userData, token}) => {
 
     return (<>
         <div className="singleUser-container">
-            <h2>{user.username}</h2>
-            <h4>{user.email}</h4>
+            <h2>{thisUser.username}</h2>
+            <h4>{thisUser.email}</h4>
 
             <img 
                 className="user-pfp"
-                src={user.imageURL}
+                src={thisUser.imageURL}
             ></img>
-            {user.isAdmin
-                ? <h4>{user.username} is an Admin</h4>
-                : <h4>{user.username} is not an Admin</h4>
+            {thisUser.isAdmin
+                ? <h4>{thisUser.username} is an Admin</h4>
+                : <h4>{thisUser.username} is not an Admin</h4>
             }
         </div>
 
-        <div className="editUser-container">
+        {/* <div className="editUser-container">
         Edit User info:
         <form
             id="editUser"
@@ -81,7 +80,7 @@ const SingleUser = ({allUsers, userData, token}) => {
                 onChange={()=>setAdmin(true)}
             ></input></div>
         </form>                    
-        </div>
+        </div> */}
     </>)
 }
 

@@ -167,8 +167,6 @@ const App = () => {
             let users = []
             if (token) {
                 users = await fetchAllUsers(token);
-                console.log('users line 161 index.js', users)
-                console.log('token 165', token);
             }
             if (users) {
                 setAllUsers(users);
@@ -176,7 +174,7 @@ const App = () => {
         } catch (error) {
             console.error(error)
         }
-    }, []);
+    }, [token]);
 
     // Retrieve all orders
     useEffect(async ()=>{
@@ -193,7 +191,7 @@ const App = () => {
         } catch (error) {
             console.error(error)
         }
-    }, [])
+    }, [token])
 
     return (
         <div id="app">
@@ -292,6 +290,7 @@ const App = () => {
                         <Admin 
                             token={token} 
                             setAllProducts={setAllProducts}
+                            allUsers={allUsers}
                             />
                     </Route>
                     : '' }
@@ -308,6 +307,7 @@ const App = () => {
                     {userData.isAdmin
                     ? <Route path="/users/:userId">
                         <SingleUser
+
                             allUsers={allUsers}
                             token={token}
                         ></SingleUser>

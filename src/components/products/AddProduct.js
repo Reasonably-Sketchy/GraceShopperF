@@ -28,7 +28,7 @@ const AddProduct = ({token, setAllProducts}) => {
                 token: token
                 
             });
-            // setAllProducts(data)
+            setAllProducts(data)
             if (data) {
                 let result = await callApi({
                     url: '/products',

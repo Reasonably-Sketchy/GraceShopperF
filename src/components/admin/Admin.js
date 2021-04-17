@@ -9,13 +9,14 @@ import { KeyboardArrowDown, KeyboardArrowRight } from '@material-ui/icons';
 import AddProduct from '../products/AddProduct';
 import './Admin.css';
 import SingleUser from './AdminSingleUser';
-import UserList from './UserList'
+import UserList from './UserList'; 
+import {Route} from 'react-router-dom';
 
-const Admin = ({token, setAllProducts}) => {
+const Admin = ({token, setAllProducts, allUsers}) => {
     const history = useHistory();
 
     // We may want to move this state/useEffect to the Admin page for security of user data
-    const [allUsers, setAllUsers] = useState([]);
+    // const [allUsers, setAllUsers] = useState([]);
     const [usersExpand, setUsersExpand] = useState(false);
     const [allUsersExpand, setAllUsersExpand] = useState(false);
     const [productsExpand, setProductsExpand] = useState(false);
@@ -23,17 +24,17 @@ const Admin = ({token, setAllProducts}) => {
 
     
     
-    useEffect(async ()=>{
-        try {
-            const users = await fetchAllUsers(token);
-            console.log('users line 16 in admin.js', users)
-            if (users) {
-                setAllUsers(users);
-            };
-        } catch (error) {
-            console.error(error)
-        }
-    }, [])
+    // useEffect(async ()=>{
+    //     try {
+    //         const users = await fetchAllUsers(token);
+    //         console.log('users line 16 in admin.js', users)
+    //         if (users) {
+    //             setAllUsers(users);
+    //         };
+    //     } catch (error) {
+    //         console.error(error)
+    //     }
+    // }, [])
 
 
     const transitionCLick = () => {

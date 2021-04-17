@@ -21,15 +21,18 @@ const ProductCard = ({
 
         const confirmed = confirm(`Are you sure you want to delete ${product.name}?`);
         if( confirmed === true ) {
-            const thisProduct = product.id
+            const thisProduct = Number(product.id)
+            console.log('this product 25 ', thisProduct)
             const response = await callApi({
-                url: `/products/${product.id}`,
+                url: `/products/${thisProduct}`,
                 method: 'DELETE',
                 token: token
             });
 
             const filtered = allProducts.filter((product)=> product.id !== thisProduct)
             setAllProducts(filtered);
+
+
         } else {
             return
         }
