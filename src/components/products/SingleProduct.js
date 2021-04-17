@@ -11,7 +11,7 @@ import ProductCard from './ProductCard';
 // import './Products.css';
 import './SingleProduct.css';
 
-const SingleProduct = ({ allProducts, cart, setCart, token, setUserData, userData }) => {
+const SingleProduct = ({ allProducts, cart, setCart, token, setUserData, userData, addLoadingEvent, removeLoadingEvent }) => {
     const { productId } = useParams();
     const [quantity, setQuantity] = useState(1);
     const [respMessage, setRespMessage] = useState('');
@@ -19,10 +19,15 @@ const SingleProduct = ({ allProducts, cart, setCart, token, setUserData, userDat
     const [creatorOpen, setCreatorOpen] = useState(false);
 
     useEffect(async () => {
-        const productReviews = await fetchReviews(productId);
-        if (productReviews) {
-            setReviews(productReviews);
-        };
+        addLoadingEvent();
+        fetchReviews(productId)
+            .then(productReviews => {
+                if (productReviews) {
+                    setReviews(productReviews);
+                };
+            })
+            .finally(removeLoadingEvent)
+        
     }, []);
 
     if (!allProducts) {
@@ -72,45 +77,50 @@ const SingleProduct = ({ allProducts, cart, setCart, token, setUserData, userDat
         // IF I AM LOGGED IN
         if (token) {
             // try to get my cart
-            let databaseCart = await fetchUserCart(token);
+            addLoadingEvent();
+            fetchUserCart(token)
+                .then(async databaseCart => {
 
-            // If there's nothing in the cart state, either find my empty cart or create a new order
-            if (cart.length === 0) {
-                // Locate the user's cart (or create one if there is none)
-                if (databaseCart && databaseCart.length > 0) {
-                    console.log("Existing User Cart: ", databaseCart);
-                } else if (!databaseCart) {
-                    databaseCart = await createOrder(token);
-                    console.log("New User Cart:", databaseCart);
-                };
-            };
-
-            // Add the product to the order
-            const body = {
-                productId: productId,
-                price: thisProduct.price,
-                quantity: quantity,
-            };
-
-            const newOrderProduct = await addProductToOrder(databaseCart.id, body, token);
-
-            // Need to update the cart
-            let cartCopy = [];
-            if (cart && cart.length > 0) {
-                cartCopy = [...cart];
-                for (let i = 0; i < cartCopy.length; i ++) {
-                    const checkedProduct = cartCopy[i];
-                    if (checkedProduct.name === thisProduct.name) {
-                        setRespMessage('This item is already in your cart.');
-                        return;
+                    // If there's nothing in the cart state, either find my empty cart or create a new order
+                    if (cart.length === 0) {
+                        // Locate the user's cart (or create one if there is none)
+                        if (databaseCart && databaseCart.length > 0) {
+                            console.log("Existing User Cart: ", databaseCart);
+                        } else if (!databaseCart) {
+                            databaseCart = await createOrder(token);
+                            console.log("New User Cart:", databaseCart);
+                        };
                     };
-                };
-            };
-            cartCopy.push(newOrderProduct);
-            setCart(cartCopy);
-            // window.location.reload();
-            setRespMessage('Added to cart!')
-            await updateUserData(token, setUserData);
+
+                    // Add the product to the order
+                    const body = {
+                        productId: productId,
+                        price: thisProduct.price,
+                        quantity: quantity,
+                    };
+
+                    const newOrderProduct = await addProductToOrder(databaseCart.id, body, token);
+
+                    // Need to update the cart
+                    let cartCopy = [];
+                    if (cart && cart.length > 0) {
+                        cartCopy = [...cart];
+                        for (let i = 0; i < cartCopy.length; i ++) {
+                            const checkedProduct = cartCopy[i];
+                            if (checkedProduct.name === thisProduct.name) {
+                                setRespMessage('This item is already in your cart.');
+                                return;
+                            };
+                        };
+                    };
+                    cartCopy.push(newOrderProduct);
+                    setCart(cartCopy);
+                    // window.location.reload();
+                    setRespMessage('Added to cart!')
+                    await updateUserData(token, setUserData);
+                })
+                .finally(removeLoadingEvent)
+
         };
 
     };
@@ -163,6 +173,8 @@ const SingleProduct = ({ allProducts, cart, setCart, token, setUserData, userDat
                     ? reviews.map((review) => {
                         return (
                             <ReviewCard
+                                addLoadingEvent={addLoadingEvent}
+                                removeLoadingEvent={removeLoadingEvent}
                                 key = {review.id} 
                                 review = {review}
                                 userData = {userData}
@@ -177,6 +189,8 @@ const SingleProduct = ({ allProducts, cart, setCart, token, setUserData, userDat
 
             {creatorOpen
             ? <ReviewCreator 
+                addLoadingEvent={addLoadingEvent}
+                removeLoadingEvent={removeLoadingEvent}
                 token = {token}
                 productId = {productId}
                 setCreatorOpen = {setCreatorOpen}

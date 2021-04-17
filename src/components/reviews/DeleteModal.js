@@ -5,13 +5,17 @@ import { Star, StarBorder } from '@material-ui/icons';
 import './DeleteModal.css';
 import { deleteReview, fetchReviews } from '../../api/utils';
 
-const DeleteModal = ({ setDeleteModalOpen, review, token, setReviews, cardStars }) => {
+const DeleteModal = ({ setDeleteModalOpen, review, token, setReviews, cardStars, addLoadingEvent, removeLoadingEvent }) => {
 
     const handleDelete = async (event) => {
         event.preventDefault();
-        const deletedReview = await deleteReview(review.id, token);
-        console.log('DELETED REVIEW: ', deletedReview);
-        const updateReviews = await fetchReviews(review.productId);
+        addLoadingEvent();
+        deleteReview(review.id, token)
+            .then(async deletedReview => {
+                console.log('DELETED REVIEW: ', deletedReview);
+                const updateReviews = await fetchReviews(review.productId);
+            })
+            .finally(removeLoadingEvent);
         setReviews(updateReviews);
         setDeleteModalOpen(false);
     };

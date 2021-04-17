@@ -73,6 +73,11 @@ const App = () => {
     const [allProducts, setAllProducts] = useState([]);
     const [activeLinkIs, setActiveLinkIs] = useState('Home');
     const [cart, _setCart] = useState([]);
+    const [numLoadingEvents, setNumLoadingEvents] = useState(0);
+    const addLoadingEvent = () => setNumLoadingEvents(numLoadingEvents + 1);
+    const removeLoadingEvent = () => {
+        setNumLoadingEvents(numLoadingEvents > 0 ? numLoadingEvents - 1 : 0);
+    }
 
     // Retrieve token from local storage
     useEffect(async () => {
@@ -80,33 +85,38 @@ const App = () => {
             setToken(localStorage.getItem('token'));
             return;
         };
+        addLoadingEvent();
+
+        fetchUserData(token)
+            .then(data => {
+                if(data && data.username) {
+                    setUserData(data)
+                }
+            })
+
+        fetchUserCart(token)
+            .then(async (databaseCart) => {
+                console.log('MY OLD CART PRODUCTS: ', cart);
+                if (!databaseCart) {
+                    databaseCart = await createOrder(token);
+                    console.log('New User Cart: ', databaseCart);
+                };
+                await addStateCartToDB(databaseCart, cart, setCart, addProductToOrder, token, updateUserData, setUserData);
+            })
+            .finally(removeLoadingEvent);
         
-        const data = await fetchUserData(token);
-        if (data && data.username) {
-            setUserData(data);
-        };
-
-        let databaseCart = await fetchUserCart(token);
-        console.log('MY OLD CART PRODUCTS: ', cart);
-        if (!databaseCart) {
-            databaseCart = await createOrder(token);
-            console.log('New User Cart: ', databaseCart);
-        };
-
-        await addStateCartToDB(databaseCart, cart, setCart, addProductToOrder, token, updateUserData, setUserData);
     }, [token]);
 
     // Retrieve all products
     useEffect(async () => {
-        try {
-            const products = await fetchAllProducts();
-            if (products) {
-                setAllProducts(products);
-            };
-            // setCart(localStorage.getItem('cart'))
-        } catch(error) {
-            console.error(error);
-        };
+        addLoadingEvent();
+
+        fetchAllProducts()
+            .then(setAllProducts)
+            .catch(console.error)
+            .finally(removeLoadingEvent);
+
+        // setCart(localStorage.getItem('cart'))
     }, [])
 
     return (
@@ -119,7 +129,6 @@ const App = () => {
                     setUserData = {setUserData}
                     userData = {userData}
                     setCart = {setCart} />
-
                 <Switch>
                     <Route exact path = "/">
                         <Home
@@ -165,6 +174,8 @@ const App = () => {
 
                     <Route exact path = "/products/:productId">
                         <SingleProduct 
+                            addLoadingEvent={addLoadingEvent}
+                            removeLoadingEvent={removeLoadingEvent}
                             allProducts = {allProducts}
                             cart = {cart}
                             setCart = {setCart}
@@ -194,6 +205,8 @@ const App = () => {
 
                     <Route path = "/cart">
                         <Cart 
+                            addLoadingEvent={addLoadingEvent}
+                            removeLoadingEvent={removeLoadingEvent}
                             userData = {userData}
                             setUserData = {setUserData}
                             cart = {cart} 
@@ -203,7 +216,7 @@ const App = () => {
 
                 </Switch>
 
-                
+                {numLoadingEvents > 0 ? <div className="loadingMessage">Loading...</div>:<></>}
             </ThemeProvider>
         </div>
     );

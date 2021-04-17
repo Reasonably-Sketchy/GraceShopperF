@@ -6,7 +6,7 @@ import { addReview, editReview, fetchReviews, renderStars } from '../../api/util
 
 import './ReviewEditor.css';
 // review id
-const ReviewEditor = ({ review, setEditorOpen, token, setReviews, setCardStars }) => {
+const ReviewEditor = ({ review, setEditorOpen, token, setReviews, setCardStars, addLoadingEvent, removeLoadingEvent }) => {
     const [title, setTitle] = useState(review.title);
     const [stars, setStars] = useState(review.stars);
     const [content, setContent] = useState(review.content);
@@ -18,23 +18,24 @@ const ReviewEditor = ({ review, setEditorOpen, token, setReviews, setCardStars }
             setRespMessage('Please fill out all required fields.');
             return;
         };
-
-        try {
-            const body = {
-                title: title,
-                stars: stars,
-                content: content,
-            };
-            console.log('REVIEW ID: ', review.id)
-            const editedReview = await editReview(review.id, body, token);
-            console.log('REVIEW UPDATED: ', editedReview);
-            const updateReviews = await fetchReviews(review.productId);
-            setReviews(updateReviews);
-            renderStars(stars, setCardStars);
-            setEditorOpen(false);
-        } catch (error) {
-            console.error(error);
+        const body = {
+            title: title,
+            stars: stars,
+            content: content,
         };
+        console.log('REVIEW ID: ', review.id)
+        addLoadingEvent();
+        editReview(review.id, body, token)
+            .then(async editedReview => {
+
+                console.log('REVIEW UPDATED: ', editedReview);
+                const updateReviews = await fetchReviews(review.productId);
+                setReviews(updateReviews);
+                renderStars(stars, setCardStars);
+                setEditorOpen(false);
+            })
+            .catch(console.error)
+            .finally(removeLoadingEvent)
     };
 
     return (

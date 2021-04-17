@@ -4,7 +4,7 @@ import { deleteOrderProduct, updateOrderProduct } from '../../api/utils';
 
 import './OrderProductCard.css'
 
-const OrderProductCard = ({ orderProduct, cart, setCart, token }) => {
+const OrderProductCard = ({ orderProduct, cart, setCart, token, addLoadingEvent, removeLoadingEvent }) => {
 
     const [quantity, setQuantity] = useState(orderProduct.quantity);
 
@@ -16,7 +16,9 @@ const OrderProductCard = ({ orderProduct, cart, setCart, token }) => {
                 price: orderProduct.price,
                 quantity: Number(event.target.value)
             };
-            const updatedOrderProduct = await updateOrderProduct(orderProduct.orderProductId, body, token);
+            addLoadingEvent()
+            updateOrderProduct(orderProduct.orderProductId, body, token)
+                .finally(removeLoadingEvent)
         };
 
         // NO TOKEN
@@ -29,8 +31,10 @@ const OrderProductCard = ({ orderProduct, cart, setCart, token }) => {
     const handleRemoveFromCart = async () => {
         // TOKEN
         if (token) {
-            const deletedOrderProduct = await deleteOrderProduct(orderProduct.orderProductId, token);
-            console.log('DELETED: ', deletedOrderProduct);
+            addLoadingEvent();
+            deleteOrderProduct(orderProduct.orderProductId, token)
+                .then(deletedOrderProduct => console.log('DELETED: ', deletedOrderProduct))
+                .finally(removeLoadingEvent)
         };
 
         // NO TOKEN

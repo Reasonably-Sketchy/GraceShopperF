@@ -7,7 +7,7 @@ import './ReviewCard.css';
 import ReviewEditor from './ReviewEditor';
 import DeleteModal from './DeleteModal';
 
-const ReviewCard = ({ review, userData, token, setReviews }) => {
+const ReviewCard = ({ review, userData, token, setReviews, addLoadingEvent, removeLoadingEvent }) => {
     const [cardStars, setCardStars] = useState([false, false, false, false, false]);
     const [editorOpen, setEditorOpen] = useState(false);
     const [deleteModalOpen, setDeleteModalOpen] = useState(false);
@@ -53,6 +53,8 @@ const ReviewCard = ({ review, userData, token, setReviews }) => {
 
             {editorOpen
             ? <ReviewEditor
+                addLoadingEvent={addLoadingEvent}
+                removeLoadingEvent={removeLoadingEvent}
                 review = {review}
                 token = {token}
                 setEditorOpen = {setEditorOpen}
@@ -62,6 +64,8 @@ const ReviewCard = ({ review, userData, token, setReviews }) => {
 
             {deleteModalOpen
             ? <DeleteModal 
+                addLoadingEvent={addLoadingEvent}
+                removeLoadingEvent={removeLoadingEvent}
                 review = {review}
                 token = {token}
                 setDeleteModalOpen = {setDeleteModalOpen}

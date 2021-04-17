@@ -6,7 +6,7 @@ import { addReview, fetchReviews } from '../../api/utils';
 
 import './ReviewEditor.css';
 
-const ReviewCreator = ({ productId, setCreatorOpen, token, setReviews }) => {
+const ReviewCreator = ({ productId, setCreatorOpen, token, setReviews, addLoadingEvent, removeLoadingEvent }) => {
     const [title, setTitle] = useState('');
     const [stars, setStars] = useState(0);
     const [content, setContent] = useState('');
@@ -18,25 +18,24 @@ const ReviewCreator = ({ productId, setCreatorOpen, token, setReviews }) => {
             setRespMessage('Please fill out all required fields.');
             return;
         };
-
-        try {
-            const body = {
-                title: title,
-                stars: stars,
-                content: content,
-            };
-            const newReview = await addReview(productId, body, token);
-            console.log('REVIEW CREATED: ', newReview);
-            setTitle('');
-            setStars(0);
-            setContent('');
-            const updateReviews = await fetchReviews(productId);
-            setReviews(updateReviews);
-
-            setCreatorOpen(false);
-        } catch (error) {
-            console.error(error);
+        const body = {
+            title: title,
+            stars: stars,
+            content: content,
         };
+        addLoadingEvent();
+        addReview(productId, body, token)
+            .then(async newReview => {
+                console.log('REVIEW CREATED: ', newReview);
+                setTitle('');
+                setStars(0);
+                setContent('');
+                const updateReviews = await fetchReviews(productId);
+                setReviews(updateReviews);
+                setCreatorOpen(false);
+            })
+            .catch(console.error)
+            .finally(removeLoadingEvent)
     };
 
     return (

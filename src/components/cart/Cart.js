@@ -33,7 +33,7 @@ const generateOrderTotal = (cart) => {
     };
 };
 
-const handleCompleteOrder = async (userId, orderId, cart, setCart, token, setUserData) => {
+const handleCompleteOrder = async (userId, orderId, cart, setCart, token, setUserData, addLoadingEvent, removeLoadingEvent) => {
     // IF TOKEN
     if (token) {
         const body = {
@@ -41,22 +41,27 @@ const handleCompleteOrder = async (userId, orderId, cart, setCart, token, setUse
             status: 'completed'
         };
 
-        try {
-            const updatedOrder = await updateOrder(orderId, body, token);
-            console.log('USER COMPLETED ORDER: ', updatedOrder);
-            setCart([]);
-            await updateUserData(token, setUserData);
-        } catch (error) {
-            console.error(error);
-        };
+        addLoadingEvent()
+        updateOrder(orderId, body, token)
+            .then(async updatedOrder => {
+                console.log('USER COMPLETED ORDER: ', updatedOrder);
+                setCart([]);
+                await updateUserData(token, setUserData);
+            })
+            .catch(console.error)
+            .finally(removeLoadingEvent);
+
     };
 
     // IF NO TOKEN
     if (!token) {
         // create an order
-        const guestOrder = await createOrder();
-        console.log('GUEST COMPLETED ORDER: ', guestOrder);
-        setCart([]);        
+        createOrder()
+            .then(guestOrder => {
+                console.log('GUEST COMPLETED ORDER: ', guestOrder);
+                setCart([]);
+            });
+              
         // add products to order
         // const guestOrderProducts = await Promise.all(cart.map(async (product) => {
         //     const body = {
@@ -71,7 +76,7 @@ const handleCompleteOrder = async (userId, orderId, cart, setCart, token, setUse
     };
 };
 
-const Cart = ({ userData, setUserData, cart, setCart, token }) => {
+const Cart = ({ userData, setUserData, cart, setCart, token, addLoadingEvent, removeLoadingEvent }) => {
     console.log('MY USER DATA: ', userData)
 
     const items = generateItemsTotal(cart);
@@ -94,7 +99,7 @@ const Cart = ({ userData, setUserData, cart, setCart, token }) => {
                 amount,
             });
             console.log('Payment Success!', response);
-            const completedOrder = await handleCompleteOrder(userId, orderId, cart, setCart, userToken, setUserData);
+            const completedOrder = await handleCompleteOrder(userId, orderId, cart, setCart, userToken, setUserData, addLoadingEvent, removeLoadingEvent);
 
         } catch (error) {
             console.error(error);
@@ -116,6 +121,8 @@ const Cart = ({ userData, setUserData, cart, setCart, token }) => {
                 ? cart.map((orderProduct) => {
                     return (
                         <OrderProductCard
+                            addLoadingEvent={addLoadingEvent}
+                            removeLoadingEvent={removeLoadingEvent}
                             key = {orderProduct.name}
                             orderProduct = {orderProduct}
                             cart = {cart}
