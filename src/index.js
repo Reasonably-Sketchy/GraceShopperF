@@ -4,8 +4,6 @@ import {
     BrowserRouter as Router,
     Route,
     Switch,
-    useHistory,
-    Link
 } from 'react-router-dom';
 import { fetchUserData, fetchAllProducts, fetchUserCart, addProductToOrder, createOrder, updateUserData } from './api/utils';
 
@@ -87,10 +85,8 @@ const App = () => {
         };
 
         let databaseCart = await fetchUserCart(token);
-        console.log('MY OLD CART PRODUCTS: ', cart);
         if (!databaseCart) {
             databaseCart = await createOrder(token);
-            console.log('New User Cart: ', databaseCart);
         };
 
         await addStateCartToDB(databaseCart, cart, setCart, addProductToOrder, token, updateUserData, setUserData);
@@ -103,7 +99,6 @@ const App = () => {
             if (products) {
                 setAllProducts(products);
             };
-            // setCart(localStorage.getItem('cart'))
         } catch(error) {
             console.error(error);
         };
@@ -200,17 +195,13 @@ const App = () => {
                             setCart = {setCart}
                             token = {token} />
                     </Route>
-
                 </Switch>
-
-                
             </ThemeProvider>
         </div>
     );
 };
 
 export default App;
-
 
 ReactDOM.render(
     <Router>

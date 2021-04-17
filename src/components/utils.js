@@ -1,15 +1,14 @@
-
+// Handles updating the cart & db cart when a user logs in/registers
 export const addStateCartToDB = async (databaseCart, cart, setCart, addProductToOrder, token, updateUserData, setUserData) => {
     let cartCopy = [];
     if (databaseCart && databaseCart.products && databaseCart.products.length > 0) {
         const dbCartOrderProducts = [databaseCart.products];
-        console.log('MY DB CART PRODUCTS: ', dbCartOrderProducts[0]);
         // Nothing in cart pre-login
         if (cart && cart.length === 0) {
             dbCartOrderProducts[0].forEach((orderProduct) => {cartCopy.push(orderProduct)});
             setCart(cartCopy);
             return;
-        }
+        };
     };
 
     // Items in cart pre-login:
@@ -36,7 +35,6 @@ export const addStateCartToDB = async (databaseCart, cart, setCart, addProductTo
                 quantity: product.quantity,
             };
             const newOrderProduct = await addProductToOrder(databaseCart.id, body, token);
-            console.log('ADDED FROM CART: ', newOrderProduct);
             return newOrderProduct;
         }));
         newOrderProducts.forEach(product => newCart.push(product));

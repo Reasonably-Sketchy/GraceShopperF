@@ -25,7 +25,6 @@ const Account = ({ userData, setActiveLinkIs, token }) => {
         const myReviews = await getUserReviews(userData.id, token);
         if (myReviews) {
             setUserReviews(myReviews);
-            console.log('MY REVIEWS: ', myReviews)
         };
     }, []);
 
@@ -42,7 +41,6 @@ const Account = ({ userData, setActiveLinkIs, token }) => {
 
     return (
         <main id="account">
-
             <div className="page-header-image">
                 <section className="page-header">
                     <h1 className="header-text">Account</h1>
@@ -135,21 +133,9 @@ const Account = ({ userData, setActiveLinkIs, token }) => {
                             );
                         })
                         : <div className="no-orders-message">No reviews to display.</div>
-
                     : ''}
-
                 </div>
-
-
-
-
             </section>
-
-
-            {/* <div className="user-orders">
-
-            </div> */}
-
         </main>
     );
 };

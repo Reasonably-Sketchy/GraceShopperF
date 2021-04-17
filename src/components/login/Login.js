@@ -25,12 +25,8 @@ const Login = ({ setToken }) => {
                     username: username,
                     password: password,
                 },
-            });
-
-            console.log('LOGIN: ', data);
-        
+            });        
             const token = data.token;
-            
             if (token) {
                 localStorage.setItem('token', token);
                 setUsername('');

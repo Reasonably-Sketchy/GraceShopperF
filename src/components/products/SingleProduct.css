@@ -1,8 +1,11 @@
-#single-product {
+.back-to-products {
+    padding: 40px 0 0 50px;
+}
+
+.single-product-body{
     display: grid;
     grid-template-columns: 1fr 2fr;
-
-    padding: 40px;
+    padding: 20px 40px 40px 40px;
 }
 
 .single-product-image-container, .single-product-description {

@@ -1,16 +1,10 @@
 import { Button } from '@material-ui/core';
 import { KeyboardArrowDown, KeyboardArrowRight } from '@material-ui/icons';
-import React, {useEffect, useState} from 'react';
-import { Link, useParams } from 'react-router-dom';
-
-// import './OrderCard.css';
+import React from 'react';
+import { useParams } from 'react-router-dom';
 
 const SingleOrder = () => {
-
     const { orderId } = useParams();
-
-    // Fetch order by id
-
     return (
         <div className="order-card">
 
@@ -25,8 +19,6 @@ const SingleOrder = () => {
                     <h3>{order.userId}</h3>
                 </div>
 
-
-
                 <div className="data-pair">
                     <h4>Status: </h4>
                     <h3>{order.status}</h3>
@@ -34,7 +26,6 @@ const SingleOrder = () => {
 
                 <div className="data-pair">
                     <h4>Products: </h4>
-                    {/* <h3>{order.products.length}</h3> */}
                     <h3>4</h3>
                 </div>
 
@@ -42,7 +33,6 @@ const SingleOrder = () => {
                     <h4>Total: </h4>
                     <h3>$100.00</h3>
                 </div>
-
 
                 <div className="view-button">
                     <Button
@@ -52,10 +42,7 @@ const SingleOrder = () => {
                             setProductListOpen(!productListOpen)
                         }}>Order Products {productListOpen ? <KeyboardArrowDown/> : <KeyboardArrowRight />}</Button>
                 </div>
-                
             </div>
-
-
         </div>
     );
 };

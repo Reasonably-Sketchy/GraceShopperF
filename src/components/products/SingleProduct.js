@@ -1,17 +1,15 @@
 import { Button } from '@material-ui/core';
+import { KeyboardArrowLeft } from '@material-ui/icons';
 import React, {useEffect, useState} from 'react';
-import { useParams } from 'react-router';
+import { useHistory, useParams } from 'react-router';
 import { addProductToOrder, createOrder, fetchReviews, fetchUserCart, updateUserData } from '../../api/utils';
 import ReviewCard from '../reviews/ReviewCard';
 import ReviewCreator from '../reviews/ReviewCreator';
-import ReviewEditor from '../reviews/ReviewEditor';
 
-import ProductCard from './ProductCard';
-
-// import './Products.css';
 import './SingleProduct.css';
 
 const SingleProduct = ({ allProducts, cart, setCart, token, setUserData, userData }) => {
+    const history = useHistory();
     const { productId } = useParams();
     const [quantity, setQuantity] = useState(1);
     const [respMessage, setRespMessage] = useState('');
@@ -108,7 +106,6 @@ const SingleProduct = ({ allProducts, cart, setCart, token, setUserData, userDat
             };
             cartCopy.push(newOrderProduct);
             setCart(cartCopy);
-            // window.location.reload();
             setRespMessage('Added to cart!')
             await updateUserData(token, setUserData);
         };
@@ -117,72 +114,82 @@ const SingleProduct = ({ allProducts, cart, setCart, token, setUserData, userDat
 
     return (
         <main id="single-product">
-            <section className="single-product-image-container">
-                <img src={thisProduct.imageURL} />
-            </section>
 
-            <section className="single-product-description">
-                <h1>{thisProduct.name}</h1>
-                <h3 className="description">{thisProduct.description}</h3>
-                <h3><span className="gold-text">{thisProduct.price}</span> USD</h3>
-                
-                <div className="action-container">
-
-                    <fieldset className="quantity-container">
-                        <label htmlFor="quantity">Quantity:</label>
-                        <input 
-                            className="quantity-input"
-                            name="quantity"
-                            type="number"
-                            value={quantity}
-                            onChange={handleQuantityChange}></input>
-                    </fieldset>
-
-                    <Button
-                        variant="outlined"
-                        color="primary"
-                        onClick={handleAddToCart}>Add to Cart</Button>
-                </div>
-                <div className="resp-message">
-                    {respMessage ? <div className="respMessage">{respMessage}</div> : ''}
-                </div>
-            </section>
-
-            <section className="reviews">
-                <h2>Reviews:</h2>
+            <div className="back-to-products">
                 <Button
-                    className="add-review"
-                    variant="contained"
                     color="primary"
-                    disabled={userData && userData.username ? false : true}
                     onClick={() => {
-                        setCreatorOpen(true);
-                    }}>Add a Review</Button>
-                <div className="reviews-container">
-                    {reviews && reviews.length > 0
-                    ? reviews.map((review) => {
-                        return (
-                            <ReviewCard
-                                key = {review.id} 
-                                review = {review}
-                                userData = {userData}
-                                token = {token}
-                                setReviews = {setReviews} />
-                        );
-                    })
-                    : <div>No reviews to display.</div>
-                    }
-                </div>
-            </section>
+                        history.push('/products');
+                    }}><KeyboardArrowLeft />All Products</Button>
+            </div>
 
-            {creatorOpen
-            ? <ReviewCreator 
-                token = {token}
-                productId = {productId}
-                setCreatorOpen = {setCreatorOpen}
-                setReviews = {setReviews}/>
-            : ''}
+            <div className="single-product-body">
+                <section className="single-product-image-container">
+                    <img src={thisProduct.imageURL} />
+                </section>
 
+                <section className="single-product-description">
+                    <h1>{thisProduct.name}</h1>
+                    <h3 className="description">{thisProduct.description}</h3>
+                    <h3><span className="gold-text">{thisProduct.price}</span> USD</h3>
+                    
+                    <div className="action-container">
+
+                        <fieldset className="quantity-container">
+                            <label htmlFor="quantity">Quantity:</label>
+                            <input 
+                                className="quantity-input"
+                                name="quantity"
+                                type="number"
+                                value={quantity}
+                                onChange={handleQuantityChange}></input>
+                        </fieldset>
+
+                        <Button
+                            variant="outlined"
+                            color="primary"
+                            onClick={handleAddToCart}>Add to Cart</Button>
+                    </div>
+                    <div className="resp-message">
+                        {respMessage ? <div className="respMessage">{respMessage}</div> : ''}
+                    </div>
+                </section>
+
+                <section className="reviews">
+                    <h2>Reviews:</h2>
+                    <Button
+                        className="add-review"
+                        variant="contained"
+                        color="primary"
+                        disabled={userData && userData.username ? false : true}
+                        onClick={() => {
+                            setCreatorOpen(true);
+                        }}>Add a Review</Button>
+                    <div className="reviews-container">
+                        {reviews && reviews.length > 0
+                        ? reviews.map((review) => {
+                            return (
+                                <ReviewCard
+                                    key = {review.id} 
+                                    review = {review}
+                                    userData = {userData}
+                                    token = {token}
+                                    setReviews = {setReviews} />
+                            );
+                        })
+                        : <div>No reviews to display.</div>
+                        }
+                    </div>
+                </section>
+
+                {creatorOpen
+                ? <ReviewCreator 
+                    token = {token}
+                    productId = {productId}
+                    setCreatorOpen = {setCreatorOpen}
+                    setReviews = {setReviews}/>
+                : ''}
+            </div>
         </main>
     );
 };

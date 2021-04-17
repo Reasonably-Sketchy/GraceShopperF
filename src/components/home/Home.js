@@ -1,11 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-
 import { Button } from '@material-ui/core';
 import logo from '../../assets/sketch-shop-by-logo.png';
+import { KeyboardArrowRight } from '@material-ui/icons';
 
 import './Home.css';
-import { KeyboardArrowRight } from '@material-ui/icons';
 
 const Home = ({ setActiveLinkIs, userData }) => {
 
@@ -41,9 +40,7 @@ const Home = ({ setActiveLinkIs, userData }) => {
                             setActiveLinkIs("Products")
                         }}>Browse the Shoppe <KeyboardArrowRight /></Button>
                 </Link> 
-                
 
-                
             </section>
         </main> 
     );
