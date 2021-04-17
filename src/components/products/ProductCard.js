@@ -1,12 +1,42 @@
 import React, {useEffect, useState} from 'react';
 import {Button} from '@material-ui/core';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
+
 
 import './ProductCard.css';
+import { callApi } from '../../api';
 
-const ProductCard = ({ product, cartButtonText, cartButtonAction  }) => {
+const ProductCard = ({ 
+    product, 
+    cartButtonText, 
+    cartButtonAction, 
+    userData,
+    token,
+    setAllProducts,
+    allProducts
+}) => {
 
-    return (
+    const history = useHistory();
+    const handleDelete = async ()=>{
+
+        const confirmed = confirm(`Are you sure you want to delete ${product.name}?`);
+        if( confirmed === true ) {
+            const thisProduct = product.id
+            const response = await callApi({
+                url: `/products/${product.id}`,
+                method: 'DELETE',
+                token: token
+            });
+
+            const filtered = allProducts.filter((product)=> product.id !== thisProduct)
+            setAllProducts(filtered);
+        } else {
+            return
+        }
+        
+    }
+
+    return (<>
         <Link to={`/products/${product.id}`}>
             <div className="product-card">
                 <div className="product-picture-container">
@@ -24,9 +54,22 @@ const ProductCard = ({ product, cartButtonText, cartButtonAction  }) => {
                             onClick={() => cartButtonAction()}
                         >{cartButtonText}</Button> : <></>
                     }
+                    {userData.isAdmin
+                        ? <Button
+                            id="deleteProductButton"
+                            variant="contained"
+                            color="secondary"
+                            onClick={(event) =>{
+                                event.preventDefault();
+                                handleDelete();  
+                            }} 
+                            >DELETE</Button>
+                        : ''
+                    }
                 </div>
             </div>
         </Link>
+        </>
     );
 };
 

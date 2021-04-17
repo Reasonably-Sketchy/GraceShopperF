@@ -1,7 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import {useHistory} from 'react-router-dom';
-import {callApi} from '../../api'
-import {Button, TextField} from '@material-ui/core'
+import {callApi} from '../../api';
+import {Button, TextField, Checkbox} from '@material-ui/core';
+// import Checkbox from '@material-ui/Checkbox'
 
 const AddUser = ({token}) => {
     const [firstName, setFirstName] = useState('');
@@ -16,6 +17,12 @@ const AddUser = ({token}) => {
     const handleSubmit = async (event) =>{
         event.preventDefault();
 
+        // const isAdminCheck = document.getElementById("isAdmin");
+        // if (isAdminCheck.checked === true ){
+        //     alert('admin set')
+        //     setAdmin(true);
+        // }
+
         try {
             const data = await callApi({
                 url: '/users/register',
@@ -26,11 +33,12 @@ const AddUser = ({token}) => {
                     email: email,
                     imageURL: imageURL,
                     username: username,
-                    password: password,                    
+                    password: password,
+                    isAdmin: admin                    
                 },
                 token
             });
-            console.log('data line 20 in addUser')
+            // console.log('data line 41 in addUser', data)
 
         } catch(error) {
             console.error(error)
@@ -91,6 +99,16 @@ const AddUser = ({token}) => {
                     value={password}
                     onChange={(event) => setPassword(event.target.value)}
                     required={true} />
+                
+                {/* <div id="isAdminCheck">Grant Admin?<input
+                        type="checkbox"
+                        value={admin}
+                        id="isAdmin"
+                        // onCheck={()=>setAdmin(true)}
+                        // checked={switched}
+                        // onCheck={()=>setAdmin(true)}
+                        onClick={()=>setAdmin(true)}
+                    ></input></div> */}
 
                 <Button
                     className="responsive-button"
@@ -99,11 +117,7 @@ const AddUser = ({token}) => {
                     type="submit"
                     >Create User</Button>
                 
-                <div id="isAdmin">Grant Admin?<input
-                        type="checkbox"
-                        value={admin}
-                        onChange={()=>setAdmin(true)}
-                    ></input></div>
+
 
             </form>
             </div>
