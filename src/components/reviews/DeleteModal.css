@@ -1,0 +1,19 @@
+.delete-modal {
+    position: fixed;
+    top: 20vh;
+    bottom: 20vh;
+    right: 20vw;
+    left: 20vw;
+    background-color: black;
+    box-shadow: 1px 1px 5px gray;
+    z-index: 200;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.delete-modal-content {
+    display: grid;
+    grid-gap: 24px;
+    text-align: center;
+}

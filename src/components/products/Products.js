@@ -9,7 +9,11 @@ const Products = ({ allProducts }) => {
     return (
         
         <main id="products">
-            <h1>Products</h1>
+            <div className="page-header-image">
+                <section className="page-header">
+                    <h1 className="header-text">Products</h1>
+                </section>
+            </div>
 
             <section className="products-container">
 
