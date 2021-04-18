@@ -14,7 +14,8 @@ export const callApi = async ({ url, method, token, body }) => {
         if (token) {
             options.headers['Authorization'] = `Bearer ${token}`;
         };
-
+        console.log('request url: ', BASE_URL + url);
+        console.log('options: ', options)
         const response = await fetch(BASE_URL + url, options);
         const data = await response.json();
         if (data.error) throw data.error;

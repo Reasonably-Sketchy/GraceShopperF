@@ -1,20 +1,26 @@
 import { Button } from '@material-ui/core';
 import React, {useEffect, useState} from 'react';
 import { useParams } from 'react-router';
+
+import {useHistory} from 'react-router-dom'
 import { addProductToOrder, createOrder, fetchReviews, fetchUserCart, updateUserData } from '../../api/utils';
 import ReviewCard from '../reviews/ReviewCard';
 import ReviewCreator from '../reviews/ReviewCreator';
 import ReviewEditor from '../reviews/ReviewEditor';
 
 import ProductCard from './ProductCard';
+import { KeyboardArrowDown, KeyboardArrowRight } from '@material-ui/icons';
 
 // import './Products.css';
 import './SingleProduct.css';
+import EditProduct from './EditProduct';
 
 const SingleProduct = ({ allProducts, cart, setCart, token, setUserData, userData }) => {
     const { productId } = useParams();
     const [quantity, setQuantity] = useState(1);
     const [respMessage, setRespMessage] = useState('');
+    const [editExpand, setEditExpand] = useState(false);
+    const history = useHistory();
     const [reviews, setReviews] = useState([]);
     const [creatorOpen, setCreatorOpen] = useState(false);
 
@@ -28,6 +34,7 @@ const SingleProduct = ({ allProducts, cart, setCart, token, setUserData, userDat
     if (!allProducts) {
         return <h1>Loading...</h1>
     };
+
 
     const thisProduct = allProducts.find((product) => {return product.id == productId})
 
@@ -142,6 +149,22 @@ const SingleProduct = ({ allProducts, cart, setCart, token, setUserData, userDat
                         variant="outlined"
                         color="primary"
                         onClick={handleAddToCart}>Add to Cart</Button>
+
+                    {userData.isAdmin
+                        ? <Button
+                        className="accordian-button"
+                        variant="contained"
+                        color="secondary"
+                        onClick={() => {
+                            setEditExpand(!editExpand);
+                        }}>Edit {editExpand ? <KeyboardArrowDown /> : <KeyboardArrowRight />}</Button>
+                        : ''}
+                    {editExpand
+                    ? <center><EditProduct productId={productId}/></center>
+                    : ''
+                    }
+
+
                 </div>
                 <div className="resp-message">
                     {respMessage ? <div className="respMessage">{respMessage}</div> : ''}

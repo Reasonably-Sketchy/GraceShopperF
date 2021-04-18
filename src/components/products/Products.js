@@ -4,8 +4,9 @@ import ProductCard from './ProductCard';
 
 import './Products.css';
 
-const Products = ({ allProducts }) => {
+const Products = ({ allProducts, userData, token, setAllProducts }) => {
     console.log(allProducts);
+
     return (
         
         <main id="products">
@@ -21,7 +22,11 @@ const Products = ({ allProducts }) => {
                     return (
                         <ProductCard 
                             key={product.id}
-                            product = {product} 
+                            product = {product}
+                            userData={userData}
+                            token={token} 
+                            setAllProducts={setAllProducts}
+                            allProducts={allProducts}
                         />
                     );
                 })}
