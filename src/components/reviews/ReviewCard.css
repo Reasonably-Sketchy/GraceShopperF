@@ -1,0 +1,33 @@
+.review-card {
+    display: grid;
+    grid-template-columns: 1fr 120px;
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 12px;
+}
+
+.account-review-card {
+    grid-template-columns: 1fr 200px;
+}
+
+.review-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.review-card h2 {
+    font-size: 1.4rem;
+}
+
+.stars-container {
+    color: #b5a264;
+}
+
+.actions {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.actions button {
+    margin-bottom: 8px;
+}

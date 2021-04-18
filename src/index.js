@@ -14,7 +14,9 @@ import {
     fetchUserCart, 
     addProductToOrder,
     fetchAllUsers,
-    fetchAllOrders 
+    fetchAllOrders,
+    createOrder,
+    updateUserData,
 } from './api/utils';
 
 // Page components
@@ -42,6 +44,7 @@ import {
 
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import './styles.css';
+import { addStateCartToDB } from './components/utils';
 
 const theme = createMuiTheme({
     palette: {
@@ -102,49 +105,14 @@ const App = () => {
             setUserData(data);
         };
 
-        const databaseCart = await fetchUserCart(token);
+        let databaseCart = await fetchUserCart(token);
         console.log('MY OLD CART PRODUCTS: ', cart);
-        if (databaseCart && databaseCart.products && databaseCart.products.length > 0) {
-
-            let cartCopy = [];
-            const dbCartOrderProducts = [databaseCart.products];
-            console.log('MY DB CART PRODUCTS: ', dbCartOrderProducts[0]);
-
-            // Nothing in cart pre-login
-            if (cart && cart.length === 0) {
-                console.log('Cart Length 0')
-                dbCartOrderProducts[0].forEach((orderProduct) => {cartCopy.push(orderProduct)});
-                setCart(cartCopy);
-                return;
-            }
-            
-            // Items in cart pre-login:
-            if (cart && cart.length > 0) {
-                cartCopy = [...cart];
-                const newCart = [];
-
-                for (let i = 0; i < dbCartOrderProducts[0].length; i++) {
-                    const dbProduct = dbCartOrderProducts[0][i];
-                    const indexToRemove = cartCopy.findIndex((product) => {return product.productId === dbProduct.productId});
-                    if (indexToRemove >= 0) {
-                        cartCopy.splice(indexToRemove, 1);
-                    };
-                };
-                const newOrderProducts = await Promise.all(cartCopy.map(async (product) => {
-                    const body = {
-                        productId: product.productId,
-                        price: product.price,
-                        quantity: product.quantity,
-                    };
-                    const newOrderProduct = await addProductToOrder(databaseCart.id, body, token);
-                    return newOrderProduct;
-                }));
-                dbCartOrderProducts[0].forEach(product => newCart.push(product));
-                newOrderProducts.forEach(product => newCart.push(product));
-                setCart(newCart);
-            };
-
+        if (!databaseCart) {
+            databaseCart = await createOrder(token);
+            console.log('New User Cart: ', databaseCart);
         };
+
+        await addStateCartToDB(databaseCart, cart, setCart, addProductToOrder, token, updateUserData, setUserData);
     }, [token]);
 
     // Retrieve all products
@@ -154,7 +122,6 @@ const App = () => {
             if (products) {
                 setAllProducts(products);
             };
-
             // setCart(localStorage.getItem('cart'))
         } catch(error) {
             console.error(error);
@@ -260,6 +227,7 @@ const App = () => {
                             token = {token}
                             userData={userData}
                             setUserData = {setUserData}/>
+
                     </Route>
 
                     {userData.isAdmin
@@ -276,6 +244,7 @@ const App = () => {
                     <Route path = "/account">
                         <Account 
                             userData = {userData}
+                            token = {token}
                             setActiveLinkIs = {setActiveLinkIs} />
                     </Route>
 

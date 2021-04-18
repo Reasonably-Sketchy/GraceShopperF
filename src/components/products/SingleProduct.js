@@ -1,8 +1,13 @@
 import { Button } from '@material-ui/core';
 import React, {useEffect, useState} from 'react';
 import { useParams } from 'react-router';
-import { addProductToOrder, createOrder, fetchUserCart, updateUserData } from '../../api/utils';
+
 import {useHistory} from 'react-router-dom'
+import { addProductToOrder, createOrder, fetchReviews, fetchUserCart, updateUserData } from '../../api/utils';
+import ReviewCard from '../reviews/ReviewCard';
+import ReviewCreator from '../reviews/ReviewCreator';
+import ReviewEditor from '../reviews/ReviewEditor';
+
 import ProductCard from './ProductCard';
 import { KeyboardArrowDown, KeyboardArrowRight } from '@material-ui/icons';
 
@@ -16,6 +21,15 @@ const SingleProduct = ({ allProducts, cart, setCart, token, setUserData, userDat
     const [respMessage, setRespMessage] = useState('');
     const [editExpand, setEditExpand] = useState(false);
     const history = useHistory();
+    const [reviews, setReviews] = useState([]);
+    const [creatorOpen, setCreatorOpen] = useState(false);
+
+    useEffect(async () => {
+        const productReviews = await fetchReviews(productId);
+        if (productReviews) {
+            setReviews(productReviews);
+        };
+    }, []);
 
     if (!allProducts) {
         return <h1>Loading...</h1>
@@ -27,7 +41,7 @@ const SingleProduct = ({ allProducts, cart, setCart, token, setUserData, userDat
     if (!thisProduct) {
         return <h1>This product does not exist.</h1>
     };
-    
+
     const handleQuantityChange = async (event) => {
         setQuantity(Number(event.target.value))
     };
@@ -124,6 +138,7 @@ const SingleProduct = ({ allProducts, cart, setCart, token, setUserData, userDat
                     <fieldset className="quantity-container">
                         <label htmlFor="quantity">Quantity:</label>
                         <input 
+                            className="quantity-input"
                             name="quantity"
                             type="number"
                             value={quantity}
@@ -155,6 +170,41 @@ const SingleProduct = ({ allProducts, cart, setCart, token, setUserData, userDat
                     {respMessage ? <div className="respMessage">{respMessage}</div> : ''}
                 </div>
             </section>
+
+            <section className="reviews">
+                <h2>Reviews:</h2>
+                <Button
+                    className="add-review"
+                    variant="contained"
+                    color="primary"
+                    disabled={userData && userData.username ? false : true}
+                    onClick={() => {
+                        setCreatorOpen(true);
+                    }}>Add a Review</Button>
+                <div className="reviews-container">
+                    {reviews && reviews.length > 0
+                    ? reviews.map((review) => {
+                        return (
+                            <ReviewCard
+                                key = {review.id} 
+                                review = {review}
+                                userData = {userData}
+                                token = {token}
+                                setReviews = {setReviews} />
+                        );
+                    })
+                    : <div>No reviews to display.</div>
+                    }
+                </div>
+            </section>
+
+            {creatorOpen
+            ? <ReviewCreator 
+                token = {token}
+                productId = {productId}
+                setCreatorOpen = {setCreatorOpen}
+                setReviews = {setReviews}/>
+            : ''}
 
         </main>
     );

@@ -1,5 +1,5 @@
-// When we deploy backend to heroku, change to that URL
-export const BASE_URL = 'http://localhost:3000/api'; 
+// export const BASE_URL = 'http://localhost:3000/api'; 
+export const BASE_URL = 'https://sketch-shoppe-backend.herokuapp.com/api'; 
 
 export const callApi = async ({ url, method, token, body }) => {
     try {

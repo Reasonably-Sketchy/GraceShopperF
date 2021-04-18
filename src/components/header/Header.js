@@ -23,7 +23,7 @@ const Header = ({
 
     const changeActiveLink = (url, setActiveLinkIs) => {
         // if (url === 'http://localhost:3000/' || url === 'https://our-url.com/')
-        if (url === 'http://localhost:3001/') {
+        if (url === 'http://localhost:3000/') {
             setActiveLinkIs("Home")
         };
         
