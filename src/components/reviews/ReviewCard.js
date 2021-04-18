@@ -21,11 +21,11 @@ const ReviewCard = ({ review, userData, token, setReviews }) => {
             <div className="review-content">
                 <h2>"{review.title}"</h2>
                 <div className="stars-container">
-                    {cardStars.map((value) => {
+                    {cardStars.map((value, index) => {
                         if (value) {
-                            return <Star />
+                            return <Star key = {index} />
                         } else {
-                            return <StarBorder />
+                            return <StarBorder key = {index} />
                         };
                     })}
                 </div>

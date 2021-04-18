@@ -30,7 +30,6 @@ import { addStateCartToDB } from './components/utils';
 const theme = createMuiTheme({
     palette: {
         primary: {
-            // main: '#d4af37',
             main: '#b5a264',
             contrastText: 'white',
 

@@ -12,6 +12,7 @@ const ProductCard = ({ product, cartButtonText, cartButtonAction  }) => {
                 <div className="product-picture-container">
                     <img className="product-picture" src={product.imageURL} />
                 </div>
+
                 <div className="product-data">
                     <h1>{product.name}</h1>
                     <h2>{product.price} USD</h2>

@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 import StripeCheckout from "react-stripe-checkout";
 import OrderProductCard from "../orders/OrderProductCard";
 import axios from 'axios';
 
 import "./Cart.css";
 import { Button } from "@material-ui/core";
-import { addProductToOrder, createOrder, updateOrder, updateUserData } from "../../api/utils";
+import { createOrder, updateOrder, updateUserData } from "../../api/utils";
 
 const STRIPE_KEY = 'pk_test_51IemByGFMkmVlUo2ZadMmHIIQKtbGWn2OdYjCM2aOLy0JVMa5WajgLBi5qAeg2dj90cmmfpb9Rcp8Ycb2FxXmVGp00le6ddDto';
 const CURRENCY = 'USD';
@@ -33,7 +33,7 @@ const generateOrderTotal = (cart) => {
     };
 };
 
-const handleCompleteOrder = async (userId, orderId, cart, setCart, token, setUserData) => {
+const handleCompleteOrder = async (userId, orderId, setCart, token, setUserData) => {
     // IF TOKEN
     if (token) {
         const body = {
@@ -43,7 +43,6 @@ const handleCompleteOrder = async (userId, orderId, cart, setCart, token, setUse
 
         try {
             const updatedOrder = await updateOrder(orderId, body, token);
-            console.log('USER COMPLETED ORDER: ', updatedOrder);
             setCart([]);
             await updateUserData(token, setUserData);
         } catch (error) {
@@ -55,19 +54,7 @@ const handleCompleteOrder = async (userId, orderId, cart, setCart, token, setUse
     if (!token) {
         // create an order
         const guestOrder = await createOrder();
-        console.log('GUEST COMPLETED ORDER: ', guestOrder);
         setCart([]);        
-        // add products to order
-        // const guestOrderProducts = await Promise.all(cart.map(async (product) => {
-        //     const body = {
-        //         productId: product.productId,
-        //         price: product.price,
-        //         quantity: product.quantity,
-        //     };
-        //     const createdOrderProduct = await addProductToOrder(guestOrder.id, body)
-        // }))
-
-
     };
 };
 
@@ -156,19 +143,12 @@ const Cart = ({ userData, setUserData, cart, setCart, token }) => {
                         color="primary">Checkout</Button>
                 </StripeCheckout>
 
-                    {/* <Button
-                        className="checkout-button"
-                        variant="contained"
-                        color="primary"
-                        onClick={() => {handleCompleteOrder(userId, orderId, cart, setCart, token)}}>Checkout</Button> */}
-
             </section>
             : ''
             }
             
         </main>
-    )
-//   return <div>Cart Page Sucess!</div>;
+    );
 };
 
 export default Cart;

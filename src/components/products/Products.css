@@ -6,5 +6,105 @@
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     grid-gap: 20px;
-    padding: 50px;
+    padding: 20px 50px 20px 50px;
+}
+
+.filter {
+    display: grid;
+    grid-template-columns: 25vw 1fr;
+    padding: 10px 50px 10px 50px;
+    grid-gap: 40px;
+}
+
+
+fieldset {
+    border: none;
+    width: 100%;
+    height: 50px;
+    display: flex;
+    justify-content: flex-start;
+}
+
+input, select {
+    outline: none;
+    height: 50px;
+}
+
+#categories {
+    width: fit-content;
+    cursor: pointer;
+    background-color: black;
+    color: #b5a264;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: none;
+    padding-right: 10px;
+    font-size: 1.2rem;
+}
+
+.filter {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr;
+    grid-gap: 8px;
+}
+
+/* MUI STYLE OVERRIDES */
+.filter .MuiInputBase-root {
+    color: white;
+    font-size: 1.6rem;
+    font-weight: 300;
+    margin-bottom: 8px;
+}
+
+.filter .MuiFormControl-root {
+    width: 100%;
+}
+
+.filter .MuiInput-underline:before {
+    border-bottom: 2px solid gray;
+}
+
+.filter .MuiInput-underline:hover:not(.Mui-disabled):before {
+    border-bottom: 2px solid gray;
+}
+
+
+
+@media screen and (max-width: 1168px) {
+    .products-container {
+        grid-template-columns: 1fr 1fr;
+        padding: 30px;
+    }
+
+    .filter {
+        padding: 10px 30px 10px 30px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .products-container {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .filter {
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr 1fr;
+        grid-gap: 8px;
+    }
+
+    .category-dropdown {
+        grid-row: 2;
+    }
+
+    #categories {
+        /* width: 60%; */
+        width: fit-content;
+    }
+    
+    /* fieldset {
+        display: flex;
+        justify-content: flex-start;
+    } */
 }
