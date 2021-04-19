@@ -24,8 +24,29 @@
     margin-bottom: 24px;
 }
 
+#single-product fieldset {
+    border: none;
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    justify-content: flex-start;
+}
+
 .action-container {
     display: flex;
+    flex-direction: column;
+}
+
+.action-buttons {
+    padding-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.action-buttons button {
+    margin-top: 6px;
+    height: 50px;
 }
 
 #single-product fieldset {
@@ -68,14 +89,58 @@
     width: 200px;
 }
 
+/* EDITOR */
+.editProduct-Container {
+    position: fixed;
+    top: 10vh;
+    bottom: 10vh;
+    right: 10vw;
+    left: 10vw;
+    background-color: black;
+    box-shadow: 1px 1px 5px gray;
+    z-index: 200;
+    padding: 24px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.editProduct-Container .product-editor-header {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+/* MUI OVERRIDES */
+
+#single-product .MuiInputBase-root {
+    color: white;
+    font-size: 2rem;
+    font-weight: 300;
+    margin-bottom: 8px;
+}
+
+#single-product .MuiInput-underline:before {
+    border-bottom: 1px solid gray;
+}
+
+#single-product .MuiInput-underline:hover:not(.Mui-disabled):before {
+    border-bottom: 2px solid gray;
+}
+
 @media screen and (max-width: 768px) {
-    #single-product {
+
+    .single-product-body{
         display: flex;
         flex-direction: column;
         padding: 20px;
     }
 
     .single-product-image-container img {
-        width: 80vw;
+        width: 60vw;
     }
 }

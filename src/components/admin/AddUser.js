@@ -12,7 +12,6 @@ const AddUser = ({token, setAllUsers, allUsers}) => {
     const [password, setPassword] = useState('');
     const [admin, setAdmin] = useState(false);
     const [imageURL, setImageURL] = useState('');
-    const history = useHistory();
 
     const handleSubmit = async (event) =>{
         event.preventDefault();
@@ -45,8 +44,8 @@ const AddUser = ({token, setAllUsers, allUsers}) => {
 
     return (
         <>
-            <h3>Add User</h3>
             <div className="addUser-Container">
+                <h3>Add User</h3>
                 <form className="register-form" onSubmit={handleSubmit}>
                     <div className="double-input">
                         <TextField 

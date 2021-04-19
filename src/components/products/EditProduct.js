@@ -2,13 +2,14 @@ import React, {useState, useEffect} from 'react';
 import {useHistory} from 'react-router-dom';
 import {callApi} from '../../api'
 import {Button, TextField} from '@material-ui/core'
+import { editProduct } from '../../api/utils';
 
-const EditProduct = ({token, userData, productId}) => {
-    const [product, editName] = useState('');
-    const [description, editDescription] = useState('');
-    const [imageURL, editImageURL] = useState('');
-    const [category, editCategory] = useState('');
-    const [price, editPrice] = useState();
+const EditProduct = ({token, userData, productId, thisProduct, setEditExpand}) => {
+    const [name, editName] = useState(thisProduct.name);
+    const [description, editDescription] = useState(thisProduct.description);
+    const [imageURL, editImageURL] = useState(thisProduct.imageURL);
+    const [category, editCategory] = useState(thisProduct.category);
+    const [price, editPrice] = useState(thisProduct.price);
     const [allProducts, setAllProducts] = useState([])
     const history = useHistory();
 
@@ -16,30 +17,39 @@ const EditProduct = ({token, userData, productId}) => {
         event.preventDefault();
 
         try {
-            const data = await callApi({
-                url: `/products/${productId}`,
-                method: 'PATCH',
-                body: {
-                    name: product,
-                    description: description,
-                    imageURL: imageURL,
-                    price: price,
-                    category: category
-                },
-                token: token
-                
-            });
+            // const data = await callApi({
+            //     url: `/products/${thisProduct.id}`,
+            //     method: 'PATCH',
+            //     body: {
+            //         name: product,
+            //         description: description,
+            //         imageURL: imageURL,
+            //         price: price,
+            //         category: category
+            //     },
+            //     token: token
+            // });
+            const body = {
+                name: name,
+                description: description,
+                imageURL: imageURL,
+                price: price,
+                category: category
+            };
+            const updatedProduct = await editProduct(thisProduct.id, body, token);
+            console.log('Updated: ', updatedProduct);
+
             // setAllProducts(data)
-            if (data) {
-                let result = await callApi({
-                    url: '/products',
-                    method: 'GET',
-                    token: token
-                })
-                if(Array.isArray(result)){
-                    setAllProducts(result)
-                }
-            }
+            // if (data) {
+            //     let result = await callApi({
+            //         url: '/products',
+            //         method: 'GET',
+            //         token: token
+            //     })
+            //     if(Array.isArray(result)){
+            //         setAllProducts(result)
+            //     }
+            // }
             history.push('/products')
 
         } catch(error) {
@@ -54,11 +64,15 @@ const EditProduct = ({token, userData, productId}) => {
         <h3>Edit Product</h3>
 
         <div className="editProduct-Container">
+            <div className="product-editor-header">
+                <h1>Edit Product:</h1>
+                <h2 className="gold-text">{thisProduct.name}</h2>
+            </div>
             <form className="register-form" onSubmit={handleEdit}>
                 <TextField 
-                    id="product"
+                    id="name"
                     placeholder="Name"
-                    value={product}
+                    value={name}
                     onChange={(event) => editName(event.target.value)}
                     required={true} />
 
@@ -98,6 +112,15 @@ const EditProduct = ({token, userData, productId}) => {
                     color="primary"
                     type="submit"
                     >edit Product</Button>
+
+                <Button
+                    className="responsive-button"
+                    variant="outlined"
+                    color="primary"
+                    onClick={() => {
+                        setEditExpand(false);
+                    }}
+                    >Cancel</Button>
 
             </form>
         </div>

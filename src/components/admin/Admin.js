@@ -9,7 +9,7 @@ import { KeyboardArrowDown, KeyboardArrowRight } from '@material-ui/icons';
 import AddProduct from '../products/AddProduct';
 import './Admin.css';
 import SingleUser from './AdminSingleUser';
-import UserList from './UserList'; 
+// import UserList from './UserList'; 
 import {Route} from 'react-router-dom';
 
 const Admin = ({token, setAllProducts, allUsers, userData, setAllUsers}) => {
@@ -55,8 +55,8 @@ const Admin = ({token, setAllProducts, allUsers, userData, setAllUsers}) => {
                     onClick={() => {
                         setAllUsersExpand(!allUsersExpand);
                     }}>View All Users {allUsersExpand ? <KeyboardArrowDown /> : <KeyboardArrowRight />}</Button>
-{/* <<<<<<< HEAD
-                {allUsersExpand
+
+                 {allUsersExpand
                 ? <div className="user-list">
                     {allUsers.map((user)=>{
                         return (
@@ -65,29 +65,11 @@ const Admin = ({token, setAllProducts, allUsers, userData, setAllUsers}) => {
                                 color="primary"
                                 key={user.id}
                                 onClick={()=>{
-                                    console.log('userid line 91', user.id)
-                                    localStorage.setItem('thisUser', user.id)
-
                                     history.push(`/users/${user.id}`)
                                 }}
                             >{user.username}</Button>
                         )})}
-                </div> */}
-
-                {allUsersExpand
-                ? <>
-                    {allUsers.map((user)=>{
-                        return (
-                            <UserList
-                                key={user.id}
-                                user={user}
-                                allUsers={allUsers}
-                                token={token}
-                                userData={userData}
-                            ></UserList>
-                        )
-                    })}
-                </>
+                </div>
                 : ''}
 
             </div>

@@ -49,11 +49,9 @@ const AddProduct = ({token, setAllProducts}) => {
 
     return (
         <>
-            <h3>Add Product</h3>
-
             <div className="addProduct-Container">
+                <h3>Add Product</h3>
                 <form className="register-form" onSubmit={handleSubmit}>
-
 
                 <TextField 
                     id="product"
@@ -105,9 +103,5 @@ const AddProduct = ({token, setAllProducts}) => {
     );
 };
 
-<<<<<<< HEAD
-export default AddProduct; 
-=======
 export default AddProduct; 
 
->>>>>>> dev

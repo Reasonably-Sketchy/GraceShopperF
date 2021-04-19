@@ -6,7 +6,6 @@ import ProductSearch from './ProductSearch';
 import './Products.css';
 
 const Products = ({ allProducts, userData, token, setAllProducts }) => {
-<<<<<<< HEAD
 
     const [productsToDisplay, setProductsToDisplay] = useState([]);
     const [productCategories, setProductCategories] = useState([]);
@@ -39,11 +38,6 @@ const Products = ({ allProducts, userData, token, setAllProducts }) => {
                 uniqueCategories.push(current);
             };
         };
-=======
-    console.log(allProducts);
-
-    return (
->>>>>>> dev
         
         if (uniqueCategories.length > 0) {
             setProductCategories(uniqueCategories);
@@ -96,19 +90,11 @@ const Products = ({ allProducts, userData, token, setAllProducts }) => {
                     return (
                         <ProductCard 
                             key={product.id}
-<<<<<<< HEAD
                             product = {product} 
                             userData = {userData}
                             token = {token} 
                             setAllProducts = {setAllProducts}
                             allProducts = {allProducts}
-=======
-                            product = {product}
-                            userData={userData}
-                            token={token} 
-                            setAllProducts={setAllProducts}
-                            allProducts={allProducts}
->>>>>>> dev
                         />
                     );
                 })}
