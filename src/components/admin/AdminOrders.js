@@ -3,9 +3,24 @@ import OrderProductCard from '../orders/OrderProductCard';
 
 const AdminOrders = ({allOrders, token, userData}) =>{
 
-    if(allOrders = []) {
+    if(!allOrders) {
         return <center><h1>Orders Loading....</h1></center>
     };
+
+    return (<>
+        <center><h1>Current Orders</h1></center>
+        {allOrders.map((order)=>{
+            return (
+                <React.Fragment key={order.id}>
+                    <div id="indieOrder">{order.id}
+                    Order
+                    </div>
+                    
+                </React.Fragment>
+            )
+        })}
+
+    </>)
 
 
 
