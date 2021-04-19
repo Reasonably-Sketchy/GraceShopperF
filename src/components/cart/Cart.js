@@ -79,7 +79,7 @@ const Cart = ({ userData, setUserData, cart, setCart, token }) => {
                 amount,
             });
             console.log('Payment Success!', response);
-            const completedOrder = await handleCompleteOrder(userId, orderId, cart, setCart, userToken, setUserData);
+            const completedOrder = await handleCompleteOrder(userId, orderId, setCart, userToken, setUserData);
 
         } catch (error) {
             console.error(error);
