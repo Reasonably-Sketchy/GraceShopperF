@@ -1,8 +1,13 @@
-import React from 'react';
+import { Button } from '@material-ui/core';
+import { KeyboardArrowDown, KeyboardArrowRight } from '@material-ui/icons';
+import React, { useState } from 'react';
 
 import './OrderCard.css';
+import OrderProductCard from './OrderProductCard';
+import ProductSummary from './ProductSummary';
 
 const OrderCard = ({ order }) => {
+    const [productsOpen, setProductsOpen] = useState(false);
     // Generates total price for product based on quantity
     if (order && order.products && order.products.length > 0) {
         const productTotals = order.products.map((product) => {
@@ -43,6 +48,26 @@ const OrderCard = ({ order }) => {
                     <h3>${order.total}</h3>
                 </div> 
             </div>
+
+            {order.products.length > 0
+            ?<Button
+                color="primary"
+                onClick={() => {
+                    setProductsOpen(!productsOpen);
+                }}>View Products {productsOpen ? <KeyboardArrowDown /> : <KeyboardArrowRight />}</Button>
+            : ''}
+            
+            {productsOpen
+            ? <div className="products-display">
+                {order.products.map((product, index) => {
+                    return (
+                        <ProductSummary 
+                            key={index}
+                            orderProduct={product} />
+                    )
+                })}
+            </div>
+            : ''}
         </div>
     );
 };

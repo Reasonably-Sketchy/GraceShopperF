@@ -2,33 +2,26 @@ import React, {useState, useEffect} from 'react';
 import {useHistory} from 'react-router-dom';
 import {callApi} from '../../api'
 import {Button, TextField} from '@material-ui/core'
-import { editProduct } from '../../api/utils';
+import { editProduct, updateAdminData } from '../../api/utils';
 
-const EditProduct = ({token, userData, productId, thisProduct, setEditExpand}) => {
+const EditProduct = ({
+    token, 
+    thisProduct, 
+    setEditExpand, 
+    setAllProducts, 
+    setModalOpen}) => {
+        
     const [name, editName] = useState(thisProduct.name);
     const [description, editDescription] = useState(thisProduct.description);
     const [imageURL, editImageURL] = useState(thisProduct.imageURL);
     const [category, editCategory] = useState(thisProduct.category);
     const [price, editPrice] = useState(thisProduct.price);
-    const [allProducts, setAllProducts] = useState([])
     const history = useHistory();
 
     const handleEdit = async (event) =>{
         event.preventDefault();
 
         try {
-            // const data = await callApi({
-            //     url: `/products/${thisProduct.id}`,
-            //     method: 'PATCH',
-            //     body: {
-            //         name: product,
-            //         description: description,
-            //         imageURL: imageURL,
-            //         price: price,
-            //         category: category
-            //     },
-            //     token: token
-            // });
             const body = {
                 name: name,
                 description: description,
@@ -37,28 +30,16 @@ const EditProduct = ({token, userData, productId, thisProduct, setEditExpand}) =
                 category: category
             };
             const updatedProduct = await editProduct(thisProduct.id, body, token);
-            console.log('Updated: ', updatedProduct);
-
-            // setAllProducts(data)
-            // if (data) {
-            //     let result = await callApi({
-            //         url: '/products',
-            //         method: 'GET',
-            //         token: token
-            //     })
-            //     if(Array.isArray(result)){
-            //         setAllProducts(result)
-            //     }
-            // }
-            history.push('/products')
-
+            if (updatedProduct) {
+                updateAdminData(token, null, null, setAllProducts);
+                setEditExpand(false);
+                setModalOpen(true);
+            }
         } catch(error) {
             console.error(error)
         }
 
     };
-
-
 
     return <>
         <h3>Edit Product</h3>
@@ -91,7 +72,7 @@ const EditProduct = ({token, userData, productId, thisProduct, setEditExpand}) =
                     required={false} />
 
                 <TextField 
-                    id="imageURL"
+                    className="imageURL"
                     placeholder="Category"
                     value={category}
                     onChange={(event) => editCategory(event.target.value)}

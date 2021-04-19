@@ -42,7 +42,7 @@ const handleCompleteOrder = async (userId, orderId, setCart, token, setUserData)
         };
 
         try {
-            const updatedOrder = await updateOrder(orderId, body, token);
+            await updateOrder(orderId, body, token);
             setCart([]);
             await updateUserData(token, setUserData);
         } catch (error) {
@@ -53,14 +53,12 @@ const handleCompleteOrder = async (userId, orderId, setCart, token, setUserData)
     // IF NO TOKEN
     if (!token) {
         // create an order
-        const guestOrder = await createOrder();
+        await createOrder();
         setCart([]);        
     };
 };
 
 const Cart = ({ userData, setUserData, cart, setCart, token }) => {
-    console.log('MY USER DATA: ', userData)
-
     const items = generateItemsTotal(cart);
     const orderTotal = generateOrderTotal(cart);
     const userToken = token;
@@ -73,7 +71,6 @@ const Cart = ({ userData, setUserData, cart, setCart, token }) => {
     };
 
     const onToken = (amount) => async (token) => {
-        console.log("Token is: ", token);
         try {
             const response = await axios.post(PAYMENT_URL, {
                 source: token.id,
@@ -81,7 +78,7 @@ const Cart = ({ userData, setUserData, cart, setCart, token }) => {
                 amount,
             });
             console.log('Payment Success!', response);
-            const completedOrder = await handleCompleteOrder(userId, orderId, cart, setCart, userToken, setUserData);
+            await handleCompleteOrder(userId, orderId, setCart, userToken, setUserData);
 
         } catch (error) {
             console.error(error);
@@ -121,7 +118,6 @@ const Cart = ({ userData, setUserData, cart, setCart, token }) => {
             ? <section className="checkout">
                 <div className="summary">
                     <h3>Items: {items}</h3>
-                    {/* <h3 className="gold-text">{items}</h3> */}
                 </div>
 
                 <div className="total">

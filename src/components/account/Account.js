@@ -12,7 +12,7 @@ import UserReview from '../reviews/UserReview';
 
 import './Account.css';
 
-const Account = ({ userData, setActiveLinkIs, token }) => {
+const Account = ({ userData, setActiveLinkIs, token, setUserData }) => {
     if (!userData || !userData.id) {
         return <h1>Loading...</h1>
     };
@@ -91,7 +91,10 @@ const Account = ({ userData, setActiveLinkIs, token }) => {
                         }}>User Info {detailsOpen ? <KeyboardArrowDown /> : <KeyboardArrowRight />}</Button>
 
                     {detailsOpen
-                    ? <UserCard userData = {userData} />
+                    ? <UserCard 
+                        userData = {userData}
+                        setUserData = {setUserData} 
+                        token = {token} />
 
                     : ''}
 
