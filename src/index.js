@@ -7,7 +7,17 @@ import {
     useHistory,
     Link
 } from 'react-router-dom';
-import { fetchUserData, fetchAllProducts, fetchUserCart, addProductToOrder, createOrder, updateUserData } from './api/utils';
+
+import { 
+    fetchUserData, 
+    fetchAllProducts, 
+    fetchUserCart, 
+    addProductToOrder,
+    fetchAllUsers,
+    fetchAllOrders,
+    createOrder,
+    updateUserData,
+} from './api/utils';
 
 // Page components
 import { 
@@ -24,7 +34,13 @@ import {
     Account,
     SingleOrder,
     Admin,
-    AdminOrders } from './components'
+    AdminOrders, 
+    AdminUsers,
+    AddUser,
+    SingleUser, 
+    ViewUpdateUser,
+    EditProduct
+} from './components'
 
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import './styles.css';
@@ -74,6 +90,8 @@ const App = () => {
     const [allProducts, setAllProducts] = useState([]);
     const [activeLinkIs, setActiveLinkIs] = useState('Home');
     const [cart, _setCart] = useState([]);
+    const [allUsers, setAllUsers] = useState([]);
+    const [allOrders, setAllOrders] = useState([]);
 
     // Retrieve token from local storage
     useEffect(async () => {
@@ -109,6 +127,38 @@ const App = () => {
             console.error(error);
         };
     }, [])
+
+    // Retrieve all users
+    useEffect(async ()=>{
+        try {
+            let users = []
+            if (token) {
+                users = await fetchAllUsers(token);
+            }
+            if (users) {
+                setAllUsers(users);
+            };
+        } catch (error) {
+            console.error(error)
+        }
+    }, [token]);
+
+    // Retrieve all orders
+    useEffect(async ()=>{
+        try{
+            let orders = [];
+            if (token) {
+                orders = await fetchAllOrders(token);
+                console.log('orders line 185', orders)
+            };
+            
+            if (orders) {
+                setAllOrders(orders);
+            }
+        } catch (error) {
+            console.error(error)
+        }
+    }, [token])
 
     return (
         <div id="app">
@@ -161,7 +211,12 @@ const App = () => {
                     </Route>
 
                     <Route exact path = "/products">
-                        <Products allProducts = {allProducts}/>
+                        <Products 
+                            allProducts = {allProducts}
+                            userData={userData}
+                            token={token}
+                            setAllProducts={setAllProducts}
+                        />
                     </Route>
 
                     <Route exact path = "/products/:productId">
@@ -170,9 +225,21 @@ const App = () => {
                             cart = {cart}
                             setCart = {setCart}
                             token = {token}
-                            setUserData = {setUserData}
-                            userData = {userData}/>
+                            userData={userData}
+                            setUserData = {setUserData}/>
+
                     </Route>
+
+                    {userData.isAdmin
+                    ? <Route path = "/editProduct">
+                        <EditProduct 
+                            allOrders={allOrders}
+                            allProducts={allProducts}
+                            token={token}
+                            userData={userData}
+                        />
+                    </Route>
+                    : ''}
 
                     <Route path = "/account">
                         <Account 
@@ -182,16 +249,34 @@ const App = () => {
                     </Route>
 
                     {userData.isAdmin
-                    ? <Route path = "/orders/:orderId">
-                        <SingleOrder />
+                    ? <Route path = "/orders">
+                        <AdminOrders allOrders={allOrders}/>
                     </Route>
                     : ''}
 
                     {userData.isAdmin
                     ? <Route path = "/admin">
-                        <Admin />
+                        <Admin 
+                            token={token} 
+                            setAllProducts={setAllProducts}
+                            allUsers={allUsers}
+                            userData={userData}
+                            setAllUsers={setAllUsers}
+                            />
                     </Route>
                     : '' }
+
+                    {userData.isAdmin
+                    ? <Route path="/users/:userId">
+                        <SingleUser
+                            userData={userData}
+                            allUsers={allUsers}
+                            token={token}
+                            setAllUsers={setAllUsers}
+                        ></SingleUser>
+                    </Route>
+                    : ''
+                    } 
 
                     <Route path = "/cart">
                         <Cart 

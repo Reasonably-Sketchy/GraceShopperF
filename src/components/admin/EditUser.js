@@ -2,9 +2,9 @@ import React, {useState, useEffect} from 'react';
 import {useHistory} from 'react-router-dom';
 import {callApi} from '../../api';
 import {Button, TextField, Checkbox} from '@material-ui/core';
-// import Checkbox from '@material-ui/Checkbox'
 
-const AddUser = ({token, setAllUsers, allUsers}) => {
+const EditUser = ({token, thisUser, setUser, setAllUsers}) =>{
+
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
@@ -13,15 +13,14 @@ const AddUser = ({token, setAllUsers, allUsers}) => {
     const [admin, setAdmin] = useState(false);
     const [imageURL, setImageURL] = useState('');
     const history = useHistory();
-    // const [allUsers, setAllUsers] = useState([])
 
     const handleSubmit = async (event) =>{
         event.preventDefault();
 
         try {
-            const newUser = await callApi({
-                url: '/users/register',
-                method: 'POST',
+            const data = await callApi({
+                url: `/users/${thisUser.id}`,
+                method: 'PATCH',
                 body: {
                     first: firstName,
                     last: lastName,
@@ -33,15 +32,15 @@ const AddUser = ({token, setAllUsers, allUsers}) => {
                 },
                 token
             });
-            
-            alert('New user added!');
-            const updatedUsers = await callApi({
+            setUser([data]);
+            alert('User Edited!');
+            const updateUsers = await callApi({
                 url: '/users',
                 method: 'GET',
                 token
             })
-            setAllUsers(updatedUsers);
-            // history.push(`/admin`)
+            setAllUsers(updateUsers);
+            history.push(`/admin`)
 
         } catch(error) {
             console.error(error)
@@ -49,10 +48,9 @@ const AddUser = ({token, setAllUsers, allUsers}) => {
 
     };
 
-
     return (
         <>
-            <h3>Add User</h3>
+            <h3>Edit User</h3>
 
             <div className="addUser-Container">
                 <form className="register-form" onSubmit={handleSubmit}>
@@ -79,18 +77,18 @@ const AddUser = ({token, setAllUsers, allUsers}) => {
                     placeholder="Email"
                     value={email}
                     onChange={(event) => setEmail(event.target.value)}
-                    required={true} />
+                    required={false} />
 
                 <TextField 
                     id="username"
-                    placeholder="Desired Username"
+                    placeholder="New Username"
                     value={username}
                     onChange={(event) => setUsername(event.target.value)}
                     required={true} />
 
                 <TextField 
                     id="imageURL"
-                    placeholder="Profile Image URL (optional)"
+                    placeholder="Profile Image URL"
                     value={imageURL}
                     onChange={(event) => setImageURL(event.target.value)}
                     required={false} />
@@ -101,22 +99,28 @@ const AddUser = ({token, setAllUsers, allUsers}) => {
                     placeholder="Password"
                     value={password}
                     onChange={(event) => setPassword(event.target.value)}
-                    required={true} />
+                    required={false} />
+                
+                <div id="isAdminCheck">Grant Admin?<input
+                        type="checkbox"
+                        value={admin}
+                        id="isAdmin"
+                        onClick={()=>setAdmin(true)}
+                    ></input></div>
 
                 <Button
                     className="responsive-button"
                     variant="contained"
                     color="primary"
                     type="submit"
-                    >Create User</Button>
+                    >Edit User</Button>
                 
 
 
             </form>
             </div>
         </>
-    );
-};
+    )
 
-export default AddUser; 
-
+}
+export default EditUser;
