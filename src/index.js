@@ -260,25 +260,19 @@ const App = () => {
                             token={token} 
                             setAllProducts={setAllProducts}
                             allUsers={allUsers}
+                            userData={userData}
+                            setAllUsers={setAllUsers}
                             />
                     </Route>
                     : '' }
 
-                    {/* {userData.isAdmin
-                    ? <Route path = "/users">
-                        <AdminUsers 
-                            token={token}
-                            allUsers={allUsers}
-                        />
-                    </Route>
-                    : '' } */}
-
                     {userData.isAdmin
                     ? <Route path="/users/:userId">
                         <SingleUser
-
+                            userData={userData}
                             allUsers={allUsers}
                             token={token}
+                            setAllUsers={setAllUsers}
                         ></SingleUser>
                     </Route>
                     : ''

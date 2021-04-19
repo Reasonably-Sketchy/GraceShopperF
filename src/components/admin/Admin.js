@@ -12,8 +12,12 @@ import SingleUser from './AdminSingleUser';
 import UserList from './UserList'; 
 import {Route} from 'react-router-dom';
 
-const Admin = ({token, setAllProducts, allUsers}) => {
+const Admin = ({token, setAllProducts, allUsers, userData, setAllUsers}) => {
     const history = useHistory();
+
+    if(!allUsers){
+        return <h1>Loading...</h1>
+    }
 
     // We may want to move this state/useEffect to the Admin page for security of user data
     // const [allUsers, setAllUsers] = useState([]);
@@ -54,7 +58,10 @@ const Admin = ({token, setAllProducts, allUsers}) => {
                         setUsersExpand(!usersExpand);
                     }}>Add User {usersExpand ? <KeyboardArrowDown /> : <KeyboardArrowRight />}</Button>
                 {usersExpand
-                ? <center><AddUser/></center>
+                ? <center><AddUser 
+                    setAllUsers={setAllUsers}
+                    allUsers={allUsers}
+                    /></center>
                 : ''}
                 
                 <Button
@@ -68,6 +75,13 @@ const Admin = ({token, setAllProducts, allUsers}) => {
                 ? <>
                     {allUsers.map((user)=>{
                         return (
+                            <UserList
+                                key={user.id}
+                                user={user}
+                                allUsers={allUsers}
+                                token={token}
+                                userData={userData}
+                            ></UserList>
                         // <>
                             // <UserList
                             //     key={user.id}
@@ -84,17 +98,17 @@ const Admin = ({token, setAllProducts, allUsers}) => {
                         //     </>
 
                             // <React.Fragment key={user.id}>
-                                <Button 
-                                    key={user.id}
-                                    onClick={()=>{
-                                        // setThisUser(user);
-                                        // <SingleUser user={user}></SingleUser>
-                                        console.log('userid line 91', user.id)
-                                        localStorage.setItem('thisUser', user.id)
+                                // <Button 
+                                //     key={user.id}
+                                //     onClick={()=>{
+                                //         // setThisUser(user);
+                                //         // <SingleUser user={user}></SingleUser>
+                                //         console.log('userid line 91', user.id)
+                                //         localStorage.setItem('thisUser', user.id)
 
-                                        history.push(`/users/${user.id}`)
-                                    }}
-                                >{user.username}</Button>
+                                //         history.push(`/users/${user.id}`)
+                                //     }}
+                                // >{user.username}</Button>
                             // </React.Fragment>
 
                             // <React.Fragment key={user.id}>
