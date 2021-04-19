@@ -41,7 +41,7 @@ const AddProduct = ({token, setAllProducts, setProductsExpand}) => {
             // setAllProducts(data)
             if (data) {
                 setModalOpen(true);
-                updateAdminData(token, null, null, setAllProducts);
+                await updateAdminData(token, null, null, setAllProducts);
             };
 
         } catch(error) {

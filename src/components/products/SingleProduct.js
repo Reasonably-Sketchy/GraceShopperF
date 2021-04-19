@@ -7,13 +7,13 @@ import { KeyboardArrowLeft, KeyboardArrowDown, KeyboardArrowRight } from '@mater
 
 import ReviewCard from '../reviews/ReviewCard';
 import ReviewCreator from '../reviews/ReviewCreator';
-import ReviewEditor from '../reviews/ReviewEditor';
-import ProductCard from './ProductCard';
 import EditProduct from './EditProduct';
+import AdminModal from '../admin/AdminModal';
+
 
 import './SingleProduct.css';
 
-const SingleProduct = ({ allProducts, cart, setCart, token, setUserData, userData }) => {
+const SingleProduct = ({ allProducts, cart, setCart, token, setUserData, userData, setAllProducts }) => {
     const history = useHistory();
     const { productId } = useParams();
     const [quantity, setQuantity] = useState(1);
@@ -21,6 +21,7 @@ const SingleProduct = ({ allProducts, cart, setCart, token, setUserData, userDat
     const [editExpand, setEditExpand] = useState(false);
     const [reviews, setReviews] = useState([]);
     const [creatorOpen, setCreatorOpen] = useState(false);
+    const [modalOpen, setModalOpen] = useState(false);
 
     useEffect(async () => {
         const productReviews = await fetchReviews(productId);
@@ -30,19 +31,24 @@ const SingleProduct = ({ allProducts, cart, setCart, token, setUserData, userDat
     }, []);
 
     if (!allProducts) {
-        return <h1>Loading...</h1>
+        return <h3>Loading...</h3>
     };
-
 
     const thisProduct = allProducts.find((product) => {return product.id == productId})
 
     if (!thisProduct) {
-        return <h1>This product does not exist.</h1>
+        return <h3>This product does not exist.</h3>
     };
 
     const handleQuantityChange = async (event) => {
         setQuantity(Number(event.target.value))
     };
+
+    const modalCloseFunction = () => {
+        setModalOpen(false);
+        history.push('/products');
+    };
+
 
     const handleAddToCart = async () => {
         // IF I'M NOT LOGGED IN
@@ -177,16 +183,14 @@ const SingleProduct = ({ allProducts, cart, setCart, token, setUserData, userDat
 
                 </section>
 
-  
-
                         {editExpand
                         ? <center>
                             <EditProduct 
                                 thisProduct = {thisProduct}
-                                productId={productId}
-                                userData = {userData}
                                 token = {token}
-                                setEditExpand = {setEditExpand}/>
+                                setEditExpand = {setEditExpand}
+                                setModalOpen = {setModalOpen}
+                                setAllProducts = {setAllProducts}/>
                         </center>
                         : ''
                         } 
@@ -224,6 +228,13 @@ const SingleProduct = ({ allProducts, cart, setCart, token, setUserData, userDat
                     productId = {productId}
                     setCreatorOpen = {setCreatorOpen}
                     setReviews = {setReviews}/>
+                : ''}
+
+                {modalOpen 
+                ? <AdminModal 
+                    action = {"Product Updated"}
+                    data = {thisProduct.name}
+                    modalCloseFunction = {modalCloseFunction}/>
                 : ''}
             </div>
         </main>

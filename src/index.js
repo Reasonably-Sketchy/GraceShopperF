@@ -11,8 +11,8 @@ import {
     fetchAllProducts, 
     fetchUserCart, 
     addProductToOrder, 
-    fetchAllUsers,
-    fetchAllOrders,
+    // fetchAllUsers,
+    // fetchAllOrders,
     createOrder, 
     updateUserData } from './api/utils';
 
@@ -29,14 +29,9 @@ import {
     SingleProduct,
     Cart,
     Account,
-    SingleOrder,
     Admin,
     AdminOrders, 
-    AdminUsers,
-    AddUser,
-    SingleUser, 
-    ViewUpdateUser,
-    EditProduct } from './components'
+    SingleUser} from './components'
 
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import './styles.css';
@@ -120,67 +115,36 @@ const App = () => {
         };
     }, []);
 
-    // Retrieve all users
-    useEffect(async ()=>{
-        try {
-            let users = []
-            if (token) {
-                users = await fetchAllUsers(token);
-            }
-            if (users) {
-                setAllUsers(users);
-            };
-        } catch (error) {
-            console.error(error)
-        }
-    }, [token]);
+    // // Retrieve all users
+    // useEffect(async ()=>{
+    //     try {
+    //         let users = []
+    //         if (token) {
+    //             users = await fetchAllUsers(token);
+    //         }
+    //         if (users) {
+    //             setAllUsers(users);
+    //         };
+    //     } catch (error) {
+    //         console.error(error)
+    //     }
+    // }, [token]);
 
-    // Retrieve all orders
-    useEffect(async ()=>{
-        try{
-            let orders = [];
-            if (token) {
-                orders = await fetchAllOrders(token);
-            };
+    // // Retrieve all orders
+    // useEffect(async ()=>{
+    //     try{
+    //         let orders = [];
+    //         if (token) {
+    //             orders = await fetchAllOrders(token);
+    //         };
             
-            if (orders) {
-                setAllOrders(orders);
-            }
-        } catch (error) {
-            console.error(error)
-        }
-    }, [token])
-
-    // Retrieve all users
-    useEffect(async ()=>{
-        try {
-            let users = []
-            if (token) {
-                users = await fetchAllUsers(token);
-            }
-            if (users) {
-                setAllUsers(users);
-            };
-        } catch (error) {
-            console.error(error)
-        }
-    }, [token]);
-
-    // Retrieve all orders
-    useEffect(async ()=>{
-        try{
-            let orders = [];
-            if (token) {
-                orders = await fetchAllOrders(token);
-            };
-            
-            if (orders) {
-                setAllOrders(orders);
-            }
-        } catch (error) {
-            console.error(error)
-        }
-    }, [token])
+    //         if (orders) {
+    //             setAllOrders(orders);
+    //         }
+    //     } catch (error) {
+    //         console.error(error)
+    //     }
+    // }, [token])
 
     return (
         <div id="app">
@@ -247,20 +211,10 @@ const App = () => {
                             setCart = {setCart}
                             token = {token}
                             userData={userData}
-                            setUserData = {setUserData}/>
+                            setUserData = {setUserData}
+                            setAllProducts = {setAllProducts}/>
 
                     </Route>
-
-                    {userData.isAdmin
-                    ? <Route path = "/editProduct">
-                        <EditProduct 
-                            allOrders={allOrders}
-                            allProducts={allProducts}
-                            token={token}
-                            userData={userData}
-                        />
-                    </Route>
-                    : ''}
 
                     <Route path = "/account">
                         <Account 
