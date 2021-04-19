@@ -200,7 +200,6 @@ export const deleteReview = async (reviewId, token) => {
 
 // Get user reviews
 export const getUserReviews = async (userId, token) => {
-  console.log('UserId', userId)
   try {
     const data = await callApi({
       url: `/users/${userId}/reviews`,
@@ -220,8 +219,6 @@ export const fetchAllUsers = async (token) => {
       url: "/users",
       token
     });
-    console.log('data fetch users line 51 utils', data)
-
     return data;
   } catch (error) {
     console.error(error)
@@ -235,7 +232,6 @@ export const fetchAllOrders = async (token) =>{
       url: "/orders",
       token
     });
-    console.log('data in utils line 80', data)
     return data;
 
   } catch (error) {
@@ -244,7 +240,7 @@ export const fetchAllOrders = async (token) =>{
 }
 
 // Update Admin Data
-export const updateAdminData = async (token, setAllUsers, setAllOrders) => {
+export const updateAdminData = async (token, setAllUsers, setAllOrders, setAllProducts) => {
   const users = await fetchAllUsers(token);
     if (setAllUsers && users && users.length > 0) {
         setAllUsers(users);
@@ -253,11 +249,15 @@ export const updateAdminData = async (token, setAllUsers, setAllOrders) => {
     if (setAllOrders && orders && orders.length > 0) {
         setAllOrders(orders);
     };
+
+  const products = await fetchAllProducts();
+  if (setAllProducts && products && products.length > 0) {
+      setAllProducts(products);
+  };
 };
 
 // Edit Product
 export const editProduct = async (productId, body, token) => {
-  console.log(productId);
   try {
     const data = await callApi({
       url:  `/products/${productId}`,

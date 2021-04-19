@@ -6,7 +6,7 @@ import ProductSearch from './ProductSearch';
 import './Products.css';
 
 const Products = ({ allProducts, userData, token, setAllProducts }) => {
-
+    
     const [productsToDisplay, setProductsToDisplay] = useState([]);
     const [productCategories, setProductCategories] = useState([]);
     const [filteredProducts, setFilteredProducts] = useState([]); 

@@ -1,10 +1,10 @@
-import React, {useState, useEffect} from 'react';
-import {useHistory} from 'react-router-dom';
+import React, {useState} from 'react';
 import {callApi} from '../../api';
-import {Button, TextField, Checkbox} from '@material-ui/core';
+import {Button, TextField} from '@material-ui/core';
 import { updateAdminData } from '../../api/utils';
+import AdminModal from './AdminModal';
 
-const AddUser = ({token, setAllUsers, allUsers}) => {
+const AddUser = ({token, setAllUsers, setUsersExpand}) => {
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
@@ -12,6 +12,18 @@ const AddUser = ({token, setAllUsers, allUsers}) => {
     const [password, setPassword] = useState('');
     const [admin, setAdmin] = useState(false);
     const [imageURL, setImageURL] = useState('');
+    const [modalOpen, setModalOpen] = useState(false);
+
+    const modalCloseFunction = () => {
+        setFirstName('');
+        setLastName('');
+        setEmail('');
+        setUsername('');
+        setPassword('');
+        setAdmin('');
+        setImageURL('');
+        setUsersExpand(false);
+    }
 
     const handleSubmit = async (event) =>{
         event.preventDefault();
@@ -32,8 +44,8 @@ const AddUser = ({token, setAllUsers, allUsers}) => {
             });
             
             if (data) {
-                console.log('USER CREATED: ', data);
-                updateAdminData(token, setAllUsers);
+                setModalOpen(true);
+                updateAdminData(token, setAllUsers, null, null);
             };
             
         } catch(error) {
@@ -41,11 +53,17 @@ const AddUser = ({token, setAllUsers, allUsers}) => {
         };
     };
 
-
     return (
-        <>
+        <>  
+            {modalOpen 
+            ? <AdminModal 
+                action = {"User Created"}
+                data = {username}
+                modalCloseFunction = {modalCloseFunction}/>
+            : ''
+            }
             <div className="addUser-Container">
-                <h3>Add User</h3>
+                <h3>Create New User</h3>
                 <form className="register-form" onSubmit={handleSubmit}>
                     <div className="double-input">
                         <TextField 
@@ -79,7 +97,7 @@ const AddUser = ({token, setAllUsers, allUsers}) => {
                         required={true} />
 
                     <TextField 
-                        id="imageURL"
+                        className="imageURL"
                         placeholder="Profile Image URL (optional)"
                         value={imageURL}
                         onChange={(event) => setImageURL(event.target.value)}
