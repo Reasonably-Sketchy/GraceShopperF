@@ -59,8 +59,6 @@ const handleCompleteOrder = async (userId, orderId, setCart, token, setUserData)
 };
 
 const Cart = ({ userData, setUserData, cart, setCart, token }) => {
-    console.log('MY USER DATA: ', userData)
-
     const items = generateItemsTotal(cart);
     const orderTotal = generateOrderTotal(cart);
     const userToken = token;

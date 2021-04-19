@@ -1,15 +1,25 @@
-import React, {useState, useEffect} from 'react';
-import {useHistory} from 'react-router-dom';
+import React, { useState } from 'react';
 import {callApi} from '../../api'
-import {Button, TextField} from '@material-ui/core'
+import {Button, TextField} from '@material-ui/core';
+import AdminModal from '../admin/AdminModal';
+import { updateAdminData } from '../../api/utils';
 
-const AddProduct = ({token, setAllProducts}) => {
+const AddProduct = ({token, setAllProducts, setProductsExpand}) => {
     const [product, setProduct] = useState('');
     const [description, setDescription] = useState('');
     const [imageURL, setImageURL] = useState('');
     const [category, setCategory] = useState('');
-    const [price, setPrice] = useState();
-    const history = useHistory();
+    const [price, setPrice] = useState(0);
+    const [modalOpen, setModalOpen] = useState(false);
+
+    const modalCloseFunction = () => {
+        setProduct('');
+        setDescription('');
+        setImageURL('');
+        setCategory('');
+        setPrice(0);
+        setProductsExpand(false);
+    }
 
     const handleSubmit = async (event) =>{
         event.preventDefault();
@@ -28,18 +38,11 @@ const AddProduct = ({token, setAllProducts}) => {
                 token: token
                 
             });
-            setAllProducts(data)
+            // setAllProducts(data)
             if (data) {
-                let result = await callApi({
-                    url: '/products',
-                    method: 'GET',
-                    token: token
-                })
-                if(Array.isArray(result)){
-                    setAllProducts(result)
-                }
-            }
-            history.push('/products')
+                setModalOpen(true);
+                updateAdminData(token, null, null, setAllProducts);
+            };
 
         } catch(error) {
             console.error(error)
@@ -49,8 +52,16 @@ const AddProduct = ({token, setAllProducts}) => {
 
     return (
         <>
+            {modalOpen 
+            ? <AdminModal 
+                action = {"Product Created"}
+                data = {product}
+                modalCloseFunction = {modalCloseFunction}/>
+            : ''
+            }
+
             <div className="addProduct-Container">
-                <h3>Add Product</h3>
+                <h3>Add New Product</h3>
                 <form className="register-form" onSubmit={handleSubmit}>
 
                 <TextField 

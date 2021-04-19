@@ -2,9 +2,10 @@ import React, {useState, useEffect} from 'react';
 import {useHistory} from 'react-router-dom';
 import {callApi} from '../../api';
 import {Button, TextField, Checkbox} from '@material-ui/core';
+import AdminModal from './AdminModal';
+import { updateAdminData } from '../../api/utils';
 
 import './Admin.css'
-import { updateAdminData } from '../../api/utils';
 
 const EditUser = ({token, thisUser, setUser, setAllUsers}) =>{
 
@@ -13,8 +14,9 @@ const EditUser = ({token, thisUser, setUser, setAllUsers}) =>{
     const [email, setEmail] = useState(thisUser.email);
     const [username, setUsername] = useState(thisUser.username);
     const [password, setPassword] = useState(thisUser.password);
-    const [admin, setAdmin] = useState(thisUser.isAdmin);
+    const [admin, setAdmin] = useState(thisUser.isAdmin || false);
     const [imageURL, setImageURL] = useState(thisUser.imageURL || '');
+    const [modalOpen, setModalOpen] = useState(false);
     const history = useHistory();
 
     const handleSubmit = async (event) =>{
@@ -37,7 +39,7 @@ const EditUser = ({token, thisUser, setUser, setAllUsers}) =>{
             });
             setUser([data]);
             alert('User Edited!');
-            updateAdminData(token, setAllUsers);
+            updateAdminData(token, setAllUsers, null, null);
             history.push(`/admin`);
 
         } catch(error) {
@@ -99,7 +101,7 @@ const EditUser = ({token, thisUser, setUser, setAllUsers}) =>{
                     onChange={(event) => setPassword(event.target.value)}
                     required={false} />
                 
-                <div id="isAdminCheck">Grant Admin?<input
+                <div className="isAdminCheck">Grant Admin?<input
                         type="checkbox"
                         value={admin}
                         id="isAdmin"

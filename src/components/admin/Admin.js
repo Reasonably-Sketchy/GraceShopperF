@@ -29,7 +29,11 @@ const Admin = ({token, setAllProducts, allUsers, userData, setAllUsers}) => {
 
     return (
         <main id="admin">
-            <center><h1>Admin</h1></center>
+            <div className="page-header-image">
+                <section className="page-header">
+                    <h1 className="header-text">Admin</h1>
+                </section>
+            </div>
             <div className="user-info">
             User Options:
                 <Button
@@ -44,7 +48,8 @@ const Admin = ({token, setAllProducts, allUsers, userData, setAllUsers}) => {
                     <AddUser 
                         token = {token}
                         setAllUsers = {setAllUsers}
-                        allUsers = {allUsers}/>
+                        allUsers = {allUsers}
+                        setUsersExpand = {setUsersExpand}/>
                 </center>
                 : ''}
                 
@@ -100,6 +105,7 @@ const Admin = ({token, setAllProducts, allUsers, userData, setAllUsers}) => {
                 ? <center><AddProduct 
                     token={token}
                     setAllProducts={setAllProducts}
+                    setProductsExpand = {setProductsExpand}
                     /></center>
                 : ''}
             </div>

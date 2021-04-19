@@ -83,11 +83,11 @@ const SingleUser = ({allUsers, userData, token, setAllUsers}) => {
 
             <Button
                 className="accordian-button"
-                variant="contained"
-                color="secondary"
+                color="primary"
+                variant="outlined"
                 onClick={() => {
                     setUpdateExpand(!updateExpand);
-                }}>Edit {updateExpand ? <KeyboardArrowDown /> : <KeyboardArrowRight />}</Button>
+                }}>Edit User Information {updateExpand ? <KeyboardArrowDown /> : <KeyboardArrowRight />}</Button>
                 {updateExpand
                     ? <center><EditUser 
                         token={token}

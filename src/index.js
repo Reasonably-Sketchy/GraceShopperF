@@ -141,7 +141,6 @@ const App = () => {
             let orders = [];
             if (token) {
                 orders = await fetchAllOrders(token);
-                console.log('orders line 185', orders)
             };
             
             if (orders) {
@@ -173,7 +172,6 @@ const App = () => {
             let orders = [];
             if (token) {
                 orders = await fetchAllOrders(token);
-                console.log('orders line 185', orders)
             };
             
             if (orders) {
