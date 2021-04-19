@@ -27,7 +27,11 @@ const EditProduct = ({token, userData, productId}) => {
                     category: category
                 },
                 token: token
+<<<<<<< HEAD
 
+=======
+                
+>>>>>>> dev
             });
             // setAllProducts(data)
             if (data) {
@@ -104,4 +108,8 @@ const EditProduct = ({token, userData, productId}) => {
 </>
 };
 
+<<<<<<< HEAD
 export default EditProduct; 
+=======
+export default EditProduct;
+>>>>>>> dev

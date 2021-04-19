@@ -105,4 +105,9 @@ const AddProduct = ({token, setAllProducts}) => {
     );
 };
 
+<<<<<<< HEAD
 export default AddProduct; 
+=======
+export default AddProduct; 
+
+>>>>>>> dev

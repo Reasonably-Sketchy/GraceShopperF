@@ -23,4 +23,9 @@ export {default as AddUser} from './admin/AddUser';
 export {default as AdminOrders} from './admin/AdminOrders';
 export {default as AddProduct} from './products/AddProduct';
 export {default as EditProduct} from './products/EditProduct';
+<<<<<<< HEAD
+=======
+export {default as EditUser} from './admin/EditUser';
+
+>>>>>>> dev
 

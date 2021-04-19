@@ -1,5 +1,11 @@
 import React, {useEffect, useState} from 'react';
+<<<<<<< HEAD
 import { useHistory, useParams } from 'react-router';
+=======
+import { useParams } from 'react-router';
+
+import {useHistory} from 'react-router-dom'
+>>>>>>> dev
 import { addProductToOrder, createOrder, fetchReviews, fetchUserCart, updateUserData } from '../../api/utils';
 
 import { Button } from '@material-ui/core';
@@ -9,15 +15,22 @@ import ReviewCard from '../reviews/ReviewCard';
 import ReviewCreator from '../reviews/ReviewCreator';
 import ReviewEditor from '../reviews/ReviewEditor';
 import ProductCard from './ProductCard';
+<<<<<<< HEAD
 import EditProduct from './EditProduct';
+=======
+import { KeyboardArrowDown, KeyboardArrowRight } from '@material-ui/icons';
+>>>>>>> dev
 
 import './SingleProduct.css';
+import EditProduct from './EditProduct';
 
 const SingleProduct = ({ allProducts, cart, setCart, token, setUserData, userData }) => {
     const history = useHistory();
     const { productId } = useParams();
     const [quantity, setQuantity] = useState(1);
     const [respMessage, setRespMessage] = useState('');
+    const [editExpand, setEditExpand] = useState(false);
+    const history = useHistory();
     const [reviews, setReviews] = useState([]);
     const [creatorOpen, setCreatorOpen] = useState(false);
     const [editExpand, setEditExpand] = useState(false);
@@ -32,6 +45,7 @@ const SingleProduct = ({ allProducts, cart, setCart, token, setUserData, userDat
     if (!allProducts) {
         return <h1>Loading...</h1>
     };
+
 
     const thisProduct = allProducts.find((product) => {return product.id == productId})
 
@@ -121,7 +135,38 @@ const SingleProduct = ({ allProducts, cart, setCart, token, setUserData, userDat
     return (
         <main id="single-product">
 
+<<<<<<< HEAD
             <div className="back-to-products">
+=======
+                    <Button
+                        variant="outlined"
+                        color="primary"
+                        onClick={handleAddToCart}>Add to Cart</Button>
+
+                    {userData.isAdmin
+                        ? <Button
+                        className="accordian-button"
+                        variant="contained"
+                        color="secondary"
+                        onClick={() => {
+                            setEditExpand(!editExpand);
+                        }}>Edit {editExpand ? <KeyboardArrowDown /> : <KeyboardArrowRight />}</Button>
+                        : ''}
+                    {editExpand
+                    ? <center><EditProduct productId={productId}/></center>
+                    : ''
+                    }
+
+
+                </div>
+                <div className="resp-message">
+                    {respMessage ? <div className="respMessage">{respMessage}</div> : ''}
+                </div>
+            </section>
+
+            <section className="reviews">
+                <h2>Reviews:</h2>
+>>>>>>> dev
                 <Button
                     color="primary"
                     onClick={() => {

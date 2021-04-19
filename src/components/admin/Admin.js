@@ -12,7 +12,7 @@ import SingleUser from './AdminSingleUser';
 import UserList from './UserList'; 
 import {Route} from 'react-router-dom';
 
-const Admin = ({token, setAllProducts, allUsers, setAllUsers}) => {
+const Admin = ({token, setAllProducts, allUsers, userData, setAllUsers}) => {
     const history = useHistory();
     const [usersExpand, setUsersExpand] = useState(false);
     const [allUsersExpand, setAllUsersExpand] = useState(false);
@@ -43,7 +43,8 @@ const Admin = ({token, setAllProducts, allUsers, setAllUsers}) => {
                 ? <center>
                     <AddUser 
                         token = {token}
-                        setAllUsers = {setAllUsers}/>
+                        setAllUsers = {setAllUsers}
+                        allUsers = {allUsers}/>
                 </center>
                 : ''}
                 
@@ -54,9 +55,7 @@ const Admin = ({token, setAllProducts, allUsers, setAllUsers}) => {
                     onClick={() => {
                         setAllUsersExpand(!allUsersExpand);
                     }}>View All Users {allUsersExpand ? <KeyboardArrowDown /> : <KeyboardArrowRight />}</Button>
-                
-
-
+{/* <<<<<<< HEAD
                 {allUsersExpand
                 ? <div className="user-list">
                     {allUsers.map((user)=>{
@@ -73,7 +72,22 @@ const Admin = ({token, setAllProducts, allUsers, setAllUsers}) => {
                                 }}
                             >{user.username}</Button>
                         )})}
-                </div>
+                </div> */}
+
+                {allUsersExpand
+                ? <>
+                    {allUsers.map((user)=>{
+                        return (
+                            <UserList
+                                key={user.id}
+                                user={user}
+                                allUsers={allUsers}
+                                token={token}
+                                userData={userData}
+                            ></UserList>
+                        )
+                    })}
+                </>
                 : ''}
 
             </div>

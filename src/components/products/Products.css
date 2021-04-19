@@ -6,6 +6,7 @@
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     grid-gap: 20px;
+<<<<<<< HEAD
     padding: 20px 50px 20px 50px;
 }
 
@@ -107,4 +108,11 @@ input, select {
         display: flex;
         justify-content: flex-start;
     } */
+=======
+    padding: 50px;
+}
+
+#deleteProductButton {
+    background-color: red;
+>>>>>>> dev
 }

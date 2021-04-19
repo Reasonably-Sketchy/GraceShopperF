@@ -41,6 +41,21 @@ export const fetchUserCart = async (token) => {
   };
 };
 
+// Users
+export const fetchAllUsers = async (token) => {
+  try {
+    const data = await callApi({
+      url: "/users",
+      token
+    });
+    console.log('data fetch users line 51 utils', data)
+
+    return data;
+  } catch (error) {
+    console.error(error)
+  };
+};
+
 // Products
 export const fetchAllProducts = async (token) => {
     try {
@@ -54,6 +69,21 @@ export const fetchAllProducts = async (token) => {
       console.error(error);
     };
 };
+
+// Orders
+export const fetchAllOrders = async (token) =>{
+  try {
+    const data = await callApi({
+      url: "/orders",
+      token
+    });
+    console.log('data in utils line 80', data)
+    return data;
+
+  } catch (error) {
+    console.error(error)
+  }
+}
 
 // Create a new order (cart)
 export const createOrder = async (token) => {

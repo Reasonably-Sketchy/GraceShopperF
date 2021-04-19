@@ -4,6 +4,7 @@
     display: flex;
     flex-wrap: wrap;
     flex-direction: column-reverse;
+<<<<<<< HEAD
 } 
 
 .user-list {
@@ -35,3 +36,6 @@
 #admin .MuiInput-underline:hover:not(.Mui-disabled):before {
     border-bottom: 2px solid white;
 }
+=======
+}
+>>>>>>> dev
