@@ -3,10 +3,16 @@ import {Link} from 'react-router-dom';
 import AdminSingleUser from './AdminSingleUser'
 
 const AdminUsers = ({allUsers}) => {
-    const [thisUser, setThisUser] = useState({})
+    // const [thisUser, setThisUser] = useState({});
+    // const [usersToMap, setUsersToMap] = useState([]);
+    // setUsersToMap(allUsers);
+    // const usersToMap = allUsers;
 
-// ! need api route for GET /users
-    return (
+    // if (!allUsers) {
+    //     return '...loading'
+    // };
+
+        return (
         <main id="users">
             <h1>All Users</h1>
             <section className="users-container">
@@ -33,4 +39,3 @@ const AdminUsers = ({allUsers}) => {
 }
 
 export default AdminUsers; 
-

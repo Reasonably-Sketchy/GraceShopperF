@@ -213,6 +213,49 @@ export const getUserReviews = async (userId, token) => {
   };
 };
 
+// ADMIN ROUTES
+export const fetchAllUsers = async (token) => {
+  try {
+    const data = await callApi({
+      url: "/users",
+      token
+    });
+    console.log('data fetch users line 51 utils', data)
+
+    return data;
+  } catch (error) {
+    console.error(error)
+  };
+};
+
+// Orders
+export const fetchAllOrders = async (token) =>{
+  try {
+    const data = await callApi({
+      url: "/orders",
+      token
+    });
+    console.log('data in utils line 80', data)
+    return data;
+
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+// Update Admin Data
+export const updateAdminData = async (token, setAllUsers, setAllOrders) => {
+  const users = await fetchAllUsers(token);
+    if (setAllUsers && users && users.length > 0) {
+        setAllUsers(users);
+    };
+  const orders = await fetchAllOrders(token);
+    if (setAllOrders && orders && orders.length > 0) {
+        setAllOrders(orders);
+    };
+};
+
+
 // MISC
 // Render Stars
 export const renderStars = (starsNum, setStars) => {

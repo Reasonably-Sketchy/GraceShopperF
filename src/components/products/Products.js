@@ -5,7 +5,7 @@ import ProductSearch from './ProductSearch';
 
 import './Products.css';
 
-const Products = ({ allProducts }) => {
+const Products = ({ allProducts, userData, token, setAllProducts }) => {
 
     const [productsToDisplay, setProductsToDisplay] = useState([]);
     const [productCategories, setProductCategories] = useState([]);
@@ -91,6 +91,10 @@ const Products = ({ allProducts }) => {
                         <ProductCard 
                             key={product.id}
                             product = {product} 
+                            userData = {userData}
+                            token = {token} 
+                            setAllProducts = {setAllProducts}
+                            allProducts = {allProducts}
                         />
                     );
                 })}

@@ -1,0 +1,37 @@
+/* containers for users / orders/ products on admin page */
+
+.user-container {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column-reverse;
+} 
+
+.user-list {
+    display: flex;
+    flex-direction: column;
+    max-height: 300px;
+    overflow-y: scroll;
+    background-color: rgba(255, 255, 255, 0.02);
+}
+
+
+/* MUI OVERRIDES */
+
+.user-list .MuiButton-root {
+    font-size: 1.4rem;
+}
+
+#admin .MuiInputBase-root {
+    color: white;
+    font-size: 1.6rem;
+    font-weight: 300;
+    margin-bottom: 8px;
+}
+
+#admin .MuiInput-underline:before {
+    border-bottom: 1px solid white;
+}
+
+#admin .MuiInput-underline:hover:not(.Mui-disabled):before {
+    border-bottom: 2px solid white;
+}
