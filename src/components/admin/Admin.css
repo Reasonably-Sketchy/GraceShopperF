@@ -1,7 +1,60 @@
 /* containers for users / orders/ products on admin page */
-
 .user-container {
     display: flex;
     flex-wrap: wrap;
     flex-direction: column-reverse;
+} 
+
+.user-list {
+    display: flex;
+    flex-direction: column;
+    max-height: 300px;
+    overflow-y: scroll;
+    background-color: rgba(255, 255, 255, 0.02);
+}
+
+.addUser-Container, .addProduct-Container {
+    padding: 20px;
+} 
+
+.addUser-Container h3, .addProduct-Container h3 {
+    margin-bottom: 12px;
+}
+
+#single-user {
+    padding: 20px 5vw 20px 5vw;
+}
+
+.back-to {
+    padding: 10px 0 10px 0;
+}
+
+#single-user h1 {
+    font-size: 2rem;
+}
+
+#single-user h2 {
+    font-size: 2.6rem;
+}
+
+
+/* MUI OVERRIDES */
+
+.user-list .MuiButton-root {
+    font-size: 1.4rem;
+}
+
+form .MuiInputBase-root {
+    color: white;
+    font-size: 1.6rem;
+    font-weight: 300;
+    margin-bottom: 8px;
+}
+
+form .MuiInput-underline:before {
+    border-bottom: 1px solid white;
+}
+
+form .MuiInput-underline:hover:not(.Mui-disabled):before {
+    border-bottom: 2px solid white;
 }

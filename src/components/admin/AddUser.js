@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {useHistory} from 'react-router-dom';
 import {callApi} from '../../api';
 import {Button, TextField, Checkbox} from '@material-ui/core';
-// import Checkbox from '@material-ui/Checkbox'
+import { updateAdminData } from '../../api/utils';
 
 const AddUser = ({token, setAllUsers, allUsers}) => {
     const [firstName, setFirstName] = useState('');
@@ -12,14 +12,11 @@ const AddUser = ({token, setAllUsers, allUsers}) => {
     const [password, setPassword] = useState('');
     const [admin, setAdmin] = useState(false);
     const [imageURL, setImageURL] = useState('');
-    const history = useHistory();
-    // const [allUsers, setAllUsers] = useState([])
 
     const handleSubmit = async (event) =>{
         event.preventDefault();
-
         try {
-            const newUser = await callApi({
+            const data = await callApi({
                 url: '/users/register',
                 method: 'POST',
                 body: {
@@ -34,89 +31,78 @@ const AddUser = ({token, setAllUsers, allUsers}) => {
                 token
             });
             
-            alert('New user added!');
-            const updatedUsers = await callApi({
-                url: '/users',
-                method: 'GET',
-                token
-            })
-            setAllUsers(updatedUsers);
-            // history.push(`/admin`)
-
+            if (data) {
+                console.log('USER CREATED: ', data);
+                updateAdminData(token, setAllUsers);
+            };
+            
         } catch(error) {
             console.error(error)
-        }
-
+        };
     };
 
 
     return (
         <>
-            <h3>Add User</h3>
-
             <div className="addUser-Container">
+                <h3>Add User</h3>
                 <form className="register-form" onSubmit={handleSubmit}>
+                    <div className="double-input">
+                        <TextField 
+                            id="firstName"
+                            placeholder="First Name"
+                            value={firstName}
+                            onChange={(event) => setFirstName(event.target.value)}
+                            required={true} />
 
-                <div className="double-input">
+                        <TextField 
+                            id="lastName"
+                            placeholder="Last Name"
+                            value={lastName}
+                            onChange={(event) => setLastName(event.target.value)}
+                            required={true} />
+                    </div>
+
                     <TextField 
-                        id="firstName"
-                        placeholder="First Name"
-                        value={firstName}
-                        onChange={(event) => setFirstName(event.target.value)}
+                        id="email"
+                        type="email"
+                        placeholder="Email"
+                        value={email}
+                        onChange={(event) => setEmail(event.target.value)}
                         required={true} />
 
                     <TextField 
-                        id="lastName"
-                        placeholder="Last Name"
-                        value={lastName}
-                        onChange={(event) => setLastName(event.target.value)}
+                        id="username"
+                        placeholder="Desired Username"
+                        value={username}
+                        onChange={(event) => setUsername(event.target.value)}
                         required={true} />
-                </div>
 
-                <TextField 
-                    id="email"
-                    type="email"
-                    placeholder="Email"
-                    value={email}
-                    onChange={(event) => setEmail(event.target.value)}
-                    required={true} />
+                    <TextField 
+                        id="imageURL"
+                        placeholder="Profile Image URL (optional)"
+                        value={imageURL}
+                        onChange={(event) => setImageURL(event.target.value)}
+                        required={false} />
 
-                <TextField 
-                    id="username"
-                    placeholder="Desired Username"
-                    value={username}
-                    onChange={(event) => setUsername(event.target.value)}
-                    required={true} />
+                    <TextField 
+                        id="password"
+                        type="password"
+                        placeholder="Password"
+                        value={password}
+                        onChange={(event) => setPassword(event.target.value)}
+                        required={true} />
 
-                <TextField 
-                    id="imageURL"
-                    placeholder="Profile Image URL (optional)"
-                    value={imageURL}
-                    onChange={(event) => setImageURL(event.target.value)}
-                    required={false} />
-
-                <TextField 
-                    id="password"
-                    type="password"
-                    placeholder="Password"
-                    value={password}
-                    onChange={(event) => setPassword(event.target.value)}
-                    required={true} />
-
-                <Button
-                    className="responsive-button"
-                    variant="contained"
-                    color="primary"
-                    type="submit"
-                    >Create User</Button>
-                
-
-
-            </form>
+                    <Button
+                        className="responsive-button"
+                        variant="contained"
+                        color="primary"
+                        type="submit"
+                        >Create User</Button>
+                </form>
             </div>
         </>
     );
 };
 
-export default AddUser; 
-
+export default AddUser;

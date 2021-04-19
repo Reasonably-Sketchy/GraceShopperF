@@ -1,11 +1,10 @@
 import { Button } from '@material-ui/core';
-import React, {useEffect, useState} from 'react';
+import React, { useState } from 'react';
 import { deleteOrderProduct, updateOrderProduct } from '../../api/utils';
 
 import './OrderProductCard.css'
 
 const OrderProductCard = ({ orderProduct, cart, setCart, token }) => {
-
     const [quantity, setQuantity] = useState(orderProduct.quantity);
 
     const handleQuantityChange = async (event) => {
@@ -16,7 +15,7 @@ const OrderProductCard = ({ orderProduct, cart, setCart, token }) => {
                 price: orderProduct.price,
                 quantity: Number(event.target.value)
             };
-            const updatedOrderProduct = await updateOrderProduct(orderProduct.orderProductId, body, token);
+            await updateOrderProduct(orderProduct.orderProductId, body, token);
         };
 
         // NO TOKEN
@@ -29,15 +28,13 @@ const OrderProductCard = ({ orderProduct, cart, setCart, token }) => {
     const handleRemoveFromCart = async () => {
         // TOKEN
         if (token) {
-            const deletedOrderProduct = await deleteOrderProduct(orderProduct.orderProductId, token);
-            console.log('DELETED: ', deletedOrderProduct);
+            await deleteOrderProduct(orderProduct.orderProductId, token);
         };
 
         // NO TOKEN
         const newCart = [...cart];
         const cartProductIndexToRemove = newCart.findIndex((product) => {return product.name === orderProduct.name});
         newCart.splice(cartProductIndexToRemove, 1);
-        console.log('NEW CART: ', newCart);
         setCart(newCart);
     };
 
@@ -70,7 +67,6 @@ const OrderProductCard = ({ orderProduct, cart, setCart, token }) => {
                 <div className="price">
                     <h3>Price:</h3>
                     <h4 className="calculation"><span className="gold-text">${orderProduct.price}</span> x {orderProduct.quantity}</h4>
-                    {/* <h2><span className="gold-text">{generateProductTotal(orderProduct)}</span> USD</h2> */}
                     <h2 className="price-line"><span className="usd">USD</span><span className="gold-text">${generateProductTotal(orderProduct)}</span> </h2>
                 </div>
                 <Button

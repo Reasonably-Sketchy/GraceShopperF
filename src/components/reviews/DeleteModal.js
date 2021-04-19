@@ -10,7 +10,6 @@ const DeleteModal = ({ setDeleteModalOpen, review, token, setReviews, cardStars 
     const handleDelete = async (event) => {
         event.preventDefault();
         const deletedReview = await deleteReview(review.id, token);
-        console.log('DELETED REVIEW: ', deletedReview);
         const updateReviews = await fetchReviews(review.productId);
         setReviews(updateReviews);
         setDeleteModalOpen(false);

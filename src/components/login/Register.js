@@ -20,20 +20,8 @@ const Register = ({ setToken }) => {
     const [imageURL, setImageURL] = useState('');
     const [respMessage, setRespMessage] = useState('');
 
-    // const resetFields = () => {
-    //     setFirstName('');
-    //     setLastName('');
-    //     setEmail('');
-    //     setUsername('');
-    //     setPassword('');
-    //     setConfirmPass('');
-    //     setImageURL('');
-    //     setRespMessage('');
-    // }
-
     const handleSubmit = async (event) => {
         event.preventDefault();
-
         if (password !== confirmPass) {
             setRespMessage('Your passwords do not match!');
             return;
@@ -64,7 +52,6 @@ const Register = ({ setToken }) => {
             } else {
                 setRespMessage(data.message);
             };
-
         } catch(error) {
             console.error(error);
         };
@@ -100,7 +87,6 @@ const Register = ({ setToken }) => {
                         required={true} />
                 </div>
 
-                
                 <TextField 
                     id="email"
                     type="email"

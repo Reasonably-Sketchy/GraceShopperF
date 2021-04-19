@@ -26,13 +26,11 @@ const ReviewCreator = ({ productId, setCreatorOpen, token, setReviews }) => {
                 content: content,
             };
             const newReview = await addReview(productId, body, token);
-            console.log('REVIEW CREATED: ', newReview);
             setTitle('');
             setStars(0);
             setContent('');
             const updateReviews = await fetchReviews(productId);
             setReviews(updateReviews);
-
             setCreatorOpen(false);
         } catch (error) {
             console.error(error);

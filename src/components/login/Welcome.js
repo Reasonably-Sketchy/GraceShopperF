@@ -1,8 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-
 import { Button } from '@material-ui/core';
-import logo from '../../assets/flim-flam-logo.png';
 
 import './Welcome.css'
 
@@ -10,10 +8,6 @@ const Welcome = () => {
 
     return (
         <main id="login-register">
-            {/* <div className="header-container">
-                <h1>Welcome to</h1>
-                <img className="login-logo" src={logo} />
-            </div> */}
             <div className="user-action-container">
                 <Link to='/login'>
                     <Button
