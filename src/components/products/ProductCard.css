@@ -1,6 +1,4 @@
 .product-card {
-    height: 425px;
-    width: 350px;
     box-shadow: 1px 1px 5px gray;
     border: 1px solid #222;
     display: grid;
@@ -39,4 +37,16 @@
     font-size: 1.4rem;
     border-top: 3px solid white;
     padding-top: 10px;
+}
+
+#deleteProductButton {
+    background-color: red;
+} 
+
+@media screen and (max-width: 1168px) {
+
+}
+
+@media screen and (max-width: 768px) {
+
 }

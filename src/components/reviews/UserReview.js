@@ -4,8 +4,6 @@ import { KeyboardArrowRight, Star, StarBorder } from '@material-ui/icons';
 import { renderStars } from '../../api/utils';
 
 import './ReviewCard.css';
-import ReviewEditor from './ReviewEditor';
-import DeleteModal from './DeleteModal';
 import { useHistory } from 'react-router';
 
 const UserReview = ({ review, userData, setActiveLinkIs }) => {

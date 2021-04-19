@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button } from '@material-ui/core';
 import { Star, StarBorder } from '@material-ui/icons';
-import { addReview, editReview, fetchReviews, renderStars } from '../../api/utils';
+import { editReview, fetchReviews, renderStars } from '../../api/utils';
 
 
 import './ReviewEditor.css';
@@ -25,9 +25,7 @@ const ReviewEditor = ({ review, setEditorOpen, token, setReviews, setCardStars }
                 stars: stars,
                 content: content,
             };
-            console.log('REVIEW ID: ', review.id)
             const editedReview = await editReview(review.id, body, token);
-            console.log('REVIEW UPDATED: ', editedReview);
             const updateReviews = await fetchReviews(review.productId);
             setReviews(updateReviews);
             renderStars(stars, setCardStars);

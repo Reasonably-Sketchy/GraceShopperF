@@ -2,7 +2,6 @@ import React from 'react';
 
 const UserCard = ({ userData }) => {
     return (
-
         <div className="user-card">
             <div className="user-details">
                 <div className="data-pair">

@@ -4,20 +4,17 @@ import {
     BrowserRouter as Router,
     Route,
     Switch,
-    useHistory,
-    Link
 } from 'react-router-dom';
 
 import { 
     fetchUserData, 
     fetchAllProducts, 
     fetchUserCart, 
-    addProductToOrder,
+    addProductToOrder, 
     fetchAllUsers,
     fetchAllOrders,
-    createOrder,
-    updateUserData,
-} from './api/utils';
+    createOrder, 
+    updateUserData } from './api/utils';
 
 // Page components
 import { 
@@ -39,8 +36,7 @@ import {
     AddUser,
     SingleUser, 
     ViewUpdateUser,
-    EditProduct
-} from './components'
+    EditProduct } from './components'
 
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import './styles.css';
@@ -49,7 +45,6 @@ import { addStateCartToDB } from './components/utils';
 const theme = createMuiTheme({
     palette: {
         primary: {
-            // main: '#d4af37',
             main: '#b5a264',
             contrastText: 'white',
 
@@ -106,10 +101,8 @@ const App = () => {
         };
 
         let databaseCart = await fetchUserCart(token);
-        console.log('MY OLD CART PRODUCTS: ', cart);
         if (!databaseCart) {
             databaseCart = await createOrder(token);
-            console.log('New User Cart: ', databaseCart);
         };
 
         await addStateCartToDB(databaseCart, cart, setCart, addProductToOrder, token, updateUserData, setUserData);
@@ -122,11 +115,42 @@ const App = () => {
             if (products) {
                 setAllProducts(products);
             };
-            // setCart(localStorage.getItem('cart'))
         } catch(error) {
             console.error(error);
         };
-    }, [])
+    }, []);
+
+    // Retrieve all users
+    useEffect(async ()=>{
+        try {
+            let users = []
+            if (token) {
+                users = await fetchAllUsers(token);
+            }
+            if (users) {
+                setAllUsers(users);
+            };
+        } catch (error) {
+            console.error(error)
+        }
+    }, [token]);
+
+    // Retrieve all orders
+    useEffect(async ()=>{
+        try{
+            let orders = [];
+            if (token) {
+                orders = await fetchAllOrders(token);
+                console.log('orders line 185', orders)
+            };
+            
+            if (orders) {
+                setAllOrders(orders);
+            }
+        } catch (error) {
+            console.error(error)
+        }
+    }, [token])
 
     // Retrieve all users
     useEffect(async ()=>{
@@ -215,8 +239,7 @@ const App = () => {
                             allProducts = {allProducts}
                             userData={userData}
                             token={token}
-                            setAllProducts={setAllProducts}
-                        />
+                            setAllProducts={setAllProducts}/>
                     </Route>
 
                     <Route exact path = "/products/:productId">
@@ -259,10 +282,9 @@ const App = () => {
                         <Admin 
                             token={token} 
                             setAllProducts={setAllProducts}
-                            allUsers={allUsers}
-                            userData={userData}
-                            setAllUsers={setAllUsers}
-                            />
+                            allUsers = {allUsers}
+                            userData = {userData}
+                            setAllUsers = {setAllUsers}/>
                     </Route>
                     : '' }
 
@@ -275,8 +297,7 @@ const App = () => {
                             setAllUsers={setAllUsers}
                         ></SingleUser>
                     </Route>
-                    : ''
-                    } 
+                    : '' } 
 
                     <Route path = "/cart">
                         <Cart 
@@ -286,17 +307,13 @@ const App = () => {
                             setCart = {setCart}
                             token = {token} />
                     </Route>
-
                 </Switch>
-
-                
             </ThemeProvider>
         </div>
     );
 };
 
 export default App;
-
 
 ReactDOM.render(
     <Router>

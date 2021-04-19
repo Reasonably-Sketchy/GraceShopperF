@@ -1,10 +1,5 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
-
-// IMAGE IMPORTS
-// import artwork from './site-images/logout-artwork.png';
-
-// MUI IMPORTS
 import {Button} from '@material-ui/core';
 
 import './Landings.css';
@@ -15,7 +10,6 @@ const LoginLanding = ({ userData, action, setActiveLinkIs }) => {
     return(
         <main id="landing">
             <div className="landing-container">
-                {/* <img src={artwork}/> */}
                     <h1>Welcome, <span className="gold-text">{userData.first}</span>!</h1>
                     <h3>You have successfully {action} as <span className="gold-text">{userData.username}</span>.</h3>
 
@@ -29,7 +23,6 @@ const LoginLanding = ({ userData, action, setActiveLinkIs }) => {
                             }}>
                             To the Shoppe <KeyboardArrowRight /></Button></Link>
 
-                    {/* TO CART */}
                     <Link to="/cart">
                         <Button 
                             color="primary"

@@ -3,15 +3,18 @@ import {useHistory} from 'react-router-dom';
 import {callApi} from '../../api';
 import {Button, TextField, Checkbox} from '@material-ui/core';
 
+import './Admin.css'
+import { updateAdminData } from '../../api/utils';
+
 const EditUser = ({token, thisUser, setUser, setAllUsers}) =>{
 
-    const [firstName, setFirstName] = useState('');
-    const [lastName, setLastName] = useState('');
-    const [email, setEmail] = useState('');
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
-    const [admin, setAdmin] = useState(false);
-    const [imageURL, setImageURL] = useState('');
+    const [firstName, setFirstName] = useState(thisUser.first);
+    const [lastName, setLastName] = useState(thisUser.last);
+    const [email, setEmail] = useState(thisUser.email);
+    const [username, setUsername] = useState(thisUser.username);
+    const [password, setPassword] = useState(thisUser.password);
+    const [admin, setAdmin] = useState(thisUser.isAdmin);
+    const [imageURL, setImageURL] = useState(thisUser.imageURL || '');
     const history = useHistory();
 
     const handleSubmit = async (event) =>{
@@ -34,13 +37,8 @@ const EditUser = ({token, thisUser, setUser, setAllUsers}) =>{
             });
             setUser([data]);
             alert('User Edited!');
-            const updateUsers = await callApi({
-                url: '/users',
-                method: 'GET',
-                token
-            })
-            setAllUsers(updateUsers);
-            history.push(`/admin`)
+            updateAdminData(token, setAllUsers);
+            history.push(`/admin`);
 
         } catch(error) {
             console.error(error)
