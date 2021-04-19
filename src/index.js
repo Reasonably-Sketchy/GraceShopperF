@@ -266,7 +266,8 @@ const App = () => {
                         <Account 
                             userData = {userData}
                             token = {token}
-                            setActiveLinkIs = {setActiveLinkIs} />
+                            setActiveLinkIs = {setActiveLinkIs}
+                            setUserData = {setUserData} />
                     </Route>
 
                     {userData.isAdmin
@@ -282,7 +283,8 @@ const App = () => {
                             setAllProducts={setAllProducts}
                             allUsers = {allUsers}
                             userData = {userData}
-                            setAllUsers = {setAllUsers}/>
+                            setAllUsers = {setAllUsers}
+                            setAllOrders = {setAllOrders}/>
                     </Route>
                     : '' }
 

@@ -1,31 +1,26 @@
 import React, {useState, useEffect} from 'react';
 
 import AddUser from './AddUser';
-import AdminUsers from './AdminUsers';
-import {fetchAllUsers} from '../../api/utils';
+import { updateAdminData } from '../../api/utils';
 import {Button} from '@material-ui/core';
-import {Link, useHistory} from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { KeyboardArrowDown, KeyboardArrowRight } from '@material-ui/icons';
 import AddProduct from '../products/AddProduct';
 import './Admin.css';
-import SingleUser from './AdminSingleUser';
-// import UserList from './UserList'; 
-import {Route} from 'react-router-dom';
 
-const Admin = ({token, setAllProducts, allUsers, userData, setAllUsers}) => {
+const Admin = ({token, setAllProducts, allUsers, setAllUsers, setAllOrders}) => {
     const history = useHistory();
     const [usersExpand, setUsersExpand] = useState(false);
     const [allUsersExpand, setAllUsersExpand] = useState(false);
     const [productsExpand, setProductsExpand] = useState(false);
-    const [thisUser, setThisUser] = useState({})
 
     if (!allUsers) {
         return <h1>Loading...</h1>
     };
 
-    const transitionCLick = () => {
-        <SingleUser user={thisUser}></SingleUser>;
-    }
+    useEffect(async () => {
+        await updateAdminData(token, setAllUsers, setAllOrders, setAllProducts);
+    }, [])
 
     return (
         <main id="admin">

@@ -1,23 +1,29 @@
-import React, {useState, useEffect} from 'react';
-import {useHistory} from 'react-router-dom';
+import React, {useState} from 'react';
 import {callApi} from '../../api';
-import {Button, TextField, Checkbox} from '@material-ui/core';
+import {Button, TextField} from '@material-ui/core';
 import AdminModal from './AdminModal';
-import { updateAdminData } from '../../api/utils';
+import { updateAdminData, updateUserData } from '../../api/utils';
 
 import './Admin.css'
 
-const EditUser = ({token, thisUser, setUser, setAllUsers}) =>{
+const EditUser = ({userData, token, thisUser, setUserData, setAllUsers, path, setUpdateExpand}) =>{
 
     const [firstName, setFirstName] = useState(thisUser.first);
     const [lastName, setLastName] = useState(thisUser.last);
     const [email, setEmail] = useState(thisUser.email);
     const [username, setUsername] = useState(thisUser.username);
     const [password, setPassword] = useState(thisUser.password);
-    const [admin, setAdmin] = useState(thisUser.isAdmin || false);
-    const [imageURL, setImageURL] = useState(thisUser.imageURL || '');
+    const [admin, setAdmin] = useState(thisUser.isAdmin ? true : false);
+    const [imageURL, setImageURL] = useState(thisUser.imageURL ? thisUser.imageURL : '');
     const [modalOpen, setModalOpen] = useState(false);
-    const history = useHistory();
+
+    if (!userData) {
+        return <h3>Loading...</h3>
+    };
+
+    const modalCloseFunction = () => {
+        setUpdateExpand(false);
+    };
 
     const handleSubmit = async (event) =>{
         event.preventDefault();
@@ -37,11 +43,15 @@ const EditUser = ({token, thisUser, setUser, setAllUsers}) =>{
                 },
                 token
             });
-            setUser([data]);
-            alert('User Edited!');
-            updateAdminData(token, setAllUsers, null, null);
-            history.push(`/admin`);
 
+            if (data) {
+                setModalOpen(true);
+                if (path === "Admin") {
+                    updateAdminData(token, setAllUsers, null, null);
+                } else if (path === "Account") {
+                    updateUserData(token, setUserData)
+                };
+            };
         } catch(error) {
             console.error(error)
         }
@@ -50,6 +60,13 @@ const EditUser = ({token, thisUser, setUser, setAllUsers}) =>{
 
     return (
         <>
+            {modalOpen 
+            ? <AdminModal 
+                action = {"User Information Updated"}
+                data = {username}
+                modalCloseFunction = {modalCloseFunction}/>
+            : ''
+            }   
             <h3>Edit User</h3>
 
             <div className="addUser-Container">
@@ -77,7 +94,7 @@ const EditUser = ({token, thisUser, setUser, setAllUsers}) =>{
                     placeholder="Email"
                     value={email}
                     onChange={(event) => setEmail(event.target.value)}
-                    required={false} />
+                    required={true} />
 
                 <TextField 
                     id="username"
@@ -93,27 +110,32 @@ const EditUser = ({token, thisUser, setUser, setAllUsers}) =>{
                     onChange={(event) => setImageURL(event.target.value)}
                     required={false} />
 
-                <TextField 
+                {path === "Admin"
+                ? <TextField 
                     id="password"
                     type="password"
                     placeholder="Password"
                     value={password}
                     onChange={(event) => setPassword(event.target.value)}
-                    required={false} />
+                    required={true} />
+                : ''}
                 
-                <div className="isAdminCheck">Grant Admin?<input
-                        type="checkbox"
-                        value={admin}
-                        id="isAdmin"
-                        onClick={()=>setAdmin(true)}
-                    ></input></div>
+                {path === "Admin"
+                ? <div className="isAdminCheck">Grant Admin?<input
+                    type="checkbox"
+                    value={admin}
+                    checked={admin ? true : false}
+                    id="isAdmin"
+                    onChange={()=>setAdmin(!admin)}
+                ></input></div>
+                : ''}
 
                 <Button
                     className="responsive-button"
                     variant="contained"
                     color="primary"
                     type="submit"
-                    >Edit User</Button>
+                    >Save Changes</Button>
                 
 
 

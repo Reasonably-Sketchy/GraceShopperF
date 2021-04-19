@@ -39,8 +39,8 @@ const AdminOrders = ({allOrders, token, userData}) =>{
             <section className="orders-section">
                 <Button
                     className="accordian-button"
-                    variant="contained"
-                    color="secondary"
+                    variant="outlined"
+                    color="primary"
                     onClick={() => {
                         sectionOpen !== 'carts'
                         ? setSectionOpen('carts')
@@ -68,8 +68,8 @@ const AdminOrders = ({allOrders, token, userData}) =>{
             <section className="orders-section">
                 <Button
                     className="accordian-button"
-                    variant="contained"
-                    color="secondary"
+                    variant="outlined"
+                    color="primary"
                     onClick={() => {
                         sectionOpen !== 'completed'
                         ? setSectionOpen('completed')
@@ -97,8 +97,8 @@ const AdminOrders = ({allOrders, token, userData}) =>{
             <section className="orders-section">
                 <Button
                     className="accordian-button"
-                    variant="contained"
-                    color="secondary"
+                    variant="outlined"
+                    color="primary"
                     onClick={() => {
                         sectionOpen !== 'cancelled'
                         ? setSectionOpen('cancelled')

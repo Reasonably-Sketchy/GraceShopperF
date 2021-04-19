@@ -24,7 +24,6 @@ const SingleUser = ({allUsers, userData, token, setAllUsers}) => {
         return Number(userId) === user.id
     })
 
-
     const handleSubmit = async (event) =>{
         event.preventDefault();
 
@@ -38,7 +37,6 @@ const SingleUser = ({allUsers, userData, token, setAllUsers}) => {
             token: token
         });
     }
-
 
     return (
         <main id="single-user">
@@ -90,10 +88,13 @@ const SingleUser = ({allUsers, userData, token, setAllUsers}) => {
                 }}>Edit User Information {updateExpand ? <KeyboardArrowDown /> : <KeyboardArrowRight />}</Button>
                 {updateExpand
                     ? <center><EditUser 
+                        userData={userData}
                         token={token}
                         thisUser={thisUser}
                         setUser={setUser}
                         setAllUsers={setAllUsers}
+                        path={"Admin"}
+                        setUpdateExpand = {setUpdateExpand}
                         /></center>
                     : ''}
         </main>

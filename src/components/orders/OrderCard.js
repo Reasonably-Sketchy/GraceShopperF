@@ -18,7 +18,6 @@ const OrderCard = ({ order }) => {
             return total;
         });
         order.total = productTotals.reduce((total, num) => {return total + num});
-        console.log('ORDER: ', order)
     };
 
     return (
@@ -50,18 +49,20 @@ const OrderCard = ({ order }) => {
                 </div> 
             </div>
 
-            <Button
+            {order.products.length > 0
+            ?<Button
                 color="primary"
                 onClick={() => {
                     setProductsOpen(!productsOpen);
                 }}>View Products {productsOpen ? <KeyboardArrowDown /> : <KeyboardArrowRight />}</Button>
-
+            : ''}
+            
             {productsOpen
             ? <div className="products-display">
-                {order.products.map((product) => {
+                {order.products.map((product, index) => {
                     return (
                         <ProductSummary 
-                            key={product.id}
+                            key={index}
                             orderProduct={product} />
                     )
                 })}
