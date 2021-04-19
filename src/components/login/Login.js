@@ -33,9 +33,11 @@ const Login = ({ setToken }) => {
                 setPassword('');
                 setToken(token);
                 history.push('/login/success');
-            } else {
+            } else if (data.message) {
                 setRespMessage(data.message);
-            };
+            } else {
+                setRespMessage('Incorrect username or password.')
+            }
 
         } catch(error) {
             console.error(error);

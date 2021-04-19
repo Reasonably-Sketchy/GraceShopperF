@@ -83,7 +83,7 @@ const Admin = ({token, setAllProducts, allUsers, userData, setAllUsers}) => {
                     color="secondary"
                     onClick={() => {
                         history.push('/orders')
-                    }}>View All Orders</Button>                
+                    }}>Orders Log <KeyboardArrowRight /></Button>                
             </div>
             
             {/* change class name later keeping for css for now */}
