@@ -22,22 +22,23 @@ const SingleProduct = ({ allProducts, cart, setCart, token, setUserData, userDat
     const [reviews, setReviews] = useState([]);
     const [creatorOpen, setCreatorOpen] = useState(false);
     const [modalOpen, setModalOpen] = useState(false);
+    const [numLoadingEvents, setNumLoadingEvents] = useState(0);
 
     useEffect(async () => {
-        const productReviews = await fetchReviews(productId);
+        const productReviews = await fetchReviews(productId, numLoadingEvents, setNumLoadingEvents);
         if (productReviews) {
             setReviews(productReviews);
         };
     }, []);
 
     if (!allProducts) {
-        return <h3>Loading...</h3>
+        return <div className="loadingMessage">Loading...</div>
     };
 
     const thisProduct = allProducts.find((product) => {return product.id == productId})
 
     if (!thisProduct) {
-        return <h3>This product does not exist.</h3>
+        return <div className="loadingMessage">This product does not exist.</div>
     };
 
     const handleQuantityChange = async (event) => {
@@ -83,7 +84,7 @@ const SingleProduct = ({ allProducts, cart, setCart, token, setUserData, userDat
         // IF I AM LOGGED IN
         if (token) {
             // try to get my cart
-            let databaseCart = await fetchUserCart(token);
+            let databaseCart = await fetchUserCart(token, numLoadingEvents, setNumLoadingEvents);
 
             // If there's nothing in the cart state, either find my empty cart or create a new order
             if (cart.length === 0) {
@@ -91,7 +92,7 @@ const SingleProduct = ({ allProducts, cart, setCart, token, setUserData, userDat
                 if (databaseCart && databaseCart.length > 0) {
                     console.log("Existing User Cart: ", databaseCart);
                 } else if (!databaseCart) {
-                    databaseCart = await createOrder(token);
+                    databaseCart = await createOrder(token, numLoadingEvents, setNumLoadingEvents);
                     console.log("New User Cart:", databaseCart);
                 };
             };
@@ -103,7 +104,7 @@ const SingleProduct = ({ allProducts, cart, setCart, token, setUserData, userDat
                 quantity: quantity,
             };
 
-            const newOrderProduct = await addProductToOrder(databaseCart.id, body, token);
+            const newOrderProduct = await addProductToOrder(databaseCart.id, body, token, numLoadingEvents, setNumLoadingEvents);
 
             // Need to update the cart
             let cartCopy = [];
@@ -120,7 +121,7 @@ const SingleProduct = ({ allProducts, cart, setCart, token, setUserData, userDat
             cartCopy.push(newOrderProduct);
             setCart(cartCopy);
             setRespMessage('Added to cart!')
-            await updateUserData(token, setUserData);
+            await updateUserData(token, setUserData, numLoadingEvents, setNumLoadingEvents);
         };
 
     };
@@ -237,6 +238,7 @@ const SingleProduct = ({ allProducts, cart, setCart, token, setUserData, userDat
                     modalCloseFunction = {modalCloseFunction}/>
                 : ''}
             </div>
+            {numLoadingEvents > 0 ? <div className="loadingMessage">Loading...</div>:<></>}
         </main>
     );
 };

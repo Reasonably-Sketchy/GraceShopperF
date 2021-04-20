@@ -82,6 +82,7 @@ const App = () => {
     const [cart, _setCart] = useState([]);
     const [allUsers, setAllUsers] = useState([]);
     const [allOrders, setAllOrders] = useState([]);
+    const [numLoadingEvents, setNumLoadingEvents] = useState(0);
 
     // Retrieve token from local storage
     useEffect(async () => {
@@ -90,23 +91,23 @@ const App = () => {
             return;
         };
         
-        const data = await fetchUserData(token);
+        const data = await fetchUserData(token, numLoadingEvents, setNumLoadingEvents);
         if (data && data.username) {
             setUserData(data);
         };
 
-        let databaseCart = await fetchUserCart(token);
+        let databaseCart = await fetchUserCart(token, numLoadingEvents, setNumLoadingEvents);
         if (!databaseCart) {
-            databaseCart = await createOrder(token);
+            databaseCart = await createOrder(token, numLoadingEvents, setNumLoadingEvents);
         };
 
-        await addStateCartToDB(databaseCart, cart, setCart, addProductToOrder, token, updateUserData, setUserData);
+        await addStateCartToDB(databaseCart, cart, setCart, addProductToOrder, token, updateUserData, setUserData, numLoadingEvents, setNumLoadingEvents);
     }, [token]);
 
     // Retrieve all products
     useEffect(async () => {
         try {
-            const products = await fetchAllProducts();
+            const products = await fetchAllProducts(numLoadingEvents, setNumLoadingEvents);
             if (products) {
                 setAllProducts(products);
             };
@@ -114,37 +115,6 @@ const App = () => {
             console.error(error);
         };
     }, []);
-
-    // // Retrieve all users
-    // useEffect(async ()=>{
-    //     try {
-    //         let users = []
-    //         if (token) {
-    //             users = await fetchAllUsers(token);
-    //         }
-    //         if (users) {
-    //             setAllUsers(users);
-    //         };
-    //     } catch (error) {
-    //         console.error(error)
-    //     }
-    // }, [token]);
-
-    // // Retrieve all orders
-    // useEffect(async ()=>{
-    //     try{
-    //         let orders = [];
-    //         if (token) {
-    //             orders = await fetchAllOrders(token);
-    //         };
-            
-    //         if (orders) {
-    //             setAllOrders(orders);
-    //         }
-    //     } catch (error) {
-    //         console.error(error)
-    //     }
-    // }, [token])
 
     return (
         <div id="app">

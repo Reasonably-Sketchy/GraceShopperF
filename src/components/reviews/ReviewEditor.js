@@ -11,6 +11,7 @@ const ReviewEditor = ({ review, setEditorOpen, token, setReviews, setCardStars }
     const [stars, setStars] = useState(review.stars);
     const [content, setContent] = useState(review.content);
     const [respMessage, setRespMessage] = useState('');
+    const [numLoadingEvents, setNumLoadingEvents] = useState(0);
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -25,8 +26,8 @@ const ReviewEditor = ({ review, setEditorOpen, token, setReviews, setCardStars }
                 stars: stars,
                 content: content,
             };
-            const editedReview = await editReview(review.id, body, token);
-            const updateReviews = await fetchReviews(review.productId);
+            const editedReview = await editReview(review.id, body, token, numLoadingEvents, setNumLoadingEvents);
+            const updateReviews = await fetchReviews(review.productId, numLoadingEvents, setNumLoadingEvents);
             setReviews(updateReviews);
             renderStars(stars, setCardStars);
             setEditorOpen(false);
@@ -132,6 +133,7 @@ const ReviewEditor = ({ review, setEditorOpen, token, setReviews, setCardStars }
             </form>
 
         </div>
+        {numLoadingEvents > 0 ? <div className="loadingMessage">Loading...</div>:<></>}
         </div>
     );
 };

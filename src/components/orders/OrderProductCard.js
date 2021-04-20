@@ -6,6 +6,7 @@ import './OrderProductCard.css'
 
 const OrderProductCard = ({ orderProduct, cart, setCart, token }) => {
     const [quantity, setQuantity] = useState(orderProduct.quantity);
+    const [numLoadingEvents, setNumLoadingEvents] = useState(0);
 
     const handleQuantityChange = async (event) => {
         setQuantity(Number(event.target.value))
@@ -15,7 +16,7 @@ const OrderProductCard = ({ orderProduct, cart, setCart, token }) => {
                 price: orderProduct.price,
                 quantity: Number(event.target.value)
             };
-            await updateOrderProduct(orderProduct.orderProductId, body, token);
+            await updateOrderProduct(orderProduct.orderProductId, body, token, numLoadingEvents, setNumLoadingEvents);
         };
 
         // NO TOKEN
@@ -28,7 +29,7 @@ const OrderProductCard = ({ orderProduct, cart, setCart, token }) => {
     const handleRemoveFromCart = async () => {
         // TOKEN
         if (token) {
-            await deleteOrderProduct(orderProduct.orderProductId, token);
+            await deleteOrderProduct(orderProduct.orderProductId, token, numLoadingEvents, setNumLoadingEvents);
         };
 
         // NO TOKEN
@@ -74,6 +75,7 @@ const OrderProductCard = ({ orderProduct, cart, setCart, token }) => {
                     variant="outlined"
                     onClick={handleRemoveFromCart}>Remove From Cart</Button>
             </div>
+            {numLoadingEvents > 0 ? <div className="loadingMessage">Loading...</div>:<></>}
         </div>
     );
 };

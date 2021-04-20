@@ -14,20 +14,20 @@ import './Account.css';
 
 const Account = ({ userData, setActiveLinkIs, token, setUserData }) => {
     if (!userData || !userData.id) {
-        return <h1>Loading...</h1>
+        return <div className="loadingMessage">Loading...</div>
     };
     const [ detailsOpen, setDetailsOpen ] = useState(false);
     const [ ordersOpen, setOrdersOpen ] = useState(false);
     const [ reviewsOpen, setReviewsOpen ] = useState(false);
     const [ userReviews, setUserReviews ] = useState([]);
+    const [numLoadingEvents, setNumLoadingEvents] = useState(0);
 
     useEffect(async () => {
-        const myReviews = await getUserReviews(userData.id, token);
+        const myReviews = await getUserReviews(userData.id, token, numLoadingEvents, setNumLoadingEvents);
         if (myReviews) {
             setUserReviews(myReviews);
         };
     }, []);
-
 
     let cartProducts = [];
     if (userData.cart) {
@@ -125,10 +125,10 @@ const Account = ({ userData, setActiveLinkIs, token, setUserData }) => {
 
                     {reviewsOpen
                     ? userReviews && userReviews.length > 0
-                        ? userReviews.map((review) => {
+                        ? userReviews.map((review, index) => {
                             return (
                                 <UserReview
-                                    key = {review.id} 
+                                    key = {index} 
                                     review = {review}
                                     userData = {userData}
                                     setActiveLinkIs = {setActiveLinkIs}
@@ -139,6 +139,8 @@ const Account = ({ userData, setActiveLinkIs, token, setUserData }) => {
                     : ''}
                 </div>
             </section>
+
+            {numLoadingEvents > 0 ? <div className="loadingMessage">Loading...</div>:<></>}
         </main>
     );
 };

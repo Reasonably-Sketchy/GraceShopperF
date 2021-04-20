@@ -43,3 +43,11 @@ export const addStateCartToDB = async (databaseCart, cart, setCart, addProductTo
     };
    
 };
+
+export const addLoadingEvent = (numLoadingEvents, setNumLoadingEvents) => {
+    setNumLoadingEvents(numLoadingEvents + 1);
+};
+
+export const removeLoadingEvent = (numLoadingEvents, setNumLoadingEvents) => {
+    setNumLoadingEvents(numLoadingEvents > 0 ? numLoadingEvents - 1 : 0);
+};

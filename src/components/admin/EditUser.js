@@ -18,7 +18,7 @@ const EditUser = ({userData, token, thisUser, setUserData, setAllUsers, path, se
     const [modalOpen, setModalOpen] = useState(false);
 
     if (!userData) {
-        return <h3>Loading...</h3>
+        return <div className="loadingMessage">Loading...</div>
     };
 
     const modalCloseFunction = () => {

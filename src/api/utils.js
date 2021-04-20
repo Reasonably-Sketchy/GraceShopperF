@@ -1,8 +1,8 @@
 import { callApi } from "./index";
+import { addLoadingEvent, removeLoadingEvent } from '../components/utils';
 
 // Users
 export const fetchUserData = async (token) => {
-
     try {
         const data = await callApi({
             url: '/users/me',
@@ -16,14 +16,19 @@ export const fetchUserData = async (token) => {
 
 // Update userData
 export const updateUserData = async (token, setUserData) => {
+  try {
   const data = await fetchUserData(token);
     if (data && data.username) {
         setUserData(data);
     };
+  } catch (error) {
+    console.error(error);
+  }
 };
 
 // Fetch userCart
-export const fetchUserCart = async (token) => {
+export const fetchUserCart = async (token, numLoadingEvents, setNumLoadingEvents) => {
+  addLoadingEvent(numLoadingEvents, setNumLoadingEvents);
   try {
     const userCart = await callApi({
       url: '/orders/cart',
@@ -38,15 +43,16 @@ export const fetchUserCart = async (token) => {
     return userCart;
   } catch(error) {
     console.error(error);
+  } finally {
+    removeLoadingEvent(numLoadingEvents, setNumLoadingEvents, numLoadingEvents, setNumLoadingEvents);
   };
 };
 
 // Products
-export const fetchAllProducts = async (token) => {
+export const fetchAllProducts = async () => {
     try {
       const data = await callApi({
         url: "/products",
-        token
       });
   
       return data;
@@ -106,7 +112,8 @@ export const updateOrderProduct = async (orderProductId, body, token) => {
 };
 
 // Delete order product
-export const deleteOrderProduct = async (orderProductId, token) => {
+export const deleteOrderProduct = async (orderProductId, token, numLoadingEvents, setNumLoadingEvents) => {
+  addLoadingEvent(numLoadingEvents, setNumLoadingEvents);
   try {
     const data = await callApi({
       url: `/order_products/${orderProductId}`,
@@ -116,6 +123,8 @@ export const deleteOrderProduct = async (orderProductId, token) => {
     return data;
   } catch(error) {
     console.error(error);
+  } finally {
+    removeLoadingEvent(numLoadingEvents, setNumLoadingEvents, numLoadingEvents, setNumLoadingEvents);
   };
 };
 
@@ -136,7 +145,8 @@ export const updateOrder = async (orderId, body, token) => {
 
 
 // Fetch product reviews (productId)
-export const fetchReviews = async (productId) => {
+export const fetchReviews = async (productId, numLoadingEvents, setNumLoadingEvents) => {
+  addLoadingEvent(numLoadingEvents, setNumLoadingEvents);
   try {
     const data = await callApi({
       url: `/reviews/${productId}`,
@@ -148,11 +158,14 @@ export const fetchReviews = async (productId) => {
     return data;
   } catch (error) {
     console.error(error);
+  } finally {
+    removeLoadingEvent(numLoadingEvents, setNumLoadingEvents, numLoadingEvents, setNumLoadingEvents);
   };
 };
 
 // Add a review
-export const addReview = async (productId, body, token) => {
+export const addReview = async (productId, body, token, numLoadingEvents, setNumLoadingEvents) => {
+  addLoadingEvent(numLoadingEvents, setNumLoadingEvents);
   try {
     const data = await callApi({
       url: `/reviews/${productId}`,
@@ -164,11 +177,14 @@ export const addReview = async (productId, body, token) => {
     return data;
   } catch (error) {
     console.error(error);
+  } finally {
+    removeLoadingEvent(numLoadingEvents, setNumLoadingEvents, numLoadingEvents, setNumLoadingEvents);
   };
 };
 
 // Update a review
-export const editReview = async (reviewId, body, token) => {
+export const editReview = async (reviewId, body, token, numLoadingEvents, setNumLoadingEvents) => {
+  addLoadingEvent(numLoadingEvents, setNumLoadingEvents);
   try {
     const data = await callApi({
       url: `/reviews/${reviewId}`,
@@ -180,11 +196,14 @@ export const editReview = async (reviewId, body, token) => {
     return data;
   } catch (error) {
     console.error(error);
+  } finally {
+    removeLoadingEvent(numLoadingEvents, setNumLoadingEvents, numLoadingEvents, setNumLoadingEvents);
   };
 };
 
 // Delete a review
-export const deleteReview = async (reviewId, token) => {
+export const deleteReview = async (reviewId, token, numLoadingEvents, setNumLoadingEvents) => {
+  addLoadingEvent(numLoadingEvents, setNumLoadingEvents);
   try {
     const data = await callApi({
       url: `/reviews/${reviewId}`,
@@ -195,11 +214,14 @@ export const deleteReview = async (reviewId, token) => {
     return data;
   } catch (error) {
     console.error(error);
+  } finally {
+    removeLoadingEvent(numLoadingEvents, setNumLoadingEvents, numLoadingEvents, setNumLoadingEvents);
   };
 };
 
 // Get user reviews
-export const getUserReviews = async (userId, token) => {
+export const getUserReviews = async (userId, token, numLoadingEvents, setNumLoadingEvents) => {
+  addLoadingEvent(numLoadingEvents, setNumLoadingEvents);
   try {
     const data = await callApi({
       url: `/users/${userId}/reviews`,
@@ -209,6 +231,8 @@ export const getUserReviews = async (userId, token) => {
     return data;
   } catch (error) {
     console.error(error);
+  } finally {
+    removeLoadingEvent(numLoadingEvents, setNumLoadingEvents, numLoadingEvents, setNumLoadingEvents);
   };
 };
 
@@ -241,7 +265,8 @@ export const fetchAllOrders = async (token) =>{
 
 // Update Admin Data
 export const updateAdminData = async (token, setAllUsers, setAllOrders, setAllProducts) => {
-  const users = await fetchAllUsers(token);
+  try {
+    const users = await fetchAllUsers(token);
     if (setAllUsers && users && users.length > 0) {
         setAllUsers(users);
     };
@@ -251,13 +276,17 @@ export const updateAdminData = async (token, setAllUsers, setAllOrders, setAllPr
     };
 
   const products = await fetchAllProducts();
-  if (setAllProducts && products && products.length > 0) {
-      setAllProducts(products);
-  };
+    if (setAllProducts && products && products.length > 0) {
+        setAllProducts(products);
+    };
+  } catch (error) {
+    console.error(error);
+  }
 };
 
 // Edit Product
-export const editProduct = async (productId, body, token) => {
+export const editProduct = async (productId, body, token, numLoadingEvents, setNumLoadingEvents) => {
+  addLoadingEvent(numLoadingEvents, setNumLoadingEvents);
   try {
     const data = await callApi({
       url:  `/products/${productId}`,
@@ -269,6 +298,8 @@ export const editProduct = async (productId, body, token) => {
     return data;
   } catch (error) {
     console.error(error);
+  } finally {
+    removeLoadingEvent(numLoadingEvents, setNumLoadingEvents, numLoadingEvents, setNumLoadingEvents);
   };
 }
 

@@ -26,7 +26,7 @@ const Products = ({ allProducts, userData, token, setAllProducts }) => {
     // Retrieve product categories
     useEffect(() => {
         if (allProducts.length === 0) {
-            return <h1>Loading...</h1>
+            return <div className="loadingMessage">Loading...</div>
         };
         setProductsToDisplay(allProducts);
 

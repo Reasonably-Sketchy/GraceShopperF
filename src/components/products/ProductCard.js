@@ -39,7 +39,7 @@ const ProductCard = ({
     allProducts
   }) => {
 
-    const history = useHistory();
+    // const history = useHistory();
     const handleDelete = async ()=>{
         const confirmed = confirm(`Are you sure you want to delete ${product.name}?`);
         if( confirmed === true ) {
