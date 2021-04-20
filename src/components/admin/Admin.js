@@ -13,13 +13,14 @@ const Admin = ({token, setAllProducts, allUsers, setAllUsers, setAllOrders}) => 
     const [usersExpand, setUsersExpand] = useState(false);
     const [allUsersExpand, setAllUsersExpand] = useState(false);
     const [productsExpand, setProductsExpand] = useState(false);
+    const [numLoadingEvents, setNumLoadingEvents] = useState(0);
 
     if (!allUsers) {
-        return <h1>Loading...</h1>
+        return <div className="loadingMessage">Loading...</div>
     };
 
     useEffect(async () => {
-        await updateAdminData(token, setAllUsers, setAllOrders, setAllProducts);
+        await updateAdminData(token, setAllUsers, setAllOrders, setAllProducts, numLoadingEvents, setNumLoadingEvents);
     }, [])
 
     return (
@@ -105,7 +106,7 @@ const Admin = ({token, setAllProducts, allUsers, setAllUsers, setAllOrders}) => 
                 : ''}
             </div>
 
-
+            {numLoadingEvents > 0 ? <div className="loadingMessage">Loading...</div>:<></>}
         </main>
     );
 };

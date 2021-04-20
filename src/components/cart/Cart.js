@@ -33,7 +33,7 @@ const generateOrderTotal = (cart) => {
     };
 };
 
-const handleCompleteOrder = async (userId, orderId, setCart, token, setUserData) => {
+const handleCompleteOrder = async (userId, orderId, setCart, token, setUserData, numLoadingEvents, setNumLoadingEvents) => {
     // IF TOKEN
     if (token) {
         const body = {
@@ -42,9 +42,9 @@ const handleCompleteOrder = async (userId, orderId, setCart, token, setUserData)
         };
 
         try {
-            await updateOrder(orderId, body, token);
+            await updateOrder(orderId, body, token, numLoadingEvents, setNumLoadingEvents);
             setCart([]);
-            await updateUserData(token, setUserData);
+            await updateUserData(token, setUserData, numLoadingEvents, setNumLoadingEvents);
         } catch (error) {
             console.error(error);
         };
@@ -59,6 +59,7 @@ const handleCompleteOrder = async (userId, orderId, setCart, token, setUserData)
 };
 
 const Cart = ({ userData, setUserData, cart, setCart, token }) => {
+    const [numLoadingEvents, setNumLoadingEvents] = useState(0);
     const items = generateItemsTotal(cart);
     const orderTotal = generateOrderTotal(cart);
     const userToken = token;
@@ -78,7 +79,7 @@ const Cart = ({ userData, setUserData, cart, setCart, token }) => {
                 amount,
             });
             console.log('Payment Success!', response);
-            await handleCompleteOrder(userId, orderId, setCart, userToken, setUserData);
+            await handleCompleteOrder(userId, orderId, setCart, userToken, setUserData, numLoadingEvents, setNumLoadingEvents);
 
         } catch (error) {
             console.error(error);
@@ -142,7 +143,8 @@ const Cart = ({ userData, setUserData, cart, setCart, token }) => {
             </section>
             : ''
             }
-            
+
+            {numLoadingEvents > 0 ? <div className="loadingMessage">Loading...</div>:<></>}
         </main>
     );
 };

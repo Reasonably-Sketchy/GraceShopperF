@@ -3,14 +3,13 @@ import { KeyboardArrowDown, KeyboardArrowLeft, KeyboardArrowRight } from '@mater
 import React, {useState, useEffect} from 'react';
 import { useHistory } from 'react-router';
 import OrderCard from '../orders/OrderCard';
-import OrderProductCard from '../orders/OrderProductCard';
 
-const AdminOrders = ({allOrders, token, userData}) =>{
+const AdminOrders = ({ allOrders }) =>{
     const history = useHistory();
     const [sectionOpen, setSectionOpen] = useState('');
 
     if(!allOrders) {
-        return <center><h1>Orders Loading....</h1></center>
+        return <div className="loadingMessage">Loading...</div>
     };
 
     const carts = allOrders.filter((order) => order.status === "created" && order.products.length > 0);

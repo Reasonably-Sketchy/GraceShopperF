@@ -4,7 +4,7 @@ import './ProductSummary.css'
 
 const ProductSummary = ({ orderProduct }) => {
     if (!orderProduct) {
-        return <h5>Loading...</h5>
+        return <div className="loadingMessage">Loading...</div>
     };
 
     const generateProductTotal = (orderProduct) => {
