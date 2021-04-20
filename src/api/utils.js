@@ -2,8 +2,7 @@ import { callApi } from "./index";
 import { addLoadingEvent, removeLoadingEvent } from '../components/utils';
 
 // Users
-export const fetchUserData = async (token, numLoadingEvents, setNumLoadingEvents) => {
-    addLoadingEvent(numLoadingEvents, setNumLoadingEvents);
+export const fetchUserData = async (token) => {
     try {
         const data = await callApi({
             url: '/users/me',
@@ -12,14 +11,11 @@ export const fetchUserData = async (token, numLoadingEvents, setNumLoadingEvents
         return data;
     } catch(error) {
         console.error(error);
-    } finally {
-      removeLoadingEvent(numLoadingEvents, setNumLoadingEvents, numLoadingEvents, setNumLoadingEvents);
     };
 };
 
 // Update userData
-export const updateUserData = async (token, setUserData, numLoadingEvents, setNumLoadingEvents) => {
-  addLoadingEvent(numLoadingEvents, setNumLoadingEvents);
+export const updateUserData = async (token, setUserData) => {
   try {
   const data = await fetchUserData(token);
     if (data && data.username) {
@@ -27,8 +23,6 @@ export const updateUserData = async (token, setUserData, numLoadingEvents, setNu
     };
   } catch (error) {
     console.error(error);
-  } finally {
-    removeLoadingEvent(numLoadingEvents, setNumLoadingEvents, numLoadingEvents, setNumLoadingEvents);
   }
 };
 
@@ -55,8 +49,7 @@ export const fetchUserCart = async (token, numLoadingEvents, setNumLoadingEvents
 };
 
 // Products
-export const fetchAllProducts = async (numLoadingEvents, setNumLoadingEvents) => {
-    addLoadingEvent(numLoadingEvents, setNumLoadingEvents);
+export const fetchAllProducts = async () => {
     try {
       const data = await callApi({
         url: "/products",
@@ -65,14 +58,11 @@ export const fetchAllProducts = async (numLoadingEvents, setNumLoadingEvents) =>
       return data;
     } catch (error) {
       console.error(error);
-    } finally {
-      removeLoadingEvent(numLoadingEvents, setNumLoadingEvents, numLoadingEvents, setNumLoadingEvents);
     };
 };
 
 // Create a new order (cart)
-export const createOrder = async (token, numLoadingEvents, setNumLoadingEvents) => {
-  addLoadingEvent(numLoadingEvents, setNumLoadingEvents);
+export const createOrder = async (token) => {
   try {
     const params = {
       url: "/orders",
@@ -88,14 +78,11 @@ export const createOrder = async (token, numLoadingEvents, setNumLoadingEvents) 
     return data;
   } catch(error) {
     console.error(error);
-  } finally {
-    removeLoadingEvent(numLoadingEvents, setNumLoadingEvents, numLoadingEvents, setNumLoadingEvents);
   };
 };
 
 // Add product to order (create orderProduct)
-export const addProductToOrder = async (orderId, body, token, numLoadingEvents, setNumLoadingEvents) => {
-  addLoadingEvent(numLoadingEvents, setNumLoadingEvents);
+export const addProductToOrder = async (orderId, body, token) => {
   try {
     const newOrderProduct = await callApi({
       url: `/orders/${orderId}/products`,
@@ -106,14 +93,11 @@ export const addProductToOrder = async (orderId, body, token, numLoadingEvents, 
     return newOrderProduct;
   } catch(error) {
     console.error(error);
-  } finally {
-    removeLoadingEvent(numLoadingEvents, setNumLoadingEvents, numLoadingEvents, setNumLoadingEvents);
   };
 };
 
 // Update order product
-export const updateOrderProduct = async (orderProductId, body, token, numLoadingEvents, setNumLoadingEvents) => {
-  addLoadingEvent(numLoadingEvents, setNumLoadingEvents);
+export const updateOrderProduct = async (orderProductId, body, token) => {
   try {
     const data = await callApi({
       url: `/order_products/${orderProductId}`,
@@ -124,8 +108,6 @@ export const updateOrderProduct = async (orderProductId, body, token, numLoading
     return data;
   } catch(error) {
     console.error(error);
-  } finally {
-    removeLoadingEvent(numLoadingEvents, setNumLoadingEvents, numLoadingEvents, setNumLoadingEvents);
   };
 };
 
@@ -147,8 +129,7 @@ export const deleteOrderProduct = async (orderProductId, token, numLoadingEvents
 };
 
 // Update an order (change to "complete")
-export const updateOrder = async (orderId, body, token, numLoadingEvents, setNumLoadingEvents) => {
-  addLoadingEvent(numLoadingEvents, setNumLoadingEvents);
+export const updateOrder = async (orderId, body, token) => {
   try {
     const data = await callApi({
       url: `/orders/${orderId}`,
@@ -159,8 +140,6 @@ export const updateOrder = async (orderId, body, token, numLoadingEvents, setNum
     return data;
   } catch (error) {
     console.error(error);
-  } finally {
-    removeLoadingEvent(numLoadingEvents, setNumLoadingEvents, numLoadingEvents, setNumLoadingEvents);
   };
 };
 
@@ -258,8 +237,7 @@ export const getUserReviews = async (userId, token, numLoadingEvents, setNumLoad
 };
 
 // ADMIN ROUTES
-export const fetchAllUsers = async (token, numLoadingEvents, setNumLoadingEvents) => {
-  addLoadingEvent(numLoadingEvents, setNumLoadingEvents);
+export const fetchAllUsers = async (token) => {
   try {
     const data = await callApi({
       url: "/users",
@@ -268,14 +246,11 @@ export const fetchAllUsers = async (token, numLoadingEvents, setNumLoadingEvents
     return data;
   } catch (error) {
     console.error(error)
-  } finally {
-    removeLoadingEvent(numLoadingEvents, setNumLoadingEvents, numLoadingEvents, setNumLoadingEvents);
   };
 };
 
 // Orders
-export const fetchAllOrders = async (token, numLoadingEvents, setNumLoadingEvents) =>{
-  addLoadingEvent(numLoadingEvents, setNumLoadingEvents);
+export const fetchAllOrders = async (token) =>{
   try {
     const data = await callApi({
       url: "/orders",
@@ -285,14 +260,11 @@ export const fetchAllOrders = async (token, numLoadingEvents, setNumLoadingEvent
 
   } catch (error) {
     console.error(error)
-  } finally {
-    removeLoadingEvent(numLoadingEvents, setNumLoadingEvents, numLoadingEvents, setNumLoadingEvents);
   }
 }
 
 // Update Admin Data
-export const updateAdminData = async (token, setAllUsers, setAllOrders, setAllProducts, numLoadingEvents, setNumLoadingEvents) => {
-  addLoadingEvent(numLoadingEvents, setNumLoadingEvents);
+export const updateAdminData = async (token, setAllUsers, setAllOrders, setAllProducts) => {
   try {
     const users = await fetchAllUsers(token);
     if (setAllUsers && users && users.length > 0) {
@@ -309,8 +281,6 @@ export const updateAdminData = async (token, setAllUsers, setAllOrders, setAllPr
     };
   } catch (error) {
     console.error(error);
-  } finally {
-    removeLoadingEvent(numLoadingEvents, setNumLoadingEvents, numLoadingEvents, setNumLoadingEvents);
   }
 };
 

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import StripeCheckout from "react-stripe-checkout";
 import OrderProductCard from "../orders/OrderProductCard";
 import axios from 'axios';
@@ -33,7 +33,7 @@ const generateOrderTotal = (cart) => {
     };
 };
 
-const handleCompleteOrder = async (userId, orderId, setCart, token, setUserData, numLoadingEvents, setNumLoadingEvents) => {
+const handleCompleteOrder = async (userId, orderId, setCart, token, setUserData) => {
     // IF TOKEN
     if (token) {
         const body = {
@@ -42,9 +42,9 @@ const handleCompleteOrder = async (userId, orderId, setCart, token, setUserData,
         };
 
         try {
-            await updateOrder(orderId, body, token, numLoadingEvents, setNumLoadingEvents);
+            await updateOrder(orderId, body, token);
             setCart([]);
-            await updateUserData(token, setUserData, numLoadingEvents, setNumLoadingEvents);
+            await updateUserData(token, setUserData);
         } catch (error) {
             console.error(error);
         };
@@ -79,7 +79,7 @@ const Cart = ({ userData, setUserData, cart, setCart, token }) => {
                 amount,
             });
             console.log('Payment Success!', response);
-            await handleCompleteOrder(userId, orderId, setCart, userToken, setUserData, numLoadingEvents, setNumLoadingEvents);
+            await handleCompleteOrder(userId, orderId, setCart, userToken, setUserData);
 
         } catch (error) {
             console.error(error);

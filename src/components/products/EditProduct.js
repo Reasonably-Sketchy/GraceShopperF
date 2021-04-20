@@ -30,7 +30,7 @@ const EditProduct = ({
                 price: price,
                 category: category
             };
-            const updatedProduct = await editProduct(thisProduct.id, body, token);
+            const updatedProduct = await editProduct(thisProduct.id, body, token, numLoadingEvents, setNumLoadingEvents);
             if (updatedProduct) {
                 updateAdminData(token, null, null, setAllProducts, numLoadingEvents, setNumLoadingEvents);
                 setEditExpand(false);

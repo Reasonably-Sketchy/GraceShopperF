@@ -20,7 +20,7 @@ const Admin = ({token, setAllProducts, allUsers, setAllUsers, setAllOrders}) => 
     };
 
     useEffect(async () => {
-        await updateAdminData(token, setAllUsers, setAllOrders, setAllProducts, numLoadingEvents, setNumLoadingEvents);
+        await updateAdminData(token, setAllUsers, setAllOrders, setAllProducts);
     }, [])
 
     return (

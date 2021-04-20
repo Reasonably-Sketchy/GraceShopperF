@@ -125,10 +125,10 @@ const Account = ({ userData, setActiveLinkIs, token, setUserData }) => {
 
                     {reviewsOpen
                     ? userReviews && userReviews.length > 0
-                        ? userReviews.map((review) => {
+                        ? userReviews.map((review, index) => {
                             return (
                                 <UserReview
-                                    key = {review.id} 
+                                    key = {index} 
                                     review = {review}
                                     userData = {userData}
                                     setActiveLinkIs = {setActiveLinkIs}
