@@ -2,7 +2,7 @@ import React from 'react';
 
 const CategoryDropdown = ({ categories, allProducts, setFilteredProducts, currentCategory, setCurrentCategory, setProductsToDisplay }) => {
     if (!categories) {
-        return <h1>Loading...</h1>
+        return <div className="loadingMessage">Loading...</div>
     };
 
     const handleChange = (event) => {

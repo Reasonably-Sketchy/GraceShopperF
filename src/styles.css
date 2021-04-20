@@ -63,3 +63,15 @@ a {
     color: white;
     /* color: black; */
 }
+
+.loadingMessage{
+    position: absolute;
+    top: 150px;
+    left: 0;
+    width: 100%;
+    background-color: black;
+    text-align: center;
+    vertical-align: text-top;
+    padding-top: 25%;
+    height: 100%
+}

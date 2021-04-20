@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import StripeCheckout from "react-stripe-checkout";
 import OrderProductCard from "../orders/OrderProductCard";
 import axios from 'axios';
@@ -59,6 +59,7 @@ const handleCompleteOrder = async (userId, orderId, setCart, token, setUserData)
 };
 
 const Cart = ({ userData, setUserData, cart, setCart, token }) => {
+    const [numLoadingEvents, setNumLoadingEvents] = useState(0);
     const items = generateItemsTotal(cart);
     const orderTotal = generateOrderTotal(cart);
     const userToken = token;
@@ -142,7 +143,8 @@ const Cart = ({ userData, setUserData, cart, setCart, token }) => {
             </section>
             : ''
             }
-            
+
+            {numLoadingEvents > 0 ? <div className="loadingMessage">Loading...</div>:<></>}
         </main>
     );
 };

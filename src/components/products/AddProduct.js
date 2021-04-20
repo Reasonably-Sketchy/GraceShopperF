@@ -11,6 +11,7 @@ const AddProduct = ({token, setAllProducts, setProductsExpand}) => {
     const [category, setCategory] = useState('');
     const [price, setPrice] = useState(0);
     const [modalOpen, setModalOpen] = useState(false);
+    const [numLoadingEvents, setNumLoadingEvents] = useState(0);
 
     const modalCloseFunction = () => {
         setProduct('');
@@ -41,7 +42,7 @@ const AddProduct = ({token, setAllProducts, setProductsExpand}) => {
             // setAllProducts(data)
             if (data) {
                 setModalOpen(true);
-                await updateAdminData(token, null, null, setAllProducts);
+                await updateAdminData(token, null, null, setAllProducts, numLoadingEvents, setNumLoadingEvents);
             };
 
         } catch(error) {
@@ -110,6 +111,7 @@ const AddProduct = ({token, setAllProducts, setProductsExpand}) => {
 
             </form>
             </div>
+            {numLoadingEvents > 0 ? <div className="loadingMessage">Loading...</div>:<></>}
         </>
     );
 };

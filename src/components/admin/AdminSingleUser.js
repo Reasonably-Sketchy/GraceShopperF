@@ -10,33 +10,19 @@ import EditUser from './EditUser';
 
 const SingleUser = ({allUsers, userData, token, setAllUsers}) => {
     const history = useHistory();
-    const [email, editEmail] = useState();
-    const [isAdmin, setAdmin] = useState(false);
+    // const [email, editEmail] = useState();
+    // const [isAdmin, setAdmin] = useState(false);
     const [user, setUser] = useState([]);
     const {userId} =  useParams();
     const [updateExpand, setUpdateExpand] = useState(false);
 
     if (!allUsers) {
-        return <h1>Loading...</h1>
-    }
+        return <div className="loadingMessage">Loading...</div>
+    };
 
     const thisUser = allUsers.find((user)=>{
         return Number(userId) === user.id
-    })
-
-    const handleSubmit = async (event) =>{
-        event.preventDefault();
-
-        const response = callApi({
-            url: `/users/${user.id}`,
-            method: 'PATCH',
-            body: {
-                email,
-                isAdmin
-            }, 
-            token: token
-        });
-    }
+    });
 
     return (
         <main id="single-user">

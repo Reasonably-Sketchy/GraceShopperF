@@ -13,7 +13,8 @@ const AddUser = ({token, setAllUsers, setUsersExpand}) => {
     const [admin, setAdmin] = useState(false);
     const [imageURL, setImageURL] = useState('');
     const [modalOpen, setModalOpen] = useState(false);
-
+    const [numLoadingEvents, setNumLoadingEvents] = useState(0);
+    
     const modalCloseFunction = () => {
         setFirstName('');
         setLastName('');
@@ -45,7 +46,7 @@ const AddUser = ({token, setAllUsers, setUsersExpand}) => {
             
             if (data) {
                 setModalOpen(true);
-                updateAdminData(token, setAllUsers, null, null);
+                updateAdminData(token, setAllUsers, null, null, numLoadingEvents, setNumLoadingEvents);
             };
             
         } catch(error) {
@@ -119,6 +120,7 @@ const AddUser = ({token, setAllUsers, setUsersExpand}) => {
                         >Create User</Button>
                 </form>
             </div>
+            {numLoadingEvents > 0 ? <div className="loadingMessage">Loading...</div>:<></>}
         </>
     );
 };
