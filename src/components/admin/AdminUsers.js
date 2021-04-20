@@ -3,14 +3,10 @@ import {Link} from 'react-router-dom';
 import AdminSingleUser from './AdminSingleUser'
 
 const AdminUsers = ({allUsers}) => {
-    // const [thisUser, setThisUser] = useState({});
-    // const [usersToMap, setUsersToMap] = useState([]);
-    // setUsersToMap(allUsers);
-    // const usersToMap = allUsers;
 
-    // if (!allUsers) {
-    //     return '...loading'
-    // };
+    if (!allUsers) {
+        return <div className="loadingMessage">Loading...</div>
+    };
 
         return (
         <main id="users">

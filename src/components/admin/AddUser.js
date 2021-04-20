@@ -13,7 +13,7 @@ const AddUser = ({token, setAllUsers, setUsersExpand}) => {
     const [admin, setAdmin] = useState(false);
     const [imageURL, setImageURL] = useState('');
     const [modalOpen, setModalOpen] = useState(false);
-
+    
     const modalCloseFunction = () => {
         setFirstName('');
         setLastName('');

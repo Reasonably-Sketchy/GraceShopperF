@@ -6,11 +6,11 @@ import './DeleteModal.css';
 import { deleteReview, fetchReviews } from '../../api/utils';
 
 const DeleteModal = ({ setDeleteModalOpen, review, token, setReviews, cardStars }) => {
-
+    const [numLoadingEvents, setNumLoadingEvents] = useState(0);
     const handleDelete = async (event) => {
         event.preventDefault();
-        const deletedReview = await deleteReview(review.id, token);
-        const updateReviews = await fetchReviews(review.productId);
+        const deletedReview = await deleteReview(review.id, token, numLoadingEvents, setNumLoadingEvents);
+        const updateReviews = await fetchReviews(review.productId, numLoadingEvents, setNumLoadingEvents);
         setReviews(updateReviews);
         setDeleteModalOpen(false);
     };
@@ -50,6 +50,7 @@ const DeleteModal = ({ setDeleteModalOpen, review, token, setReviews, cardStars 
                 </div>
             </div>
         </div>
+        {numLoadingEvents > 0 ? <div className="loadingMessage">Loading...</div>:<></>}
         </div>
     );
 };

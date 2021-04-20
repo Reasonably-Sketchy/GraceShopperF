@@ -55,12 +55,11 @@ export const fetchUserCart = async (token, numLoadingEvents, setNumLoadingEvents
 };
 
 // Products
-export const fetchAllProducts = async (token, numLoadingEvents, setNumLoadingEvents) => {
+export const fetchAllProducts = async (numLoadingEvents, setNumLoadingEvents) => {
     addLoadingEvent(numLoadingEvents, setNumLoadingEvents);
     try {
       const data = await callApi({
         url: "/products",
-        token
       });
   
       return data;

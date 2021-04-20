@@ -11,6 +11,7 @@ const ReviewCreator = ({ productId, setCreatorOpen, token, setReviews }) => {
     const [stars, setStars] = useState(0);
     const [content, setContent] = useState('');
     const [respMessage, setRespMessage] = useState('');
+    const [numLoadingEvents, setNumLoadingEvents] = useState(0);
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -25,11 +26,11 @@ const ReviewCreator = ({ productId, setCreatorOpen, token, setReviews }) => {
                 stars: stars,
                 content: content,
             };
-            const newReview = await addReview(productId, body, token);
+            const newReview = await addReview(productId, body, token, numLoadingEvents, setNumLoadingEvents);
             setTitle('');
             setStars(0);
             setContent('');
-            const updateReviews = await fetchReviews(productId);
+            const updateReviews = await fetchReviews(productId, numLoadingEvents, setNumLoadingEvents);
             setReviews(updateReviews);
             setCreatorOpen(false);
         } catch (error) {
@@ -134,6 +135,7 @@ const ReviewCreator = ({ productId, setCreatorOpen, token, setReviews }) => {
             </form>
 
         </div>
+        {numLoadingEvents > 0 ? <div className="loadingMessage">Loading...</div>:<></>}
         </div>
     );
 };

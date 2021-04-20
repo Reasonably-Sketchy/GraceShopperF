@@ -29,7 +29,6 @@ const Account = ({ userData, setActiveLinkIs, token, setUserData }) => {
         };
     }, []);
 
-
     let cartProducts = [];
     if (userData.cart) {
         cartProducts = userData.cart.products;

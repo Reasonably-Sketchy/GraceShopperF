@@ -16,6 +16,7 @@ const EditProduct = ({
     const [imageURL, editImageURL] = useState(thisProduct.imageURL);
     const [category, editCategory] = useState(thisProduct.category);
     const [price, editPrice] = useState(thisProduct.price);
+    const [numLoadingEvents, setNumLoadingEvents] = useState(0);
     const history = useHistory();
 
     const handleEdit = async (event) =>{
@@ -31,7 +32,7 @@ const EditProduct = ({
             };
             const updatedProduct = await editProduct(thisProduct.id, body, token);
             if (updatedProduct) {
-                updateAdminData(token, null, null, setAllProducts);
+                updateAdminData(token, null, null, setAllProducts, numLoadingEvents, setNumLoadingEvents);
                 setEditExpand(false);
                 setModalOpen(true);
             }
@@ -105,6 +106,7 @@ const EditProduct = ({
 
             </form>
         </div>
+        {numLoadingEvents > 0 ? <div className="loadingMessage">Loading...</div>:<></>}
 </>
 };
 
