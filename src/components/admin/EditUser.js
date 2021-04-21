@@ -55,8 +55,32 @@ const EditUser = ({userData, token, thisUser, setUserData, setAllUsers, path, se
         } catch(error) {
             console.error(error)
         }
-
     };
+
+    const handleDelete = async (event) => {
+        // event.preventDefault();
+
+        const confirmed = confirm(`Are you sure you want to delete ${thisUser.username}?`);
+        if (confirmed === true) {
+            try {
+                const response = await callApi({
+                    url: `/users/${thisUser.id}`,
+                    method: 'DELETE',
+                    token
+                });
+                if (response) {
+                    setModalOpen(true);
+                    if (path === "Admin") {
+                        updateAdminData(token, setAllUsers, null, null);
+                    } else if (path === "Account") {
+                        updateUserData(token, setUserData)
+                    };
+                };
+            } catch (error) {
+                throw error;
+            }
+        }
+    }
 
     return (
         <>
@@ -136,6 +160,17 @@ const EditUser = ({userData, token, thisUser, setUserData, setAllUsers, path, se
                     color="primary"
                     type="submit"
                     >Save Changes</Button>
+
+                <Button
+                    className="responsive-button"
+                    id="murder-user"
+                    variant="contained"
+                    color="secondary"
+                    type="submit"
+                    onClick={()=>{
+                        handleDelete();
+                    }}
+                    >Delete User</Button>
                 
 
 
